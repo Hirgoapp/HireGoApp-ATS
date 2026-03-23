@@ -6,12 +6,16 @@ import {
     UpdateDateColumn,
     ManyToOne,
     JoinColumn,
+    Index,
 } from 'typeorm';
 import { Company } from '../../../companies/entities/company.entity';
 import { JobRequirement } from './job-requirement.entity';
 import { User } from '../../../auth/entities/user.entity';
 
 @Entity('requirement_assignments')
+@Index('idx_requirement_assignments_job_req_id', ['job_requirement_id'])
+@Index('idx_requirement_assignments_company_job_req', ['company_id', 'job_requirement_id'])
+@Index('idx_requirement_assignments_assigned_to', ['assigned_to_user_id'])
 export class RequirementAssignment {
     @PrimaryGeneratedColumn('uuid')
     id: string;

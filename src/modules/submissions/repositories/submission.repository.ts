@@ -206,12 +206,27 @@ export class SubmissionRepository {
     }
 
     async getStatusCounts(companyId: string, jobId?: string): Promise<Record<SubmissionStatus, number>> {
-        const statuses = Object.values(SubmissionStatus) as SubmissionStatus[];
+        const qb = this.repository
+            .createQueryBuilder('s')
+            .select('s.status', 'status')
+            .addSelect('COUNT(*)', 'count')
+            .where('s.company_id = :companyId', { companyId })
+            .andWhere('s.deleted_at IS NULL');
+
+        if (jobId) {
+            qb.andWhere('s.job_id = :jobId', { jobId });
+        }
+
+        const rows: { status: SubmissionStatus; count: string }[] = await qb
+            .groupBy('s.status')
+            .getRawMany();
+
         const counts: Record<SubmissionStatus, number> = {} as any;
-        for (const s of statuses) {
-            counts[s] = jobId
-                ? await this.countByJobAndStatus(jobId, companyId, s)
-                : await this.countByStatus(companyId, s);
+        for (const s of Object.values(SubmissionStatus) as SubmissionStatus[]) {
+            counts[s] = 0;
+        }
+        for (const row of rows) {
+            counts[row.status] = parseInt(row.count, 10);
         }
         return counts;
     }
