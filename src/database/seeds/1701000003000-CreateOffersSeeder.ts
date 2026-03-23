@@ -1,0 +1,311 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Offer, OfferStatus, OfferBreakup } from '../../offers/entities/offer.entity';
+import { v4 as uuidv4 } from 'uuid';
+
+@Injectable()
+export class OfferSeeder {
+    constructor(
+        @InjectRepository(Offer)
+        private readonly repository: Repository<Offer>,
+    ) { }
+
+    async seed(): Promise<void> {
+        const companyId = '550e8400-e29b-41d4-a716-446655440000'; // Test company
+        const userId = 'e0f74b58-6a5d-4b1d-8c7a-3d1e9f8a2c0b';
+
+        const offers = [
+            // Offer 1: Senior Engineer - Accepted
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440001',
+                currentVersion: 1,
+                status: OfferStatus.ACCEPTED,
+                ctc: 1500000,
+                breakup: {
+                    baseSalary: 1000000,
+                    dearness: 80000,
+                    houseRent: 250000,
+                    specialAllowance: 100000,
+                    bonus: 70000,
+                    totalCTC: 1500000,
+                } as OfferBreakup,
+                designation: 'Senior Software Engineer',
+                joiningDate: '2025-03-01',
+                department: 'Engineering',
+                reportingManager: 'John Smith',
+                location: 'Bangalore',
+                termsAndConditions: 'Standard 3-year lock-in for training programs',
+                acceptedAt: new Date('2025-01-15'),
+                sentAt: new Date('2025-01-10'),
+                createdById: userId,
+                updatedById: userId,
+                createdAt: new Date('2025-01-05'),
+                updatedAt: new Date('2025-01-15'),
+            },
+            // Offer 2: Product Manager - Sent (Pending)
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440002',
+                currentVersion: 1,
+                status: OfferStatus.SENT,
+                ctc: 1200000,
+                breakup: {
+                    baseSalary: 800000,
+                    dearness: 60000,
+                    houseRent: 200000,
+                    specialAllowance: 80000,
+                    bonus: 60000,
+                    totalCTC: 1200000,
+                } as OfferBreakup,
+                designation: 'Product Manager',
+                joiningDate: '2025-04-01',
+                department: 'Product',
+                reportingManager: 'Sarah Johnson',
+                location: 'Mumbai',
+                sentAt: new Date('2025-01-20'),
+                expiresAt: new Date('2025-02-05'),
+                createdById: userId,
+                createdAt: new Date('2025-01-18'),
+                updatedAt: new Date('2025-01-20'),
+            },
+            // Offer 3: Backend Developer - Draft
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440003',
+                currentVersion: 1,
+                status: OfferStatus.DRAFT,
+                ctc: 1100000,
+                breakup: {
+                    baseSalary: 750000,
+                    dearness: 50000,
+                    houseRent: 180000,
+                    specialAllowance: 70000,
+                    bonus: 50000,
+                    totalCTC: 1100000,
+                } as OfferBreakup,
+                designation: 'Backend Developer',
+                joiningDate: '2025-03-15',
+                department: 'Engineering',
+                reportingManager: 'Mike Chen',
+                location: 'Hyderabad',
+                internalNotes: 'Pending final approval from CTO',
+                createdById: userId,
+                createdAt: new Date('2025-01-22'),
+                updatedAt: new Date('2025-01-22'),
+            },
+            // Offer 4: Frontend Developer - Rejected
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440004',
+                currentVersion: 1,
+                status: OfferStatus.REJECTED,
+                ctc: 1050000,
+                breakup: {
+                    baseSalary: 700000,
+                    dearness: 45000,
+                    houseRent: 170000,
+                    specialAllowance: 60000,
+                    bonus: 75000,
+                    totalCTC: 1050000,
+                } as OfferBreakup,
+                designation: 'Frontend Developer',
+                joiningDate: '2025-03-01',
+                department: 'Engineering',
+                reportingManager: 'Lisa Wong',
+                location: 'Bangalore',
+                rejectionReason: 'Candidate declined due to salary expectation mismatch',
+                closedAt: new Date('2025-01-16'),
+                sentAt: new Date('2025-01-08'),
+                createdById: userId,
+                updatedById: userId,
+                createdAt: new Date('2025-01-05'),
+                updatedAt: new Date('2025-01-16'),
+            },
+            // Offer 5: DevOps Engineer - Multiple Versions (Revised)
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440005',
+                currentVersion: 2,
+                status: OfferStatus.SENT,
+                ctc: 1300000,
+                breakup: {
+                    baseSalary: 850000,
+                    dearness: 70000,
+                    houseRent: 220000,
+                    specialAllowance: 90000,
+                    bonus: 70000,
+                    totalCTC: 1300000,
+                } as OfferBreakup,
+                designation: 'DevOps Engineer',
+                joiningDate: '2025-04-15',
+                department: 'Infrastructure',
+                reportingManager: 'Alex Kumar',
+                location: 'Pune',
+                internalNotes: '[Revision 2]: Increased salary based on candidate negotiation',
+                sentAt: new Date('2025-01-21'),
+                expiresAt: new Date('2025-02-10'),
+                createdById: userId,
+                updatedById: userId,
+                createdAt: new Date('2025-01-17'),
+                updatedAt: new Date('2025-01-21'),
+            },
+            // Offer 6: QA Engineer - Withdrawn
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440006',
+                currentVersion: 1,
+                status: OfferStatus.WITHDRAWN,
+                ctc: 900000,
+                breakup: {
+                    baseSalary: 600000,
+                    dearness: 40000,
+                    houseRent: 150000,
+                    specialAllowance: 50000,
+                    bonus: 60000,
+                    totalCTC: 900000,
+                } as OfferBreakup,
+                designation: 'QA Engineer',
+                joiningDate: '2025-03-20',
+                department: 'QA',
+                reportingManager: 'Emma Davis',
+                location: 'Bangalore',
+                rejectionReason: 'Offer withdrawn due to business needs change',
+                closedAt: new Date('2025-01-19'),
+                sentAt: new Date('2025-01-12'),
+                createdById: userId,
+                updatedById: userId,
+                createdAt: new Date('2025-01-10'),
+                updatedAt: new Date('2025-01-19'),
+            },
+            // Offer 7: Data Engineer - Accepted (Senior level)
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440007',
+                currentVersion: 1,
+                status: OfferStatus.ACCEPTED,
+                ctc: 1800000,
+                breakup: {
+                    baseSalary: 1200000,
+                    dearness: 100000,
+                    houseRent: 300000,
+                    specialAllowance: 120000,
+                    bonus: 80000,
+                    totalCTC: 1800000,
+                } as OfferBreakup,
+                designation: 'Senior Data Engineer',
+                joiningDate: '2025-02-15',
+                department: 'Data & Analytics',
+                reportingManager: 'Robert Singh',
+                location: 'Bangalore',
+                acceptedAt: new Date('2025-01-18'),
+                sentAt: new Date('2025-01-12'),
+                createdById: userId,
+                updatedById: userId,
+                createdAt: new Date('2025-01-10'),
+                updatedAt: new Date('2025-01-18'),
+            },
+            // Offer 8: UI/UX Designer - Draft (Pending HR Review)
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440008',
+                currentVersion: 1,
+                status: OfferStatus.DRAFT,
+                ctc: 1050000,
+                breakup: {
+                    baseSalary: 700000,
+                    dearness: 45000,
+                    houseRent: 170000,
+                    specialAllowance: 80000,
+                    bonus: 55000,
+                    totalCTC: 1050000,
+                } as OfferBreakup,
+                designation: 'Senior UI/UX Designer',
+                joiningDate: '2025-04-01',
+                department: 'Design',
+                reportingManager: 'Victoria Holmes',
+                location: 'Bangalore',
+                internalNotes: 'Awaiting HR final review and CEO approval',
+                createdById: userId,
+                createdAt: new Date('2025-01-23'),
+                updatedAt: new Date('2025-01-23'),
+            },
+            // Offer 9: Business Analyst - Sent (Expiring Soon)
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440009',
+                currentVersion: 1,
+                status: OfferStatus.SENT,
+                ctc: 1000000,
+                breakup: {
+                    baseSalary: 650000,
+                    dearness: 50000,
+                    houseRent: 160000,
+                    specialAllowance: 70000,
+                    bonus: 70000,
+                    totalCTC: 1000000,
+                } as OfferBreakup,
+                designation: 'Business Analyst',
+                joiningDate: '2025-03-30',
+                department: 'Operations',
+                reportingManager: 'Patricia Martinez',
+                location: 'Delhi NCR',
+                sentAt: new Date('2025-01-24'),
+                expiresAt: new Date('2025-01-31'), // Expiring soon
+                createdById: userId,
+                createdAt: new Date('2025-01-22'),
+                updatedAt: new Date('2025-01-24'),
+            },
+            // Offer 10: Tech Lead - Accepted with stock options
+            {
+                id: uuidv4(),
+                companyId,
+                submissionId: '550e8400-e29b-41d4-a716-446655440010',
+                currentVersion: 1,
+                status: OfferStatus.ACCEPTED,
+                ctc: 2000000,
+                breakup: {
+                    baseSalary: 1200000,
+                    dearness: 120000,
+                    houseRent: 350000,
+                    specialAllowance: 150000,
+                    bonus: 100000,
+                    stockOptions: 80000,
+                    totalCTC: 2000000,
+                } as OfferBreakup,
+                designation: 'Tech Lead',
+                joiningDate: '2025-02-01',
+                department: 'Engineering',
+                reportingManager: 'David Patel',
+                location: 'Bangalore',
+                acceptedAt: new Date('2025-01-20'),
+                sentAt: new Date('2025-01-15'),
+                createdById: userId,
+                updatedById: userId,
+                createdAt: new Date('2025-01-12'),
+                updatedAt: new Date('2025-01-20'),
+            },
+        ];
+
+        for (const offer of offers) {
+            const existing = await this.repository.findOne({
+                where: { id: offer.id },
+            });
+            if (!existing) {
+                await this.repository.save(offer);
+            }
+        }
+
+        console.log('✓ Offer seeder completed');
+    }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ATS Extension Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 12px;
+            min-width: 260px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 8px;
+            background: #1f6feb;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        .error {
+            color: #b00020;
+        }
+
+        .success {
+            color: #1a7f37;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="logged-in" style="display: none;">
+        <div id="logged-in-text" class="status success"></div>
+        <div id="session-timer" class="status">Session: 00:00:00</div>
+        <div id="capture-status" class="status">Last capture: —</div>
+        <label style="margin-top: 12px; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="quiet-mode" />
+            <span>Quiet mode (no toasts on Naukri)</span>
+        </label>
+        <p class="status" style="margin-top: 6px; font-size: 11px; color: #666;">Activity is recorded in the portal dashboard.</p>
+        <button id="clear-data-button" type="button" style="margin-top: 8px; background: #555;">Clear extension data</button>
+        <button id="logout-button" type="button" style="margin-top: 6px;">Logout</button>
+    </div>
+
+    <form id="login-form">
+        <label for="username">Username or Email</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Login</button>
+        <div id="status" class="status"></div>
+    </form>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

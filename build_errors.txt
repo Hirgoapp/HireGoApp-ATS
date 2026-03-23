@@ -1,0 +1,2399 @@
+
+> ats-saas-backend@1.0.0 build
+> nest build
+
+src/database/seeds/default-licenses-features.seed.ts:92:48 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(entityLikeArray: DeepPartial<License>[]): License[]', gave the following error.
+    Argument of type '{ company_id: string; tier: string; status: string; billing_cycle: string; auto_renew: boolean; starts_at: Date; expires_at: Date; custom_limits?: undefined; } | { company_id: string; ... 6 more ...; custom_limits: { ...; }; }' is not assignable to parameter of type 'DeepPartial<License>[]'.
+      Type '{ company_id: string; tier: string; status: string; billing_cycle: string; auto_renew: boolean; starts_at: Date; expires_at: Date; custom_limits?: undefined; }' is missing the following properties from type 'DeepPartial<License>[]': length, pop, push, concat, and 29 more.
+  Overload 2 of 3, '(entityLike: DeepPartial<License>): License', gave the following error.
+    Argument of type '{ company_id: string; tier: string; status: string; billing_cycle: string; auto_renew: boolean; starts_at: Date; expires_at: Date; custom_limits?: undefined; } | { company_id: string; ... 6 more ...; custom_limits: { ...; }; }' is not assignable to parameter of type 'DeepPartial<License>'.
+      Type '{ company_id: string; tier: string; status: string; billing_cycle: string; auto_renew: boolean; starts_at: Date; expires_at: Date; custom_limits?: undefined; }' is not assignable to type 'DeepPartial<License>'.
+        Type '{ company_id: string; tier: string; status: string; billing_cycle: string; auto_renew: boolean; starts_at: Date; expires_at: Date; custom_limits?: undefined; }' is not assignable to type '{ id?: string; company_id?: string; tier?: DeepPartial<LicenseTier>; status?: DeepPartial<LicenseStatus>; billing_cycle?: DeepPartial<"monthly" | "annual" | "custom">; ... 8 more ...; license_features?: DeepPartial<...>; }'.
+          Types of property 'tier' are incompatible.
+            Type 'string' is not assignable to type 'DeepPartial<LicenseTier>'.
+
+92             license = licenseRepository.create(licenseData);
+                                                  ~~~~~~~~~~~
+
+src/database/seeds/default-licenses-features.seed.ts:173:55 - error TS2769: No overload matches this call.
+  Overload 1 of 3, '(entityLikeArray: DeepPartial<FeatureFlag>[]): FeatureFlag[]', gave the following error.
+    Argument of type '{ name: string; description: string; flag_type: string; status: string; is_enabled_globally: boolean; enabled_percentage: number; target_tiers: string[]; included_companies?: undefined; } | { ...; }' is not assignable to parameter of type 'DeepPartial<FeatureFlag>[]'.
+      Type '{ name: string; description: string; flag_type: string; status: string; is_enabled_globally: boolean; enabled_percentage: number; target_tiers: string[]; included_companies?: undefined; }' is missing the following properties from type 'DeepPartial<FeatureFlag>[]': length, pop, push, concat, and 29 more.
+  Overload 2 of 3, '(entityLike: DeepPartial<FeatureFlag>): FeatureFlag', gave the following error.
+    Argument of type '{ name: string; description: string; flag_type: string; status: string; is_enabled_globally: boolean; enabled_percentage: number; target_tiers: string[]; included_companies?: undefined; } | { ...; }' is not assignable to parameter of type 'DeepPartial<FeatureFlag>'.
+      Type '{ name: string; description: string; flag_type: string; status: string; is_enabled_globally: boolean; enabled_percentage: number; target_tiers: string[]; included_companies?: undefined; }' is not assignable to type 'DeepPartial<FeatureFlag>'.
+        Type '{ name: string; description: string; flag_type: string; status: string; is_enabled_globally: boolean; enabled_percentage: number; target_tiers: string[]; included_companies?: undefined; }' is not assignable to type '{ id?: string; name?: string; description?: string; flag_type?: DeepPartial<"boolean" | "percentage" | "user_list">; status?: DeepPartial<"draft" | "active" | "archived">; ... 10 more ...; created_by_id?: string; }'.
+          Types of property 'flag_type' are incompatible.
+            Type 'string' is not assignable to type 'DeepPartial<"boolean" | "percentage" | "user_list">'.
+
+173             const flag = featureFlagRepository.create(flagData);
+                                                          ~~~~~~~~
+
+src/interviews/controllers/interview.controller.ts:70:61 - error TS2339: Property 'getInterviews' does not exist on type 'InterviewService'.
+
+70         const { data, total } = await this.interviewService.getInterviews(companyId, {
+                                                               ~~~~~~~~~~~~~
+src/interviews/controllers/interview.controller.ts:100:55 - error TS2339: Property 'getInterview' does not exist on type 'InterviewService'.
+
+100         const interview = await this.interviewService.getInterview(companyId, interviewId);
+                                                          ~~~~~~~~~~~~
+src/interviews/controllers/interview.controller.ts:119:55 - error TS2339: Property 'recordFeedback' does not exist on type 'InterviewService'.
+
+119         const interview = await this.interviewService.recordFeedback(
+                                                          ~~~~~~~~~~~~~~
+src/interviews/controllers/interview.controller.ts:144:55 - error TS2339: Property 'markCompleted' does not exist on type 'InterviewService'.
+
+144         const interview = await this.interviewService.markCompleted(companyId, interviewId, userId);
+                                                          ~~~~~~~~~~~~~
+src/interviews/controllers/interview.controller.ts:163:55 - error TS2551: Property 'reschedule' does not exist on type 'InterviewService'. Did you mean 'schedule'?
+
+163         const interview = await this.interviewService.reschedule(
+                                                          ~~~~~~~~~~
+
+  src/interviews/services/interview.service.ts:19:11
+    19     async schedule(
+                 ~~~~~~~~
+    'schedule' is declared here.
+src/interviews/controllers/interview.controller.ts:188:55 - error TS2339: Property 'cancel' does not exist on type 'InterviewService'.
+
+188         const interview = await this.interviewService.cancel(
+                                                          ~~~~~~
+src/interviews/controllers/interview.controller.ts:212:55 - error TS2339: Property 'update' does not exist on type 'InterviewService'.
+
+212         const interview = await this.interviewService.update(
+                                                          ~~~~~~
+src/interviews/controllers/interview.controller.ts:236:37 - error TS2339: Property 'delete' does not exist on type 'InterviewService'.
+
+236         await this.interviewService.delete(companyId, interviewId, userId);
+                                        ~~~~~~
+src/interviews/controllers/interview.controller.ts:248:51 - error TS2339: Property 'getCount' does not exist on type 'InterviewService'.
+
+248         const count = await this.interviewService.getCount(companyId);
+                                                      ~~~~~~~~
+src/interviews/controllers/interview.controller.ts:265:56 - error TS2339: Property 'getInterviewsBySubmission' does not exist on type 'InterviewService'.
+
+265         const interviews = await this.interviewService.getInterviewsBySubmission(
+                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:23:8 - error TS2355: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.
+
+23     ): Promise<GetInterviewDto> {
+          ~~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:44:25 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+44             company_id: companyId,
+                           ~~~~~~~~~
+src/interviews/services/interview.service.ts:45:13 - error TS2304: Cannot find name 'entity_type'.
+
+45             entity_type: 'Interview',
+               ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:45:24 - error TS1005: ';' expected.
+
+45             entity_type: 'Interview',
+                          ~
+src/interviews/services/interview.service.ts:45:26 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+45             entity_type: 'Interview',
+                            ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:46:13 - error TS2304: Cannot find name 'entity_id'.
+
+46             entity_id: interview.id,
+               ~~~~~~~~~
+src/interviews/services/interview.service.ts:46:22 - error TS1005: ';' expected.
+
+46             entity_id: interview.id,
+                        ~
+src/interviews/services/interview.service.ts:47:13 - error TS2304: Cannot find name 'action'.
+
+47             action: 'CREATE',
+               ~~~~~~
+src/interviews/services/interview.service.ts:47:19 - error TS1005: ';' expected.
+
+47             action: 'CREATE',
+                     ~
+src/interviews/services/interview.service.ts:47:21 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+47             action: 'CREATE',
+                       ~~~~~~~~
+src/interviews/services/interview.service.ts:48:13 - error TS2552: Cannot find name 'user_id'. Did you mean 'userId'?
+
+48             user_id: userId,
+               ~~~~~~~
+
+  src/interviews/services/interview.service.ts:21:9
+    21         userId: string,
+               ~~~~~~~~~~~~~~
+    'userId' is declared here.
+src/interviews/services/interview.service.ts:48:20 - error TS1005: ';' expected.
+
+48             user_id: userId,
+                      ~
+src/interviews/services/interview.service.ts:48:22 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+48             user_id: userId,
+                        ~~~~~~
+src/interviews/services/interview.service.ts:49:13 - error TS2304: Cannot find name 'changes'.
+
+49             changes: {
+               ~~~~~~~
+src/interviews/services/interview.service.ts:49:20 - error TS1005: ';' expected.
+
+49             changes: {
+                      ~
+src/interviews/services/interview.service.ts:51:17 - error TS2304: Cannot find name 'round'.
+
+51                 round: dto.round,
+                   ~~~~~
+src/interviews/services/interview.service.ts:51:22 - error TS1005: ';' expected.
+
+51                 round: dto.round,
+                        ~
+src/interviews/services/interview.service.ts:52:17 - error TS2304: Cannot find name 'scheduled_date'.
+
+52                 scheduled_date: dto.scheduled_date,
+                   ~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:52:31 - error TS1005: ';' expected.
+
+52                 scheduled_date: dto.scheduled_date,
+                                 ~
+src/interviews/services/interview.service.ts:53:17 - error TS2304: Cannot find name 'mode'.
+
+53                 mode: dto.mode,
+                   ~~~~
+src/interviews/services/interview.service.ts:53:21 - error TS1005: ';' expected.
+
+53                 mode: dto.mode,
+                       ~
+src/interviews/services/interview.service.ts:54:13 - error TS1109: Expression expected.
+
+54             },
+               ~
+src/interviews/services/interview.service.ts:54:14 - error TS1128: Declaration or statement expected.
+
+54             },
+                ~
+src/interviews/services/interview.service.ts:55:10 - error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+
+55         });
+            ~
+src/interviews/services/interview.service.ts:57:9 - error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+
+57         return new GetInterviewDto(interview);
+           ~~~~~~
+src/interviews/services/interview.service.ts:58:5 - error TS1128: Declaration or statement expected.
+
+58     }
+       ~
+src/interviews/services/interview.service.ts:63:5 - error TS1434: Unexpected keyword or identifier.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+       ~~~~~
+src/interviews/services/interview.service.ts:63:5 - error TS2304: Cannot find name 'async'.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+       ~~~~~
+src/interviews/services/interview.service.ts:63:11 - error TS2552: Cannot find name 'getInterview'. Did you mean 'Interview'?
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+             ~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:63:24 - error TS2304: Cannot find name 'companyId'.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                          ~~~~~~~~~
+src/interviews/services/interview.service.ts:63:33 - error TS1005: ',' expected.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                                   ~
+src/interviews/services/interview.service.ts:63:35 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                                     ~~~~~~
+src/interviews/services/interview.service.ts:63:43 - error TS2304: Cannot find name 'interviewId'.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                                             ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:63:54 - error TS1005: ',' expected.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                                                        ~
+src/interviews/services/interview.service.ts:63:56 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                                                          ~~~~~~
+src/interviews/services/interview.service.ts:63:63 - error TS1005: ';' expected.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                                                                 ~
+src/interviews/services/interview.service.ts:63:65 - error TS2365: Operator '<' cannot be applied to types 'PromiseConstructor' and 'typeof GetInterviewDto'.
+
+63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                                                                   ~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:63:65 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; if(: any, interview: any): never; return: GetInterviewDto; }'.
+
+ 63     async getInterview(companyId: string, interviewId: string): Promise<GetInterviewDto> {
+                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 64         const interview = await this.interviewRepository.findById(companyId, interviewId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 68         return new GetInterviewDto(interview);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 69     }
+    ~~~~~
+src/interviews/services/interview.service.ts:64:15 - error TS1005: ':' expected.
+
+64         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                 ~~~~~~~~~
+src/interviews/services/interview.service.ts:64:15 - error TS2304: Cannot find name 'interview'.
+
+64         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                 ~~~~~~~~~
+src/interviews/services/interview.service.ts:64:33 - error TS2532: Object is possibly 'undefined'.
+
+64         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                   ~~~~
+src/interviews/services/interview.service.ts:64:67 - error TS2304: Cannot find name 'companyId'.
+
+64         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                     ~~~~~~~~~
+src/interviews/services/interview.service.ts:64:78 - error TS2304: Cannot find name 'interviewId'.
+
+64         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:64:90 - error TS1005: ',' expected.
+
+64         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                            ~
+src/interviews/services/interview.service.ts:65:13 - error TS1003: Identifier expected.
+
+65         if (!interview) {
+               ~
+src/interviews/services/interview.service.ts:68:9 - error TS1005: ',' expected.
+
+68         return new GetInterviewDto(interview);
+           ~~~~~~
+src/interviews/services/interview.service.ts:68:16 - error TS1005: ':' expected.
+
+68         return new GetInterviewDto(interview);
+                  ~~~
+src/interviews/services/interview.service.ts:68:36 - error TS2304: Cannot find name 'interview'.
+
+68         return new GetInterviewDto(interview);
+                                      ~~~~~~~~~
+src/interviews/services/interview.service.ts:68:46 - error TS1005: ',' expected.
+
+68         return new GetInterviewDto(interview);
+                                                ~
+src/interviews/services/interview.service.ts:74:5 - error TS1434: Unexpected keyword or identifier.
+
+74     async getInterviews(
+       ~~~~~
+src/interviews/services/interview.service.ts:74:5 - error TS2304: Cannot find name 'async'.
+
+74     async getInterviews(
+       ~~~~~
+src/interviews/services/interview.service.ts:74:11 - error TS2304: Cannot find name 'getInterviews'.
+
+74     async getInterviews(
+             ~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:75:9 - error TS2304: Cannot find name 'companyId'.
+
+75         companyId: string,
+           ~~~~~~~~~
+src/interviews/services/interview.service.ts:75:18 - error TS1005: ',' expected.
+
+75         companyId: string,
+                    ~
+src/interviews/services/interview.service.ts:75:20 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+75         companyId: string,
+                      ~~~~~~
+src/interviews/services/interview.service.ts:76:9 - error TS2304: Cannot find name 'options'.
+
+76         options?: {
+           ~~~~~~~
+src/interviews/services/interview.service.ts:76:17 - error TS1109: Expression expected.
+
+76         options?: {
+                   ~
+src/interviews/services/interview.service.ts:77:20 - error TS2693: 'number' only refers to a type, but is being used as a value here.
+
+77             skip?: number;
+                      ~~~~~~
+src/interviews/services/interview.service.ts:77:26 - error TS1005: ',' expected.
+
+77             skip?: number;
+                            ~
+src/interviews/services/interview.service.ts:78:20 - error TS2693: 'number' only refers to a type, but is being used as a value here.
+
+78             take?: number;
+                      ~~~~~~
+src/interviews/services/interview.service.ts:78:26 - error TS1005: ',' expected.
+
+78             take?: number;
+                            ~
+src/interviews/services/interview.service.ts:79:29 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+79             submission_id?: string;
+                               ~~~~~~
+src/interviews/services/interview.service.ts:79:35 - error TS1005: ',' expected.
+
+79             submission_id?: string;
+                                     ~
+src/interviews/services/interview.service.ts:80:30 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+80             interviewer_id?: string;
+                                ~~~~~~
+src/interviews/services/interview.service.ts:80:36 - error TS1005: ',' expected.
+
+80             interviewer_id?: string;
+                                      ~
+src/interviews/services/interview.service.ts:81:35 - error TS1005: ',' expected.
+
+81             round?: InterviewRound;
+                                     ~
+src/interviews/services/interview.service.ts:82:37 - error TS1005: ',' expected.
+
+82             status?: InterviewStatus;
+                                       ~
+src/interviews/services/interview.service.ts:83:25 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+83             from_date?: string;
+                           ~~~~~~
+src/interviews/services/interview.service.ts:83:31 - error TS1005: ',' expected.
+
+83             from_date?: string;
+                                 ~
+src/interviews/services/interview.service.ts:84:23 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+84             to_date?: string;
+                         ~~~~~~
+src/interviews/services/interview.service.ts:84:29 - error TS1005: ',' expected.
+
+84             to_date?: string;
+                               ~
+src/interviews/services/interview.service.ts:85:23 - error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+85             orderBy?: 'created_at' | 'updated_at' | 'scheduled_date';
+                         ~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:85:38 - error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+85             orderBy?: 'created_at' | 'updated_at' | 'scheduled_date';
+                                        ~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:85:53 - error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+85             orderBy?: 'created_at' | 'updated_at' | 'scheduled_date';
+                                                       ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:85:69 - error TS1005: ',' expected.
+
+85             orderBy?: 'created_at' | 'updated_at' | 'scheduled_date';
+                                                                       ~
+src/interviews/services/interview.service.ts:86:30 - error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+86             orderDirection?: 'ASC' | 'DESC';
+                                ~~~~~
+src/interviews/services/interview.service.ts:86:38 - error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+86             orderDirection?: 'ASC' | 'DESC';
+                                        ~~~~~~
+src/interviews/services/interview.service.ts:86:44 - error TS1005: ',' expected.
+
+86             orderDirection?: 'ASC' | 'DESC';
+                                              ~
+src/interviews/services/interview.service.ts:88:6 - error TS1005: ';' expected.
+
+88     ): Promise<{ data: GetInterviewDto[]; total: number }> {
+        ~
+src/interviews/services/interview.service.ts:88:8 - error TS2365: Operator '<' cannot be applied to types 'PromiseConstructor' and '{ data: any; total: any; }'.
+
+88     ): Promise<{ data: GetInterviewDto[]; total: number }> {
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:88:8 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; return: { data: any; total: any; }; }'.
+
+ 88     ): Promise<{ data: GetInterviewDto[]; total: number }> {
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 89         const { data, total } = await this.interviewRepository.findByCompany(companyId, options);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 93         };
+    ~~~~~~~~~~
+ 94     }
+    ~~~~~
+src/interviews/services/interview.service.ts:88:40 - error TS1011: An element access expression should take an argument.
+
+88     ): Promise<{ data: GetInterviewDto[]; total: number }> {
+                                          
+src/interviews/services/interview.service.ts:88:41 - error TS1005: ',' expected.
+
+88     ): Promise<{ data: GetInterviewDto[]; total: number }> {
+                                           ~
+src/interviews/services/interview.service.ts:88:50 - error TS2693: 'number' only refers to a type, but is being used as a value here.
+
+88     ): Promise<{ data: GetInterviewDto[]; total: number }> {
+                                                    ~~~~~~
+src/interviews/services/interview.service.ts:89:15 - error TS1005: ':' expected.
+
+89         const { data, total } = await this.interviewRepository.findByCompany(companyId, options);
+                 ~
+src/interviews/services/interview.service.ts:89:17 - error TS18004: No value exists in scope for the shorthand property 'data'. Either declare one or provide an initializer.
+
+89         const { data, total } = await this.interviewRepository.findByCompany(companyId, options);
+                   ~~~~
+src/interviews/services/interview.service.ts:89:23 - error TS18004: No value exists in scope for the shorthand property 'total'. Either declare one or provide an initializer.
+
+89         const { data, total } = await this.interviewRepository.findByCompany(companyId, options);
+                         ~~~~~
+src/interviews/services/interview.service.ts:89:39 - error TS2532: Object is possibly 'undefined'.
+
+89         const { data, total } = await this.interviewRepository.findByCompany(companyId, options);
+                                         ~~~~
+src/interviews/services/interview.service.ts:89:78 - error TS2304: Cannot find name 'companyId'.
+
+89         const { data, total } = await this.interviewRepository.findByCompany(companyId, options);
+                                                                                ~~~~~~~~~
+src/interviews/services/interview.service.ts:89:89 - error TS2304: Cannot find name 'options'.
+
+89         const { data, total } = await this.interviewRepository.findByCompany(companyId, options);
+                                                                                           ~~~~~~~
+src/interviews/services/interview.service.ts:89:97 - error TS1005: ',' expected.
+
+89         const { data, total } = await this.interviewRepository.findByCompany(companyId, options);
+                                                                                                   ~
+src/interviews/services/interview.service.ts:90:16 - error TS1005: ':' expected.
+
+90         return {
+                  ~
+src/interviews/services/interview.service.ts:91:19 - error TS2304: Cannot find name 'data'.
+
+91             data: data.map((interview) => new GetInterviewDto(interview)),
+                     ~~~~
+src/interviews/services/interview.service.ts:92:13 - error TS18004: No value exists in scope for the shorthand property 'total'. Either declare one or provide an initializer.
+
+92             total,
+               ~~~~~
+src/interviews/services/interview.service.ts:93:10 - error TS1005: ',' expected.
+
+93         };
+            ~
+src/interviews/services/interview.service.ts:99:5 - error TS1434: Unexpected keyword or identifier.
+
+99     async recordFeedback(
+       ~~~~~
+src/interviews/services/interview.service.ts:99:5 - error TS2304: Cannot find name 'async'.
+
+99     async recordFeedback(
+       ~~~~~
+src/interviews/services/interview.service.ts:99:11 - error TS2304: Cannot find name 'recordFeedback'.
+
+99     async recordFeedback(
+             ~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:100:9 - error TS2304: Cannot find name 'companyId'.
+
+100         companyId: string,
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:100:18 - error TS1005: ',' expected.
+
+100         companyId: string,
+                     ~
+src/interviews/services/interview.service.ts:100:20 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+100         companyId: string,
+                       ~~~~~~
+src/interviews/services/interview.service.ts:101:9 - error TS2304: Cannot find name 'interviewId'.
+
+101         interviewId: string,
+            ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:101:20 - error TS1005: ',' expected.
+
+101         interviewId: string,
+                       ~
+src/interviews/services/interview.service.ts:101:22 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+101         interviewId: string,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:102:9 - error TS2304: Cannot find name 'userId'.
+
+102         userId: string,
+            ~~~~~~
+src/interviews/services/interview.service.ts:102:15 - error TS1005: ',' expected.
+
+102         userId: string,
+                  ~
+src/interviews/services/interview.service.ts:102:17 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+102         userId: string,
+                    ~~~~~~
+src/interviews/services/interview.service.ts:103:9 - error TS2304: Cannot find name 'feedback'.
+
+103         feedback: string,
+            ~~~~~~~~
+src/interviews/services/interview.service.ts:103:17 - error TS1005: ',' expected.
+
+103         feedback: string,
+                    ~
+src/interviews/services/interview.service.ts:103:19 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+103         feedback: string,
+                      ~~~~~~
+src/interviews/services/interview.service.ts:104:9 - error TS2304: Cannot find name 'score'.
+
+104         score: number,
+            ~~~~~
+src/interviews/services/interview.service.ts:104:14 - error TS1005: ',' expected.
+
+104         score: number,
+                 ~
+src/interviews/services/interview.service.ts:104:16 - error TS2693: 'number' only refers to a type, but is being used as a value here.
+
+104         score: number,
+                   ~~~~~~
+src/interviews/services/interview.service.ts:105:9 - error TS2304: Cannot find name 'remarks'.
+
+105         remarks?: string,
+            ~~~~~~~
+src/interviews/services/interview.service.ts:105:17 - error TS1109: Expression expected.
+
+105         remarks?: string,
+                    ~
+src/interviews/services/interview.service.ts:105:19 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+105         remarks?: string,
+                      ~~~~~~
+src/interviews/services/interview.service.ts:106:6 - error TS1005: ';' expected.
+
+106     ): Promise<GetInterviewDto> {
+         ~
+src/interviews/services/interview.service.ts:106:8 - error TS2365: Operator '<' cannot be applied to types 'PromiseConstructor' and 'typeof GetInterviewDto'.
+
+106     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:106:8 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; if(: any, interview: any): never; }'.
+
+106     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+107         const interview = await this.interviewRepository.findById(companyId, interviewId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+111 
+    
+112         if (score < 0 || score > 10) {
+    ~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:107:15 - error TS1005: ':' expected.
+
+107         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:107:15 - error TS2304: Cannot find name 'interview'.
+
+107         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:107:33 - error TS2532: Object is possibly 'undefined'.
+
+107         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                    ~~~~
+src/interviews/services/interview.service.ts:107:67 - error TS2304: Cannot find name 'companyId'.
+
+107         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                      ~~~~~~~~~
+src/interviews/services/interview.service.ts:107:78 - error TS2304: Cannot find name 'interviewId'.
+
+107         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                 ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:107:90 - error TS1005: ',' expected.
+
+107         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                             ~
+src/interviews/services/interview.service.ts:108:13 - error TS1003: Identifier expected.
+
+108         if (!interview) {
+                ~
+src/interviews/services/interview.service.ts:112:9 - error TS1005: ',' expected.
+
+112         if (score < 0 || score > 10) {
+            ~~
+src/interviews/services/interview.service.ts:112:18 - error TS2300: Duplicate identifier '(Missing)'.
+
+112         if (score < 0 || score > 10) {
+                     
+src/interviews/services/interview.service.ts:112:19 - error TS1005: ',' expected.
+
+112         if (score < 0 || score > 10) {
+                      ~
+src/interviews/services/interview.service.ts:112:20 - error TS2300: Duplicate identifier '(Missing)'.
+
+112         if (score < 0 || score > 10) {
+                       
+src/interviews/services/interview.service.ts:112:21 - error TS1003: Identifier expected.
+
+112         if (score < 0 || score > 10) {
+                        ~
+src/interviews/services/interview.service.ts:112:23 - error TS1138: Parameter declaration expected.
+
+112         if (score < 0 || score > 10) {
+                          ~~
+src/interviews/services/interview.service.ts:112:26 - error TS2304: Cannot find name 'score'.
+
+112         if (score < 0 || score > 10) {
+                             ~~~~~
+src/interviews/services/interview.service.ts:112:36 - error TS1005: ';' expected.
+
+112         if (score < 0 || score > 10) {
+                                       ~
+src/interviews/services/interview.service.ts:116:31 - error TS2304: Cannot find name 'interview'.
+
+116         const previousScore = interview.score;
+                                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:117:9 - error TS2304: Cannot find name 'interview'.
+
+117         interview.feedback = feedback;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:117:30 - error TS2304: Cannot find name 'feedback'.
+
+117         interview.feedback = feedback;
+                                 ~~~~~~~~
+src/interviews/services/interview.service.ts:118:9 - error TS2304: Cannot find name 'interview'.
+
+118         interview.score = score;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:118:27 - error TS2304: Cannot find name 'score'.
+
+118         interview.score = score;
+                              ~~~~~
+src/interviews/services/interview.service.ts:119:9 - error TS2304: Cannot find name 'interview'.
+
+119         interview.remarks = remarks;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:119:29 - error TS2304: Cannot find name 'remarks'.
+
+119         interview.remarks = remarks;
+                                ~~~~~~~
+src/interviews/services/interview.service.ts:120:9 - error TS2304: Cannot find name 'interview'.
+
+120         interview.updated_by_id = userId;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:120:35 - error TS2304: Cannot find name 'userId'.
+
+120         interview.updated_by_id = userId;
+                                      ~~~~~~
+src/interviews/services/interview.service.ts:122:15 - error TS2451: Cannot redeclare block-scoped variable 'updatedInterview'.
+
+122         const updatedInterview = await this.interviewRepository.update(interview);
+                  ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:122:40 - error TS2532: Object is possibly 'undefined'.
+
+122         const updatedInterview = await this.interviewRepository.update(interview);
+                                           ~~~~
+src/interviews/services/interview.service.ts:122:72 - error TS2304: Cannot find name 'interview'.
+
+122         const updatedInterview = await this.interviewRepository.update(interview);
+                                                                           ~~~~~~~~~
+src/interviews/services/interview.service.ts:126:25 - error TS2304: Cannot find name 'companyId'.
+
+126             company_id: companyId,
+                            ~~~~~~~~~
+src/interviews/services/interview.service.ts:126:25 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+126             company_id: companyId,
+                            ~~~~~~~~~
+src/interviews/services/interview.service.ts:127:13 - error TS2304: Cannot find name 'entity_type'.
+
+127             entity_type: 'Interview',
+                ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:127:24 - error TS1005: ';' expected.
+
+127             entity_type: 'Interview',
+                           ~
+src/interviews/services/interview.service.ts:127:26 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+127             entity_type: 'Interview',
+                             ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:128:13 - error TS2304: Cannot find name 'entity_id'.
+
+128             entity_id: interviewId,
+                ~~~~~~~~~
+src/interviews/services/interview.service.ts:128:22 - error TS1005: ';' expected.
+
+128             entity_id: interviewId,
+                         ~
+src/interviews/services/interview.service.ts:128:24 - error TS2304: Cannot find name 'interviewId'.
+
+128             entity_id: interviewId,
+                           ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:128:24 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+128             entity_id: interviewId,
+                           ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:129:13 - error TS2304: Cannot find name 'action'.
+
+129             action: 'FEEDBACK_RECORDED',
+                ~~~~~~
+src/interviews/services/interview.service.ts:129:19 - error TS1005: ';' expected.
+
+129             action: 'FEEDBACK_RECORDED',
+                      ~
+src/interviews/services/interview.service.ts:129:21 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+129             action: 'FEEDBACK_RECORDED',
+                        ~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:130:13 - error TS2304: Cannot find name 'user_id'.
+
+130             user_id: userId,
+                ~~~~~~~
+src/interviews/services/interview.service.ts:130:20 - error TS1005: ';' expected.
+
+130             user_id: userId,
+                       ~
+src/interviews/services/interview.service.ts:130:22 - error TS2304: Cannot find name 'userId'.
+
+130             user_id: userId,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:130:22 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+130             user_id: userId,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:131:13 - error TS2304: Cannot find name 'changes'.
+
+131             changes: {
+                ~~~~~~~
+src/interviews/services/interview.service.ts:131:20 - error TS1005: ';' expected.
+
+131             changes: {
+                       ~
+src/interviews/services/interview.service.ts:133:29 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+133                     before: previousScore,
+                                ~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:134:21 - error TS2304: Cannot find name 'after'.
+
+134                     after: score,
+                        ~~~~~
+src/interviews/services/interview.service.ts:134:26 - error TS1005: ';' expected.
+
+134                     after: score,
+                             ~
+src/interviews/services/interview.service.ts:134:28 - error TS2304: Cannot find name 'score'.
+
+134                     after: score,
+                               ~~~~~
+src/interviews/services/interview.service.ts:134:28 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+134                     after: score,
+                               ~~~~~
+src/interviews/services/interview.service.ts:135:17 - error TS1109: Expression expected.
+
+135                 },
+                    ~
+src/interviews/services/interview.service.ts:135:18 - error TS1128: Declaration or statement expected.
+
+135                 },
+                     ~
+src/interviews/services/interview.service.ts:136:36 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+136                 feedback_provided: true,
+                                       ~~~~
+src/interviews/services/interview.service.ts:137:13 - error TS1109: Expression expected.
+
+137             },
+                ~
+src/interviews/services/interview.service.ts:137:14 - error TS1128: Declaration or statement expected.
+
+137             },
+                 ~
+src/interviews/services/interview.service.ts:138:9 - error TS1128: Declaration or statement expected.
+
+138         });
+            ~
+src/interviews/services/interview.service.ts:138:10 - error TS1128: Declaration or statement expected.
+
+138         });
+             ~
+src/interviews/services/interview.service.ts:141:5 - error TS1128: Declaration or statement expected.
+
+141     }
+        ~
+src/interviews/services/interview.service.ts:146:5 - error TS1434: Unexpected keyword or identifier.
+
+146     async markCompleted(
+        ~~~~~
+src/interviews/services/interview.service.ts:146:5 - error TS2304: Cannot find name 'async'.
+
+146     async markCompleted(
+        ~~~~~
+src/interviews/services/interview.service.ts:146:11 - error TS2304: Cannot find name 'markCompleted'.
+
+146     async markCompleted(
+              ~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:147:9 - error TS2304: Cannot find name 'companyId'.
+
+147         companyId: string,
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:147:18 - error TS1005: ',' expected.
+
+147         companyId: string,
+                     ~
+src/interviews/services/interview.service.ts:147:20 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+147         companyId: string,
+                       ~~~~~~
+src/interviews/services/interview.service.ts:148:9 - error TS2304: Cannot find name 'interviewId'.
+
+148         interviewId: string,
+            ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:148:20 - error TS1005: ',' expected.
+
+148         interviewId: string,
+                       ~
+src/interviews/services/interview.service.ts:148:22 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+148         interviewId: string,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:149:9 - error TS2304: Cannot find name 'userId'.
+
+149         userId: string,
+            ~~~~~~
+src/interviews/services/interview.service.ts:149:15 - error TS1005: ',' expected.
+
+149         userId: string,
+                  ~
+src/interviews/services/interview.service.ts:149:17 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+149         userId: string,
+                    ~~~~~~
+src/interviews/services/interview.service.ts:150:6 - error TS1005: ';' expected.
+
+150     ): Promise<GetInterviewDto> {
+         ~
+src/interviews/services/interview.service.ts:150:8 - error TS2365: Operator '<' cannot be applied to types 'PromiseConstructor' and 'typeof GetInterviewDto'.
+
+150     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:150:8 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; if(: any, interview: any): never; interview: any; "": any; company_id: any; entity_type: string; entity_id: any; action: string; user_id: any; changes: { status: { before: any; after: InterviewStatus; }; }; }'.
+
+150     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+151         const interview = await this.interviewRepository.findById(companyId, interviewId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+174             },
+    ~~~~~~~~~~~~~~
+175         });
+    ~~~~~~~~~
+src/interviews/services/interview.service.ts:151:15 - error TS1005: ':' expected.
+
+151         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:151:15 - error TS2304: Cannot find name 'interview'.
+
+151         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:151:33 - error TS2532: Object is possibly 'undefined'.
+
+151         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                    ~~~~
+src/interviews/services/interview.service.ts:151:67 - error TS2304: Cannot find name 'companyId'.
+
+151         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                      ~~~~~~~~~
+src/interviews/services/interview.service.ts:151:78 - error TS2304: Cannot find name 'interviewId'.
+
+151         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                 ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:151:90 - error TS1005: ',' expected.
+
+151         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                             ~
+src/interviews/services/interview.service.ts:152:13 - error TS1003: Identifier expected.
+
+152         if (!interview) {
+                ~
+src/interviews/services/interview.service.ts:156:9 - error TS1005: ',' expected.
+
+156         const previousStatus = interview.status;
+            ~~~~~
+src/interviews/services/interview.service.ts:156:15 - error TS1005: ':' expected.
+
+156         const previousStatus = interview.status;
+                  ~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:156:15 - error TS2304: Cannot find name 'previousStatus'.
+
+156         const previousStatus = interview.status;
+                  ~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:156:32 - error TS2304: Cannot find name 'interview'.
+
+156         const previousStatus = interview.status;
+                                   ~~~~~~~~~
+src/interviews/services/interview.service.ts:156:48 - error TS1005: ',' expected.
+
+156         const previousStatus = interview.status;
+                                                   ~
+src/interviews/services/interview.service.ts:157:9 - error TS18004: No value exists in scope for the shorthand property 'interview'. Either declare one or provide an initializer.
+
+157         interview.status = InterviewStatus.COMPLETED;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:157:18 - error TS1005: ',' expected.
+
+157         interview.status = InterviewStatus.COMPLETED;
+                     ~
+src/interviews/services/interview.service.ts:157:53 - error TS1005: ',' expected.
+
+157         interview.status = InterviewStatus.COMPLETED;
+                                                        ~
+src/interviews/services/interview.service.ts:158:9 - error TS18004: No value exists in scope for the shorthand property 'interview'. Either declare one or provide an initializer.
+
+158         interview.updated_by_id = userId;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:158:18 - error TS1005: ',' expected.
+
+158         interview.updated_by_id = userId;
+                     ~
+src/interviews/services/interview.service.ts:158:35 - error TS2304: Cannot find name 'userId'.
+
+158         interview.updated_by_id = userId;
+                                      ~~~~~~
+src/interviews/services/interview.service.ts:158:41 - error TS1005: ',' expected.
+
+158         interview.updated_by_id = userId;
+                                            ~
+src/interviews/services/interview.service.ts:160:15 - error TS1005: ':' expected.
+
+160         const updatedInterview = await this.interviewRepository.update(interview);
+                  ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:160:15 - error TS2588: Cannot assign to 'updatedInterview' because it is a constant.
+
+160         const updatedInterview = await this.interviewRepository.update(interview);
+                  ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:160:40 - error TS2532: Object is possibly 'undefined'.
+
+160         const updatedInterview = await this.interviewRepository.update(interview);
+                                           ~~~~
+src/interviews/services/interview.service.ts:160:72 - error TS2304: Cannot find name 'interview'.
+
+160         const updatedInterview = await this.interviewRepository.update(interview);
+                                                                           ~~~~~~~~~
+src/interviews/services/interview.service.ts:160:82 - error TS1005: ',' expected.
+
+160         const updatedInterview = await this.interviewRepository.update(interview);
+                                                                                     ~
+src/interviews/services/interview.service.ts:164:25 - error TS2304: Cannot find name 'companyId'.
+
+164             company_id: companyId,
+                            ~~~~~~~~~
+src/interviews/services/interview.service.ts:166:24 - error TS2304: Cannot find name 'interviewId'.
+
+166             entity_id: interviewId,
+                           ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:168:22 - error TS2304: Cannot find name 'userId'.
+
+168             user_id: userId,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:171:29 - error TS2304: Cannot find name 'previousStatus'.
+
+171                     before: previousStatus,
+                                ~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:175:10 - error TS1005: ';' expected.
+
+175         });
+             ~
+src/interviews/services/interview.service.ts:178:5 - error TS1128: Declaration or statement expected.
+
+178     }
+        ~
+src/interviews/services/interview.service.ts:183:5 - error TS1434: Unexpected keyword or identifier.
+
+183     async cancel(
+        ~~~~~
+src/interviews/services/interview.service.ts:183:5 - error TS2304: Cannot find name 'async'.
+
+183     async cancel(
+        ~~~~~
+src/interviews/services/interview.service.ts:183:11 - error TS2304: Cannot find name 'cancel'.
+
+183     async cancel(
+              ~~~~~~
+src/interviews/services/interview.service.ts:184:9 - error TS2304: Cannot find name 'companyId'.
+
+184         companyId: string,
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:184:18 - error TS1005: ',' expected.
+
+184         companyId: string,
+                     ~
+src/interviews/services/interview.service.ts:184:20 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+184         companyId: string,
+                       ~~~~~~
+src/interviews/services/interview.service.ts:185:9 - error TS2304: Cannot find name 'interviewId'.
+
+185         interviewId: string,
+            ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:185:20 - error TS1005: ',' expected.
+
+185         interviewId: string,
+                       ~
+src/interviews/services/interview.service.ts:185:22 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+185         interviewId: string,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:186:9 - error TS2304: Cannot find name 'userId'.
+
+186         userId: string,
+            ~~~~~~
+src/interviews/services/interview.service.ts:186:15 - error TS1005: ',' expected.
+
+186         userId: string,
+                  ~
+src/interviews/services/interview.service.ts:186:17 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+186         userId: string,
+                    ~~~~~~
+src/interviews/services/interview.service.ts:187:9 - error TS2304: Cannot find name 'reason'.
+
+187         reason?: string,
+            ~~~~~~
+src/interviews/services/interview.service.ts:187:16 - error TS1109: Expression expected.
+
+187         reason?: string,
+                   ~
+src/interviews/services/interview.service.ts:187:18 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+187         reason?: string,
+                     ~~~~~~
+src/interviews/services/interview.service.ts:188:6 - error TS1005: ';' expected.
+
+188     ): Promise<GetInterviewDto> {
+         ~
+src/interviews/services/interview.service.ts:188:8 - error TS2365: Operator '<' cannot be applied to types 'PromiseConstructor' and 'typeof GetInterviewDto'.
+
+188     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:188:8 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; if(: any, interview: any): never; if(reason: any): void; interview: any; "": any; company_id: any; entity_type: string; entity_id: any; action: string; user_id: any; changes: { status: { ...; }; cancellation_reason: any; }; }'.
+
+188     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+189         const interview = await this.interviewRepository.findById(companyId, interviewId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+216             },
+    ~~~~~~~~~~~~~~
+217         });
+    ~~~~~~~~~
+src/interviews/services/interview.service.ts:189:15 - error TS1005: ':' expected.
+
+189         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:189:15 - error TS2304: Cannot find name 'interview'.
+
+189         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:189:33 - error TS2532: Object is possibly 'undefined'.
+
+189         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                    ~~~~
+src/interviews/services/interview.service.ts:189:67 - error TS2304: Cannot find name 'companyId'.
+
+189         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                      ~~~~~~~~~
+src/interviews/services/interview.service.ts:189:78 - error TS2304: Cannot find name 'interviewId'.
+
+189         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                 ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:189:90 - error TS1005: ',' expected.
+
+189         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                             ~
+src/interviews/services/interview.service.ts:190:13 - error TS1003: Identifier expected.
+
+190         if (!interview) {
+                ~
+src/interviews/services/interview.service.ts:194:9 - error TS1005: ',' expected.
+
+194         const previousStatus = interview.status;
+            ~~~~~
+src/interviews/services/interview.service.ts:194:15 - error TS1005: ':' expected.
+
+194         const previousStatus = interview.status;
+                  ~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:194:15 - error TS2304: Cannot find name 'previousStatus'.
+
+194         const previousStatus = interview.status;
+                  ~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:194:32 - error TS2304: Cannot find name 'interview'.
+
+194         const previousStatus = interview.status;
+                                   ~~~~~~~~~
+src/interviews/services/interview.service.ts:194:48 - error TS1005: ',' expected.
+
+194         const previousStatus = interview.status;
+                                                   ~
+src/interviews/services/interview.service.ts:195:9 - error TS18004: No value exists in scope for the shorthand property 'interview'. Either declare one or provide an initializer.
+
+195         interview.status = InterviewStatus.CANCELLED;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:195:18 - error TS1005: ',' expected.
+
+195         interview.status = InterviewStatus.CANCELLED;
+                     ~
+src/interviews/services/interview.service.ts:195:53 - error TS1005: ',' expected.
+
+195         interview.status = InterviewStatus.CANCELLED;
+                                                        ~
+src/interviews/services/interview.service.ts:196:9 - error TS18004: No value exists in scope for the shorthand property 'interview'. Either declare one or provide an initializer.
+
+196         interview.updated_by_id = userId;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:196:18 - error TS1005: ',' expected.
+
+196         interview.updated_by_id = userId;
+                     ~
+src/interviews/services/interview.service.ts:196:35 - error TS2304: Cannot find name 'userId'.
+
+196         interview.updated_by_id = userId;
+                                      ~~~~~~
+src/interviews/services/interview.service.ts:196:41 - error TS1005: ',' expected.
+
+196         interview.updated_by_id = userId;
+                                            ~
+src/interviews/services/interview.service.ts:198:13 - error TS2304: Cannot find name 'interview'.
+
+198             interview.remarks = `Cancelled: ${reason}`;
+                ~~~~~~~~~
+src/interviews/services/interview.service.ts:201:9 - error TS1005: ',' expected.
+
+201         const updatedInterview = await this.interviewRepository.update(interview);
+            ~~~~~
+src/interviews/services/interview.service.ts:201:15 - error TS1005: ':' expected.
+
+201         const updatedInterview = await this.interviewRepository.update(interview);
+                  ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:201:15 - error TS2588: Cannot assign to 'updatedInterview' because it is a constant.
+
+201         const updatedInterview = await this.interviewRepository.update(interview);
+                  ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:201:40 - error TS2532: Object is possibly 'undefined'.
+
+201         const updatedInterview = await this.interviewRepository.update(interview);
+                                           ~~~~
+src/interviews/services/interview.service.ts:201:72 - error TS2304: Cannot find name 'interview'.
+
+201         const updatedInterview = await this.interviewRepository.update(interview);
+                                                                           ~~~~~~~~~
+src/interviews/services/interview.service.ts:201:82 - error TS1005: ',' expected.
+
+201         const updatedInterview = await this.interviewRepository.update(interview);
+                                                                                     ~
+src/interviews/services/interview.service.ts:205:25 - error TS2304: Cannot find name 'companyId'.
+
+205             company_id: companyId,
+                            ~~~~~~~~~
+src/interviews/services/interview.service.ts:207:24 - error TS2304: Cannot find name 'interviewId'.
+
+207             entity_id: interviewId,
+                           ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:209:22 - error TS2304: Cannot find name 'userId'.
+
+209             user_id: userId,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:212:29 - error TS2304: Cannot find name 'previousStatus'.
+
+212                     before: previousStatus,
+                                ~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:215:38 - error TS2304: Cannot find name 'reason'.
+
+215                 cancellation_reason: reason,
+                                         ~~~~~~
+src/interviews/services/interview.service.ts:217:10 - error TS1005: ';' expected.
+
+217         });
+             ~
+src/interviews/services/interview.service.ts:220:5 - error TS1128: Declaration or statement expected.
+
+220     }
+        ~
+src/interviews/services/interview.service.ts:225:5 - error TS1434: Unexpected keyword or identifier.
+
+225     async reschedule(
+        ~~~~~
+src/interviews/services/interview.service.ts:225:5 - error TS2304: Cannot find name 'async'.
+
+225     async reschedule(
+        ~~~~~
+src/interviews/services/interview.service.ts:225:11 - error TS2304: Cannot find name 'reschedule'.
+
+225     async reschedule(
+              ~~~~~~~~~~
+src/interviews/services/interview.service.ts:226:9 - error TS2304: Cannot find name 'companyId'.
+
+226         companyId: string,
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:226:18 - error TS1005: ',' expected.
+
+226         companyId: string,
+                     ~
+src/interviews/services/interview.service.ts:226:20 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+226         companyId: string,
+                       ~~~~~~
+src/interviews/services/interview.service.ts:227:9 - error TS2304: Cannot find name 'interviewId'.
+
+227         interviewId: string,
+            ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:227:20 - error TS1005: ',' expected.
+
+227         interviewId: string,
+                       ~
+src/interviews/services/interview.service.ts:227:22 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+227         interviewId: string,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:228:9 - error TS2304: Cannot find name 'userId'.
+
+228         userId: string,
+            ~~~~~~
+src/interviews/services/interview.service.ts:228:15 - error TS1005: ',' expected.
+
+228         userId: string,
+                  ~
+src/interviews/services/interview.service.ts:228:17 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+228         userId: string,
+                    ~~~~~~
+src/interviews/services/interview.service.ts:229:9 - error TS2304: Cannot find name 'newDate'.
+
+229         newDate: string,
+            ~~~~~~~
+src/interviews/services/interview.service.ts:229:16 - error TS1005: ',' expected.
+
+229         newDate: string,
+                   ~
+src/interviews/services/interview.service.ts:229:18 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+229         newDate: string,
+                     ~~~~~~
+src/interviews/services/interview.service.ts:230:9 - error TS2304: Cannot find name 'newTime'.
+
+230         newTime: string,
+            ~~~~~~~
+src/interviews/services/interview.service.ts:230:16 - error TS1005: ',' expected.
+
+230         newTime: string,
+                   ~
+src/interviews/services/interview.service.ts:230:18 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+230         newTime: string,
+                     ~~~~~~
+src/interviews/services/interview.service.ts:231:6 - error TS1005: ';' expected.
+
+231     ): Promise<GetInterviewDto> {
+         ~
+src/interviews/services/interview.service.ts:231:8 - error TS2365: Operator '<' cannot be applied to types 'PromiseConstructor' and 'typeof GetInterviewDto'.
+
+231     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:231:8 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; if(: any, interview: any): never; interview: any; "": any; company_id: any; entity_type: string; entity_id: any; action: string; user_id: any; changes: { scheduled_date: { before: any; after: any; }; scheduled_time: any; }; }'.
+
+231     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+232         const interview = await this.interviewRepository.findById(companyId, interviewId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+258             },
+    ~~~~~~~~~~~~~~
+259         });
+    ~~~~~~~~~
+src/interviews/services/interview.service.ts:232:15 - error TS1005: ':' expected.
+
+232         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:232:15 - error TS2304: Cannot find name 'interview'.
+
+232         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:232:33 - error TS2532: Object is possibly 'undefined'.
+
+232         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                    ~~~~
+src/interviews/services/interview.service.ts:232:67 - error TS2304: Cannot find name 'companyId'.
+
+232         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                      ~~~~~~~~~
+src/interviews/services/interview.service.ts:232:78 - error TS2304: Cannot find name 'interviewId'.
+
+232         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                 ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:232:90 - error TS1005: ',' expected.
+
+232         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                             ~
+src/interviews/services/interview.service.ts:233:13 - error TS1003: Identifier expected.
+
+233         if (!interview) {
+                ~
+src/interviews/services/interview.service.ts:237:9 - error TS1005: ',' expected.
+
+237         const previousDate = interview.scheduled_date;
+            ~~~~~
+src/interviews/services/interview.service.ts:237:15 - error TS1005: ':' expected.
+
+237         const previousDate = interview.scheduled_date;
+                  ~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:237:15 - error TS2304: Cannot find name 'previousDate'.
+
+237         const previousDate = interview.scheduled_date;
+                  ~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:237:30 - error TS2304: Cannot find name 'interview'.
+
+237         const previousDate = interview.scheduled_date;
+                                 ~~~~~~~~~
+src/interviews/services/interview.service.ts:237:54 - error TS1005: ',' expected.
+
+237         const previousDate = interview.scheduled_date;
+                                                         ~
+src/interviews/services/interview.service.ts:238:9 - error TS18004: No value exists in scope for the shorthand property 'interview'. Either declare one or provide an initializer.
+
+238         interview.scheduled_date = newDate;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:238:18 - error TS1005: ',' expected.
+
+238         interview.scheduled_date = newDate;
+                     ~
+src/interviews/services/interview.service.ts:238:36 - error TS2304: Cannot find name 'newDate'.
+
+238         interview.scheduled_date = newDate;
+                                       ~~~~~~~
+src/interviews/services/interview.service.ts:238:43 - error TS1005: ',' expected.
+
+238         interview.scheduled_date = newDate;
+                                              ~
+src/interviews/services/interview.service.ts:239:9 - error TS18004: No value exists in scope for the shorthand property 'interview'. Either declare one or provide an initializer.
+
+239         interview.scheduled_time = newTime;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:239:18 - error TS1005: ',' expected.
+
+239         interview.scheduled_time = newTime;
+                     ~
+src/interviews/services/interview.service.ts:239:36 - error TS2304: Cannot find name 'newTime'.
+
+239         interview.scheduled_time = newTime;
+                                       ~~~~~~~
+src/interviews/services/interview.service.ts:239:43 - error TS1005: ',' expected.
+
+239         interview.scheduled_time = newTime;
+                                              ~
+src/interviews/services/interview.service.ts:240:9 - error TS18004: No value exists in scope for the shorthand property 'interview'. Either declare one or provide an initializer.
+
+240         interview.status = InterviewStatus.RESCHEDULED;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:240:18 - error TS1005: ',' expected.
+
+240         interview.status = InterviewStatus.RESCHEDULED;
+                     ~
+src/interviews/services/interview.service.ts:240:55 - error TS1005: ',' expected.
+
+240         interview.status = InterviewStatus.RESCHEDULED;
+                                                          ~
+src/interviews/services/interview.service.ts:241:9 - error TS18004: No value exists in scope for the shorthand property 'interview'. Either declare one or provide an initializer.
+
+241         interview.updated_by_id = userId;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:241:18 - error TS1005: ',' expected.
+
+241         interview.updated_by_id = userId;
+                     ~
+src/interviews/services/interview.service.ts:241:35 - error TS2304: Cannot find name 'userId'.
+
+241         interview.updated_by_id = userId;
+                                      ~~~~~~
+src/interviews/services/interview.service.ts:241:41 - error TS1005: ',' expected.
+
+241         interview.updated_by_id = userId;
+                                            ~
+src/interviews/services/interview.service.ts:243:15 - error TS1005: ':' expected.
+
+243         const updatedInterview = await this.interviewRepository.update(interview);
+                  ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:243:15 - error TS2588: Cannot assign to 'updatedInterview' because it is a constant.
+
+243         const updatedInterview = await this.interviewRepository.update(interview);
+                  ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:243:40 - error TS2532: Object is possibly 'undefined'.
+
+243         const updatedInterview = await this.interviewRepository.update(interview);
+                                           ~~~~
+src/interviews/services/interview.service.ts:243:72 - error TS2304: Cannot find name 'interview'.
+
+243         const updatedInterview = await this.interviewRepository.update(interview);
+                                                                           ~~~~~~~~~
+src/interviews/services/interview.service.ts:243:82 - error TS1005: ',' expected.
+
+243         const updatedInterview = await this.interviewRepository.update(interview);
+                                                                                     ~
+src/interviews/services/interview.service.ts:247:25 - error TS2304: Cannot find name 'companyId'.
+
+247             company_id: companyId,
+                            ~~~~~~~~~
+src/interviews/services/interview.service.ts:249:24 - error TS2304: Cannot find name 'interviewId'.
+
+249             entity_id: interviewId,
+                           ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:251:22 - error TS2304: Cannot find name 'userId'.
+
+251             user_id: userId,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:254:29 - error TS2304: Cannot find name 'previousDate'.
+
+254                     before: previousDate,
+                                ~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:255:28 - error TS2304: Cannot find name 'newDate'.
+
+255                     after: newDate,
+                               ~~~~~~~
+src/interviews/services/interview.service.ts:257:33 - error TS2304: Cannot find name 'newTime'.
+
+257                 scheduled_time: newTime,
+                                    ~~~~~~~
+src/interviews/services/interview.service.ts:259:10 - error TS1005: ';' expected.
+
+259         });
+             ~
+src/interviews/services/interview.service.ts:262:5 - error TS1128: Declaration or statement expected.
+
+262     }
+        ~
+src/interviews/services/interview.service.ts:267:5 - error TS1434: Unexpected keyword or identifier.
+
+267     async update(
+        ~~~~~
+src/interviews/services/interview.service.ts:267:5 - error TS2304: Cannot find name 'async'.
+
+267     async update(
+        ~~~~~
+src/interviews/services/interview.service.ts:267:11 - error TS2304: Cannot find name 'update'.
+
+267     async update(
+              ~~~~~~
+src/interviews/services/interview.service.ts:268:9 - error TS2304: Cannot find name 'companyId'.
+
+268         companyId: string,
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:268:18 - error TS1005: ',' expected.
+
+268         companyId: string,
+                     ~
+src/interviews/services/interview.service.ts:268:20 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+268         companyId: string,
+                       ~~~~~~
+src/interviews/services/interview.service.ts:269:9 - error TS2304: Cannot find name 'interviewId'.
+
+269         interviewId: string,
+            ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:269:20 - error TS1005: ',' expected.
+
+269         interviewId: string,
+                       ~
+src/interviews/services/interview.service.ts:269:22 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+269         interviewId: string,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:270:9 - error TS2304: Cannot find name 'userId'.
+
+270         userId: string,
+            ~~~~~~
+src/interviews/services/interview.service.ts:270:15 - error TS1005: ',' expected.
+
+270         userId: string,
+                  ~
+src/interviews/services/interview.service.ts:270:17 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+270         userId: string,
+                    ~~~~~~
+src/interviews/services/interview.service.ts:271:9 - error TS2304: Cannot find name 'dto'.
+
+271         dto: UpdateInterviewDto,
+            ~~~
+src/interviews/services/interview.service.ts:271:12 - error TS1005: ',' expected.
+
+271         dto: UpdateInterviewDto,
+               ~
+src/interviews/services/interview.service.ts:272:6 - error TS1005: ';' expected.
+
+272     ): Promise<GetInterviewDto> {
+         ~
+src/interviews/services/interview.service.ts:272:8 - error TS2365: Operator '<' cannot be applied to types 'PromiseConstructor' and 'typeof GetInterviewDto'.
+
+272     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:272:8 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; if(: any, interview: any): never; Record<string, any>(): any; }'.
+
+272     ): Promise<GetInterviewDto> {
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+273         const interview = await this.interviewRepository.findById(companyId, interviewId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+277 
+    
+278         const changes: Record<string, any> = {};
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:273:15 - error TS1005: ':' expected.
+
+273         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:273:15 - error TS2304: Cannot find name 'interview'.
+
+273         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:273:33 - error TS2532: Object is possibly 'undefined'.
+
+273         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                    ~~~~
+src/interviews/services/interview.service.ts:273:67 - error TS2304: Cannot find name 'companyId'.
+
+273         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                      ~~~~~~~~~
+src/interviews/services/interview.service.ts:273:78 - error TS2304: Cannot find name 'interviewId'.
+
+273         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                 ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:273:90 - error TS1005: ',' expected.
+
+273         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                             ~
+src/interviews/services/interview.service.ts:274:13 - error TS1003: Identifier expected.
+
+274         if (!interview) {
+                ~
+src/interviews/services/interview.service.ts:278:9 - error TS1005: ',' expected.
+
+278         const changes: Record<string, any> = {};
+            ~~~~~
+src/interviews/services/interview.service.ts:278:15 - error TS1005: ':' expected.
+
+278         const changes: Record<string, any> = {};
+                  ~~~~~~~
+src/interviews/services/interview.service.ts:278:15 - error TS2304: Cannot find name 'changes'.
+
+278         const changes: Record<string, any> = {};
+                  ~~~~~~~
+src/interviews/services/interview.service.ts:278:22 - error TS1005: ',' expected.
+
+278         const changes: Record<string, any> = {};
+                         ~
+src/interviews/services/interview.service.ts:278:31 - error TS2368: Type parameter name cannot be 'string'.
+
+278         const changes: Record<string, any> = {};
+                                  ~~~~~~
+src/interviews/services/interview.service.ts:278:39 - error TS2368: Type parameter name cannot be 'any'.
+
+278         const changes: Record<string, any> = {};
+                                          ~~~
+src/interviews/services/interview.service.ts:278:44 - error TS1005: '(' expected.
+
+278         const changes: Record<string, any> = {};
+                                               ~
+src/interviews/services/interview.service.ts:278:46 - error TS1136: Property assignment expected.
+
+278         const changes: Record<string, any> = {};
+                                                 ~
+src/interviews/services/interview.service.ts:279:21 - error TS2304: Cannot find name 'dto'.
+
+279         Object.keys(dto).forEach((key) => {
+                        ~~~
+src/interviews/services/interview.service.ts:280:17 - error TS2304: Cannot find name 'dto'.
+
+280             if (dto[key] !== undefined) {
+                    ~~~
+src/interviews/services/interview.service.ts:281:17 - error TS2304: Cannot find name 'changes'.
+
+281                 changes[key] = {
+                    ~~~~~~~
+src/interviews/services/interview.service.ts:282:29 - error TS2304: Cannot find name 'interview'.
+
+282                     before: interview[key],
+                                ~~~~~~~~~
+src/interviews/services/interview.service.ts:283:28 - error TS2304: Cannot find name 'dto'.
+
+283                     after: dto[key],
+                               ~~~
+src/interviews/services/interview.service.ts:288:23 - error TS2304: Cannot find name 'interview'.
+
+288         Object.assign(interview, dto);
+                          ~~~~~~~~~
+src/interviews/services/interview.service.ts:288:34 - error TS2304: Cannot find name 'dto'.
+
+288         Object.assign(interview, dto);
+                                     ~~~
+src/interviews/services/interview.service.ts:289:9 - error TS2304: Cannot find name 'interview'.
+
+289         interview.updated_by_id = userId;
+            ~~~~~~~~~
+src/interviews/services/interview.service.ts:289:35 - error TS2304: Cannot find name 'userId'.
+
+289         interview.updated_by_id = userId;
+                                      ~~~~~~
+src/interviews/services/interview.service.ts:290:15 - error TS2451: Cannot redeclare block-scoped variable 'updatedInterview'.
+
+290         const updatedInterview = await this.interviewRepository.update(interview);
+                  ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:290:40 - error TS2532: Object is possibly 'undefined'.
+
+290         const updatedInterview = await this.interviewRepository.update(interview);
+                                           ~~~~
+src/interviews/services/interview.service.ts:290:72 - error TS2304: Cannot find name 'interview'.
+
+290         const updatedInterview = await this.interviewRepository.update(interview);
+                                                                           ~~~~~~~~~
+src/interviews/services/interview.service.ts:294:25 - error TS2304: Cannot find name 'companyId'.
+
+294             company_id: companyId,
+                            ~~~~~~~~~
+src/interviews/services/interview.service.ts:294:25 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+294             company_id: companyId,
+                            ~~~~~~~~~
+src/interviews/services/interview.service.ts:295:13 - error TS2304: Cannot find name 'entity_type'.
+
+295             entity_type: 'Interview',
+                ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:295:24 - error TS1005: ';' expected.
+
+295             entity_type: 'Interview',
+                           ~
+src/interviews/services/interview.service.ts:295:26 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+295             entity_type: 'Interview',
+                             ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:296:13 - error TS2304: Cannot find name 'entity_id'.
+
+296             entity_id: interviewId,
+                ~~~~~~~~~
+src/interviews/services/interview.service.ts:296:22 - error TS1005: ';' expected.
+
+296             entity_id: interviewId,
+                         ~
+src/interviews/services/interview.service.ts:296:24 - error TS2304: Cannot find name 'interviewId'.
+
+296             entity_id: interviewId,
+                           ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:296:24 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+296             entity_id: interviewId,
+                           ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:297:13 - error TS2304: Cannot find name 'action'.
+
+297             action: 'UPDATE',
+                ~~~~~~
+src/interviews/services/interview.service.ts:297:19 - error TS1005: ';' expected.
+
+297             action: 'UPDATE',
+                      ~
+src/interviews/services/interview.service.ts:297:21 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+297             action: 'UPDATE',
+                        ~~~~~~~~
+src/interviews/services/interview.service.ts:298:13 - error TS2304: Cannot find name 'user_id'.
+
+298             user_id: userId,
+                ~~~~~~~
+src/interviews/services/interview.service.ts:298:20 - error TS1005: ';' expected.
+
+298             user_id: userId,
+                       ~
+src/interviews/services/interview.service.ts:298:22 - error TS2304: Cannot find name 'userId'.
+
+298             user_id: userId,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:298:22 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+298             user_id: userId,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:298:22 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+298             user_id: userId,
+                         ~~~~~~~
+299             changes,
+    ~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:299:13 - error TS2304: Cannot find name 'changes'.
+
+299             changes,
+                ~~~~~~~
+src/interviews/services/interview.service.ts:300:9 - error TS1109: Expression expected.
+
+300         });
+            ~
+src/interviews/services/interview.service.ts:300:10 - error TS1128: Declaration or statement expected.
+
+300         });
+             ~
+src/interviews/services/interview.service.ts:303:5 - error TS1128: Declaration or statement expected.
+
+303     }
+        ~
+src/interviews/services/interview.service.ts:308:5 - error TS1434: Unexpected keyword or identifier.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+        ~~~~~
+src/interviews/services/interview.service.ts:308:5 - error TS2304: Cannot find name 'async'.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+        ~~~~~
+src/interviews/services/interview.service.ts:308:18 - error TS2304: Cannot find name 'companyId'.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                     ~~~~~~~~~
+src/interviews/services/interview.service.ts:308:18 - error TS2703: The operand of a 'delete' operator must be a property reference.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                     ~~~~~~~~~
+src/interviews/services/interview.service.ts:308:27 - error TS1005: ')' expected.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                              ~
+src/interviews/services/interview.service.ts:308:29 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                ~~~~~~
+src/interviews/services/interview.service.ts:308:29 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                ~~~~~~
+src/interviews/services/interview.service.ts:308:37 - error TS2304: Cannot find name 'interviewId'.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                        ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:308:48 - error TS1005: ';' expected.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                   ~
+src/interviews/services/interview.service.ts:308:50 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                     ~~~~~~
+src/interviews/services/interview.service.ts:308:50 - error TS2695: Left side of comma operator is unused and has no side effects.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                     ~~~~~~
+src/interviews/services/interview.service.ts:308:58 - error TS2304: Cannot find name 'userId'.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                             ~~~~~~
+src/interviews/services/interview.service.ts:308:64 - error TS1005: ';' expected.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                                   ~
+src/interviews/services/interview.service.ts:308:66 - error TS1434: Unexpected keyword or identifier.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                                     ~~~~~~
+src/interviews/services/interview.service.ts:308:66 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                                     ~~~~~~
+src/interviews/services/interview.service.ts:308:72 - error TS1128: Declaration or statement expected.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                                           ~
+src/interviews/services/interview.service.ts:308:73 - error TS1128: Declaration or statement expected.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                                            ~
+src/interviews/services/interview.service.ts:308:75 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; if(: any, interview: any): never; await: any; this: any; company_id: any; entity_type: string; entity_id: any; action: string; user_id: any; changes: { deleted: boolean; }; }'.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                                              ~~~~~~~~~~~~~~~
+309         const interview = await this.interviewRepository.findById(companyId, interviewId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+323             changes: { deleted: true },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+324         });
+    ~~~~~~~~~
+src/interviews/services/interview.service.ts:308:83 - error TS2532: Object is possibly 'undefined'.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                                                      ~~~~
+src/interviews/services/interview.service.ts:308:87 - error TS1109: Expression expected.
+
+308     async delete(companyId: string, interviewId: string, userId: string): Promise<void> {
+                                                                                          ~
+src/interviews/services/interview.service.ts:309:15 - error TS1005: ':' expected.
+
+309         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:309:15 - error TS2304: Cannot find name 'interview'.
+
+309         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                  ~~~~~~~~~
+src/interviews/services/interview.service.ts:309:33 - error TS2532: Object is possibly 'undefined'.
+
+309         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                    ~~~~
+src/interviews/services/interview.service.ts:309:67 - error TS2304: Cannot find name 'companyId'.
+
+309         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                      ~~~~~~~~~
+src/interviews/services/interview.service.ts:309:78 - error TS2304: Cannot find name 'interviewId'.
+
+309         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                 ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:309:90 - error TS1005: ',' expected.
+
+309         const interview = await this.interviewRepository.findById(companyId, interviewId);
+                                                                                             ~
+src/interviews/services/interview.service.ts:310:13 - error TS1003: Identifier expected.
+
+310         if (!interview) {
+                ~
+src/interviews/services/interview.service.ts:314:9 - error TS1005: ',' expected.
+
+314         await this.interviewRepository.softDelete(companyId, interviewId);
+            ~~~~~
+src/interviews/services/interview.service.ts:314:9 - error TS18004: No value exists in scope for the shorthand property 'await'. Either declare one or provide an initializer.
+
+314         await this.interviewRepository.softDelete(companyId, interviewId);
+            ~~~~~
+src/interviews/services/interview.service.ts:314:15 - error TS1005: ',' expected.
+
+314         await this.interviewRepository.softDelete(companyId, interviewId);
+                  ~~~~
+src/interviews/services/interview.service.ts:314:19 - error TS1005: ':' expected.
+
+314         await this.interviewRepository.softDelete(companyId, interviewId);
+                      ~
+src/interviews/services/interview.service.ts:314:51 - error TS2304: Cannot find name 'companyId'.
+
+314         await this.interviewRepository.softDelete(companyId, interviewId);
+                                                      ~~~~~~~~~
+src/interviews/services/interview.service.ts:314:62 - error TS2304: Cannot find name 'interviewId'.
+
+314         await this.interviewRepository.softDelete(companyId, interviewId);
+                                                                 ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:314:74 - error TS1005: ',' expected.
+
+314         await this.interviewRepository.softDelete(companyId, interviewId);
+                                                                             ~
+src/interviews/services/interview.service.ts:318:25 - error TS2304: Cannot find name 'companyId'.
+
+318             company_id: companyId,
+                            ~~~~~~~~~
+src/interviews/services/interview.service.ts:320:24 - error TS2304: Cannot find name 'interviewId'.
+
+320             entity_id: interviewId,
+                           ~~~~~~~~~~~
+src/interviews/services/interview.service.ts:322:22 - error TS2304: Cannot find name 'userId'.
+
+322             user_id: userId,
+                         ~~~~~~
+src/interviews/services/interview.service.ts:324:10 - error TS1005: ';' expected.
+
+324         });
+             ~
+src/interviews/services/interview.service.ts:325:5 - error TS1128: Declaration or statement expected.
+
+325     }
+        ~
+src/interviews/services/interview.service.ts:330:5 - error TS1434: Unexpected keyword or identifier.
+
+330     async getCount(companyId: string): Promise<number> {
+        ~~~~~
+src/interviews/services/interview.service.ts:330:5 - error TS2304: Cannot find name 'async'.
+
+330     async getCount(companyId: string): Promise<number> {
+        ~~~~~
+src/interviews/services/interview.service.ts:330:11 - error TS2304: Cannot find name 'getCount'.
+
+330     async getCount(companyId: string): Promise<number> {
+              ~~~~~~~~
+src/interviews/services/interview.service.ts:330:20 - error TS2304: Cannot find name 'companyId'.
+
+330     async getCount(companyId: string): Promise<number> {
+                       ~~~~~~~~~
+src/interviews/services/interview.service.ts:330:29 - error TS1005: ',' expected.
+
+330     async getCount(companyId: string): Promise<number> {
+                                ~
+src/interviews/services/interview.service.ts:330:31 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+330     async getCount(companyId: string): Promise<number> {
+                                  ~~~~~~
+src/interviews/services/interview.service.ts:330:38 - error TS1005: ';' expected.
+
+330     async getCount(companyId: string): Promise<number> {
+                                         ~
+src/interviews/services/interview.service.ts:330:40 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ return: any; }'.
+
+330     async getCount(companyId: string): Promise<number> {
+                                           ~~~~~~~~~~~~~~~~~
+331         return await this.interviewRepository.countByCompany(companyId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+332     }
+    ~~~~~
+src/interviews/services/interview.service.ts:330:48 - error TS2693: 'number' only refers to a type, but is being used as a value here.
+
+330     async getCount(companyId: string): Promise<number> {
+                                                   ~~~~~~
+src/interviews/services/interview.service.ts:331:16 - error TS1005: ':' expected.
+
+331         return await this.interviewRepository.countByCompany(companyId);
+                   ~~~~~
+src/interviews/services/interview.service.ts:331:22 - error TS2532: Object is possibly 'undefined'.
+
+331         return await this.interviewRepository.countByCompany(companyId);
+                         ~~~~
+src/interviews/services/interview.service.ts:331:62 - error TS2304: Cannot find name 'companyId'.
+
+331         return await this.interviewRepository.countByCompany(companyId);
+                                                                 ~~~~~~~~~
+src/interviews/services/interview.service.ts:331:72 - error TS1005: ',' expected.
+
+331         return await this.interviewRepository.countByCompany(companyId);
+                                                                           ~
+src/interviews/services/interview.service.ts:337:5 - error TS1434: Unexpected keyword or identifier.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+        ~~~~~
+src/interviews/services/interview.service.ts:337:5 - error TS2304: Cannot find name 'async'.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+        ~~~~~
+src/interviews/services/interview.service.ts:337:11 - error TS2304: Cannot find name 'getCountByRound'.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+              ~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:337:27 - error TS2304: Cannot find name 'companyId'.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+                              ~~~~~~~~~
+src/interviews/services/interview.service.ts:337:36 - error TS1005: ',' expected.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+                                       ~
+src/interviews/services/interview.service.ts:337:38 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+                                         ~~~~~~
+src/interviews/services/interview.service.ts:337:46 - error TS2304: Cannot find name 'round'.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+                                                 ~~~~~
+src/interviews/services/interview.service.ts:337:51 - error TS1005: ',' expected.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+                                                      ~
+src/interviews/services/interview.service.ts:337:68 - error TS1005: ';' expected.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+                                                                       ~
+src/interviews/services/interview.service.ts:337:70 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ return: any; }'.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+                                                                         ~~~~~~~~~~~~~~~~~
+338         return await this.interviewRepository.countByRound(companyId, round);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+339     }
+    ~~~~~
+src/interviews/services/interview.service.ts:337:78 - error TS2693: 'number' only refers to a type, but is being used as a value here.
+
+337     async getCountByRound(companyId: string, round: InterviewRound): Promise<number> {
+                                                                                 ~~~~~~
+src/interviews/services/interview.service.ts:338:16 - error TS1005: ':' expected.
+
+338         return await this.interviewRepository.countByRound(companyId, round);
+                   ~~~~~
+src/interviews/services/interview.service.ts:338:22 - error TS2532: Object is possibly 'undefined'.
+
+338         return await this.interviewRepository.countByRound(companyId, round);
+                         ~~~~
+src/interviews/services/interview.service.ts:338:60 - error TS2304: Cannot find name 'companyId'.
+
+338         return await this.interviewRepository.countByRound(companyId, round);
+                                                               ~~~~~~~~~
+src/interviews/services/interview.service.ts:338:71 - error TS2304: Cannot find name 'round'.
+
+338         return await this.interviewRepository.countByRound(companyId, round);
+                                                                          ~~~~~
+src/interviews/services/interview.service.ts:338:77 - error TS1005: ',' expected.
+
+338         return await this.interviewRepository.countByRound(companyId, round);
+                                                                                ~
+src/interviews/services/interview.service.ts:344:5 - error TS1434: Unexpected keyword or identifier.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+        ~~~~~
+src/interviews/services/interview.service.ts:344:5 - error TS2304: Cannot find name 'async'.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+        ~~~~~
+src/interviews/services/interview.service.ts:344:11 - error TS2304: Cannot find name 'getCountByStatus'.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+              ~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:344:28 - error TS2304: Cannot find name 'companyId'.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+                               ~~~~~~~~~
+src/interviews/services/interview.service.ts:344:37 - error TS1005: ',' expected.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+                                        ~
+src/interviews/services/interview.service.ts:344:39 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+                                          ~~~~~~
+src/interviews/services/interview.service.ts:344:47 - error TS2304: Cannot find name 'status'.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+                                                  ~~~~~~
+src/interviews/services/interview.service.ts:344:53 - error TS1005: ',' expected.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+                                                        ~
+src/interviews/services/interview.service.ts:344:71 - error TS1005: ';' expected.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+                                                                          ~
+src/interviews/services/interview.service.ts:344:73 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ return: any; }'.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+                                                                            ~~~~~~~~~~~~~~~~~
+345         return await this.interviewRepository.countByStatus(companyId, status);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+346     }
+    ~~~~~
+src/interviews/services/interview.service.ts:344:81 - error TS2693: 'number' only refers to a type, but is being used as a value here.
+
+344     async getCountByStatus(companyId: string, status: InterviewStatus): Promise<number> {
+                                                                                    ~~~~~~
+src/interviews/services/interview.service.ts:345:16 - error TS1005: ':' expected.
+
+345         return await this.interviewRepository.countByStatus(companyId, status);
+                   ~~~~~
+src/interviews/services/interview.service.ts:345:22 - error TS2532: Object is possibly 'undefined'.
+
+345         return await this.interviewRepository.countByStatus(companyId, status);
+                         ~~~~
+src/interviews/services/interview.service.ts:345:61 - error TS2304: Cannot find name 'companyId'.
+
+345         return await this.interviewRepository.countByStatus(companyId, status);
+                                                                ~~~~~~~~~
+src/interviews/services/interview.service.ts:345:72 - error TS2304: Cannot find name 'status'.
+
+345         return await this.interviewRepository.countByStatus(companyId, status);
+                                                                           ~~~~~~
+src/interviews/services/interview.service.ts:345:79 - error TS1005: ',' expected.
+
+345         return await this.interviewRepository.countByStatus(companyId, status);
+                                                                                  ~
+src/interviews/services/interview.service.ts:351:5 - error TS1434: Unexpected keyword or identifier.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+        ~~~~~
+src/interviews/services/interview.service.ts:351:5 - error TS2304: Cannot find name 'async'.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+        ~~~~~
+src/interviews/services/interview.service.ts:351:11 - error TS2304: Cannot find name 'getInterviewsBySubmission'.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+              ~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:351:37 - error TS2304: Cannot find name 'companyId'.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                        ~~~~~~~~~
+src/interviews/services/interview.service.ts:351:46 - error TS1005: ',' expected.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                                 ~
+src/interviews/services/interview.service.ts:351:48 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                                   ~~~~~~
+src/interviews/services/interview.service.ts:351:56 - error TS2304: Cannot find name 'submissionId'.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                                           ~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:351:68 - error TS1005: ',' expected.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                                                       ~
+src/interviews/services/interview.service.ts:351:70 - error TS2693: 'string' only refers to a type, but is being used as a value here.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                                                         ~~~~~~
+src/interviews/services/interview.service.ts:351:77 - error TS1005: ';' expected.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                                                                ~
+src/interviews/services/interview.service.ts:351:79 - error TS2365: Operator '>' cannot be applied to types 'boolean' and '{ const: any; return: any; }'.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+352         const interviews = await this.interviewRepository.findBySubmission(companyId, submissionId);
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+353         return interviews.map((i) => new GetInterviewDto(i));
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+354     }
+    ~~~~~
+src/interviews/services/interview.service.ts:351:103 - error TS1011: An element access expression should take an argument.
+
+351     async getInterviewsBySubmission(companyId: string, submissionId: string): Promise<GetInterviewDto[]> {
+                                                                                                          
+src/interviews/services/interview.service.ts:352:15 - error TS1005: ':' expected.
+
+352         const interviews = await this.interviewRepository.findBySubmission(companyId, submissionId);
+                  ~~~~~~~~~~
+src/interviews/services/interview.service.ts:352:15 - error TS2304: Cannot find name 'interviews'.
+
+352         const interviews = await this.interviewRepository.findBySubmission(companyId, submissionId);
+                  ~~~~~~~~~~
+src/interviews/services/interview.service.ts:352:34 - error TS2532: Object is possibly 'undefined'.
+
+352         const interviews = await this.interviewRepository.findBySubmission(companyId, submissionId);
+                                     ~~~~
+src/interviews/services/interview.service.ts:352:76 - error TS2304: Cannot find name 'companyId'.
+
+352         const interviews = await this.interviewRepository.findBySubmission(companyId, submissionId);
+                                                                               ~~~~~~~~~
+src/interviews/services/interview.service.ts:352:87 - error TS2304: Cannot find name 'submissionId'.
+
+352         const interviews = await this.interviewRepository.findBySubmission(companyId, submissionId);
+                                                                                          ~~~~~~~~~~~~
+src/interviews/services/interview.service.ts:352:100 - error TS1005: ',' expected.
+
+352         const interviews = await this.interviewRepository.findBySubmission(companyId, submissionId);
+                                                                                                       ~
+src/interviews/services/interview.service.ts:353:16 - error TS1005: ':' expected.
+
+353         return interviews.map((i) => new GetInterviewDto(i));
+                   ~~~~~~~~~~
+src/interviews/services/interview.service.ts:353:16 - error TS2304: Cannot find name 'interviews'.
+
+353         return interviews.map((i) => new GetInterviewDto(i));
+                   ~~~~~~~~~~
+src/interviews/services/interview.service.ts:353:61 - error TS1005: ',' expected.
+
+353         return interviews.map((i) => new GetInterviewDto(i));
+                                                                ~
+src/interviews/services/interview.service.ts:355:1 - error TS1128: Declaration or statement expected.
+
+355 }
+    ~
+src/jobs/services/job.service.ts:41:33 - error TS2554: Expected 3 arguments, but got 1.
+
+41         await this.auditService.log({
+                                   ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/jobs/services/job.service.ts:158:33 - error TS2554: Expected 3 arguments, but got 1.
+
+158         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/jobs/services/job.service.ts:182:33 - error TS2554: Expected 3 arguments, but got 1.
+
+182         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/jobs/services/job.service.ts:228:41 - error TS2554: Expected 3 arguments, but got 1.
+
+228                 await this.auditService.log({
+                                            ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/jobs/services/job.service.ts:257:58 - error TS2339: Property 'getFieldByKey' does not exist on type 'CustomFieldsService'.
+
+257             const field = await this.customFieldsService.getFieldByKey(companyId, fieldKey);
+                                                             ~~~~~~~~~~~~~
+src/jobs/services/job.service.ts:263:53 - error TS2339: Property 'validate' does not exist on type 'CustomFieldValidationService'.
+
+263             await this.customFieldValidationService.validate(field, fieldValue);
+                                                        ~~~~~~~~
+src/jobs/services/job.service.ts:266:44 - error TS2554: Expected 6 arguments, but got 5.
+
+266             await this.customFieldsService.setFieldValue(
+                                               ~~~~~~~~~~~~~
+
+  src/custom-fields/services/custom-fields.service.ts:185:9
+    185         value: any
+                ~~~~~~~~~~
+    An argument for 'value' was not provided.
+src/licensing/controllers/license.controller.ts:79:26 - error TS2339: Property 'current' does not exist on type '{ allowed: boolean; remaining: number; limit: number; }'.
+
+79             usage: usage.current,
+                            ~~~~~~~
+src/licensing/controllers/license.controller.ts:113:13 - error TS2345: Argument of type 'import("G:/ATS/src/licensing/dtos/update-license.dto").LicenseTier' is not assignable to parameter of type 'import("G:/ATS/src/licensing/entities/license.entity").LicenseTier'.
+  Each declaration of 'LicenseTier.BASIC' differs in its value, where '"basic"' was expected but '"BASIC"' was given.
+
+113             dto.tier,
+                ~~~~~~~~
+src/licensing/repositories/feature-flag.repository.ts:21:17 - error TS2353: Object literal may only specify known properties, and 'deleted_at' does not exist in type 'FindOptionsWhere<FeatureFlag> | FindOptionsWhere<FeatureFlag>[]'.
+
+21                 deleted_at: IsNull(),
+                   ~~~~~~~~~~
+
+  src/node_modules/typeorm/find-options/FindOneOptions.d.ts:23:5
+    23     where?: FindOptionsWhere<Entity>[] | FindOptionsWhere<Entity>;
+           ~~~~~
+    The expected type comes from property 'where' which is declared here on type 'FindOneOptions<FeatureFlag>'
+src/licensing/repositories/feature-flag.repository.ts:33:17 - error TS2353: Object literal may only specify known properties, and 'deleted_at' does not exist in type 'FindOptionsWhere<FeatureFlag> | FindOptionsWhere<FeatureFlag>[]'.
+
+33                 deleted_at: IsNull(),
+                   ~~~~~~~~~~
+
+  src/node_modules/typeorm/find-options/FindOneOptions.d.ts:23:5
+    23     where?: FindOptionsWhere<Entity>[] | FindOptionsWhere<Entity>;
+           ~~~~~
+    The expected type comes from property 'where' which is declared here on type 'FindManyOptions<FeatureFlag>'
+src/offers/services/offer.service.ts:54:33 - error TS2554: Expected 3 arguments, but got 1.
+
+54         await this.auditService.log({
+                                   ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/offers/services/offer.service.ts:139:33 - error TS2554: Expected 3 arguments, but got 1.
+
+139         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/offers/services/offer.service.ts:184:33 - error TS2554: Expected 3 arguments, but got 1.
+
+184         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/offers/services/offer.service.ts:230:33 - error TS2554: Expected 3 arguments, but got 1.
+
+230         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/offers/services/offer.service.ts:276:33 - error TS2554: Expected 3 arguments, but got 1.
+
+276         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/offers/services/offer.service.ts:333:33 - error TS2554: Expected 3 arguments, but got 1.
+
+333         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/offers/services/offer.service.ts:389:33 - error TS2554: Expected 3 arguments, but got 1.
+
+389         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/offers/services/offer.service.ts:413:33 - error TS2554: Expected 3 arguments, but got 1.
+
+413         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/shared/guards/index.ts:4:44 - error TS2307: Cannot find module '../../common/decorators' or its corresponding type declarations.
+
+4 export { CompanyId, UserId, Require } from '../../common/decorators';
+                                             ~~~~~~~~~~~~~~~~~~~~~~~~~
+src/submissions/services/submission.service.ts:63:33 - error TS2554: Expected 3 arguments, but got 1.
+
+63         await this.auditService.log({
+                                   ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/submissions/services/submission.service.ts:187:33 - error TS2554: Expected 3 arguments, but got 1.
+
+187         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/submissions/services/submission.service.ts:238:33 - error TS2554: Expected 3 arguments, but got 1.
+
+238         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/submissions/services/submission.service.ts:298:33 - error TS2554: Expected 3 arguments, but got 1.
+
+298         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/submissions/services/submission.service.ts:322:33 - error TS2554: Expected 3 arguments, but got 1.
+
+322         await this.auditService.log({
+                                    ~~~
+
+  src/audit/services/audit.service.ts:6:34
+    6     async log(companyId: string, userId: string, context: AuditContext): Promise<void> {
+                                       ~~~~~~~~~~~~~~
+    An argument for 'userId' was not provided.
+src/submissions/services/submission.service.ts:375:58 - error TS2339: Property 'getFieldByKey' does not exist on type 'CustomFieldsService'.
+
+375             const field = await this.customFieldsService.getFieldByKey(companyId, fieldKey);
+                                                             ~~~~~~~~~~~~~
+src/submissions/services/submission.service.ts:380:53 - error TS2339: Property 'validate' does not exist on type 'CustomFieldValidationService'.
+
+380             await this.customFieldValidationService.validate(field, fieldValue);
+                                                        ~~~~~~~~
+src/submissions/services/submission.service.ts:382:44 - error TS2554: Expected 6 arguments, but got 5.
+
+382             await this.customFieldsService.setFieldValue(
+                                               ~~~~~~~~~~~~~
+
+  src/custom-fields/services/custom-fields.service.ts:185:9
+    185         value: any
+                ~~~~~~~~~~
+    An argument for 'value' was not provided.
+
+Found 545 error(s).
+

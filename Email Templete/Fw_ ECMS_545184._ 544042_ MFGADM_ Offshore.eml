@@ -1,0 +1,1085 @@
+Received: from MAUPR01MB12952.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1da::13) by PN4PR01MB11492.INDPRD01.PROD.OUTLOOK.COM with
+ HTTPS; Thu, 20 Nov 2025 05:07:05 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=EI5/YrZXzfgdMMZ576vvw8Ot3wXqnI4UGlDpaO+WZ91Pr4gepRyB+IUc2idbx1qA134fZFIXzzWwj8gW45TYfMk1yBd8FsaO9OKvEX92kDM5X0AcFYOQxaGINNECLXvfvtTvsyuYxIpgYUWiEAupjYgUaGdltNFivQ8MH+ZI9McRAXKMr1yPeToAXPWzyK12oZuml/JPtbzVYVA7z1ntZCQ1iVdWPXmgTigcO4cX6gU+hBmPJsTie1GQoD3+b+THzTO0/qG+Ul5K4clM4TSDAvdYIdAB1brNvJfki89sf30MxWwJjfAh3O2+VBhxztX2L7czv/fLA6ONX4w0b4hRSQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ac28n7ZvhiNlZVrGX1Bsy96v3jeyv+fsbvqzaPeJFN0=;
+ b=XKEER7e+kC2T2spAI9adBykO7auQko5BH0y6uGlQAKYaVuyrFgCUxmeMytfE1E9NKFesxfwAzRU/NrVLSug4RBNOM8gj193HYCyiIXUdLr9ZIb6nXL8kq8lEIz3NRkB1o4Kewq3OdbsIJGNjLLVEYlxZZqBxAOo80aeNpZRDgRo1GYDKA3z0i7f8QYpLpmodXf3mM+DQsmgg2bRJsDTdT5Xr8ulorAzhdkbr6BH4TWZBUjzBFYBxK+fiKIgBYb79ilgqe0RBXYgotQvudKkOfebgBPaAFdyQnvgSjINhFCs/rbk7u9/uwt+jLmApyyyxlWEnoFK3YdEbFxPVZ6yc7Q==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 2a01:111:f403:c408::3) smtp.rcpttodomain=o2finfosolutions.com
+ smtp.mailfrom=o2finfo.com; dmarc=pass (p=quarantine sp=quarantine pct=25)
+ action=none header.from=o2finfo.com; dkim=pass (signature was verified)
+ header.d=o2finfo.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=o2finfo.com] dkim=[1,1,header.d=o2finfo.com]
+ dmarc=[1,1,header.from=o2finfo.com])
+Received: from MA1PR01CA0166.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a00:71::36)
+ by MAUPR01MB12952.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:1da::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Thu, 20 Nov
+ 2025 05:07:04 +0000
+Received: from MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a00:71:cafe::43) by MA1PR01CA0166.outlook.office365.com
+ (2603:1096:a00:71::36) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.10 via Frontend Transport; Thu,
+ 20 Nov 2025 05:07:06 +0000
+Authentication-Results: spf=pass (sender IP is 2a01:111:f403:c408::3)
+ smtp.mailfrom=o2finfo.com; dkim=pass (signature was verified)
+ header.d=o2finfo.com;dmarc=pass action=none
+ header.from=o2finfo.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of o2finfo.com designates
+ 2a01:111:f403:c408::3 as permitted sender) receiver=protection.outlook.com;
+ client-ip=2a01:111:f403:c408::3;
+ helo=PNZPR01CU001.outbound.protection.outlook.com; pr=C
+Received: from PNZPR01CU001.outbound.protection.outlook.com
+ (2a01:111:f403:c408::3) by MA1PEPF00007265.mail.protection.outlook.com
+ (2603:1096:a04::207) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.9 via Frontend Transport; Thu,
+ 20 Nov 2025 05:07:04 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Sio/xexs9x81rMPQNyS5vD82iZbiOC97p342m2Gr91uiYopciBEiJM2ftlsfEJ27Up7TqAWonYA/aCPgO3yzsiyKo2319BS2awyBQ8A5age5HvzEJOKfruzbeqvaiNoFAk2iSdQVWFzVeaBe/7abt8kuhbYKzaNNokIyKNb7FaouO7k7ADAGF1HaF5+SluKzZ2vDdnOk7IKtg7sl3ThYb5ToXJqXECylHPjRjJk6nMcDAzDmLPvpBbtljhLm+U4cozRjIpkQuEhkvU200lYLuYcf24SHFYzk8z4tIM46VbLOmZNiET9idoyn/ttrTxJQQmfbcTH5MG0OJjqexNcjug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ac28n7ZvhiNlZVrGX1Bsy96v3jeyv+fsbvqzaPeJFN0=;
+ b=u3k/vlZQ8Y5cWldvuonrjhSlxFFGoD5/RfttcvBQfhgrpYH4+1KEhcloFEWNPWAVU3FobnmfNzsxT6NFr5v4V3iKIMy6xa4YTDCsALC2OV2iDlbjN9K0B6r6diLdJWn69Yb8LBshXV1lZKDE3du2clzyulJi3Qa8c0opkiDTojztqa2m7dBs8eJrs5C0sZUpvXXyXuYYXbEI60QQYQ7CHuMKw/GRKuRzfHvtbTVlUnFJH9dLco0mszWsF6kc62iw58LgVYJUbuQeXRnIshO3WtFi7mx8nxBgsno3Mrjg+5K2ffA9geD2SgHwsFI2Op5HpWPSaIxNOyrk0cQk6bzW9g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=o2finfo.com; dmarc=pass action=none header.from=o2finfo.com;
+ dkim=pass header.d=o2finfo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2finfo.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ac28n7ZvhiNlZVrGX1Bsy96v3jeyv+fsbvqzaPeJFN0=;
+ b=tV4SsHUWZT7hkeXPDYMUQm0r+O3fiKOKzPJopMqNbrnNsP2QcsEkX2vZmBL9AOj7sx+aTwV8lDGm9N/VIbHBQs7HIHJOV6oHz2wX8ZXkXxXZaXYpiXUq5Yx6ol7WSXwicCHJxiheNPz4l/CPqGb+uazOig2EvE5vhNK7fpJ1Oe0i69+xZowBKNvbHaZjvs4FjujamKfduhoSbZHLuxlkYH8p+YJIgge2YGQUiDWh2qTLRjh+R281ZSPY0cEj/QSSLAnc75V81mPyXQLKn9p6iwOQq71I2fhEH3OyRMVpA02YreKFnSfCOBp9dAW0P5ecKf6v/8hfBb2NazoDdFc/+g==
+Received: from MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a00:78::15)
+ by PN3PR01MB9709.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:16c::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Thu, 20 Nov
+ 2025 05:07:03 +0000
+Received: from MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::62dd:7157:93e5:8111]) by MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::62dd:7157:93e5:8111%2]) with mapi id 15.20.9298.012; Thu, 20 Nov 2025
+ 05:07:03 +0000
+From: Santosh <santosh@o2finfo.com>
+To: "requirements@o2finfosolutions.com" <requirements@o2finfosolutions.com>
+Subject: Fw: ECMS_545184./ 544042_ MFGADM_ Offshore
+Thread-Topic: ECMS_545184./ 544042_ MFGADM_ Offshore
+Thread-Index: AdxVNPuyRdk73dlwSG6iYuJTGq3OUQAF/v4wAAU0QKABHm2EHA==
+Date: Thu, 20 Nov 2025 05:07:03 +0000
+Message-ID: <MA1PR01MB3450F55B85DCC265D51DFE8EFCD4A@MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM>
+References: <PSAPR02MB490138F28DB91A941AF28F5197CAA@PSAPR02MB4901.apcprd02.prod.outlook.com>
+ <KL1PR02MB5219EB0034A1BE39CCD1A87793CAA@KL1PR02MB5219.apcprd02.prod.outlook.com>
+ <MAXPR01MB2782304337231DEDF747E83D9ECAA@MAXPR01MB2782.INDPRD01.PROD.OUTLOOK.COM>
+In-Reply-To: <MAXPR01MB2782304337231DEDF747E83D9ECAA@MAXPR01MB2782.INDPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-IN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=o2finfo.com;
+x-ms-traffictypediagnostic: MA1PR01MB3450:EE_|PN3PR01MB9709:EE_|MA1PEPF00007265:EE_|MAUPR01MB12952:EE_|PN4PR01MB11492:EE_
+X-MS-Office365-Filtering-Correlation-Id: 88a8262e-9b02-44e7-c552-08de27f2a571
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|376014|366016|1800799024|38070700021|8096899003;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?SPhn17NO7CHUv4jYmh+XWzXLtoTADRQ0C2exYNDzBJRm14IsMhhaL/KSaN+J?=
+ =?us-ascii?Q?ZlZwxV6ULnvCypOJoK+3+wzoWZRLN6xn7e10Rry3qZSC72YERV7fOZBa9FXN?=
+ =?us-ascii?Q?2Uz8o2HjuValiivGJFDU6UMZI9s4ZvO8191sIIAzDtqj1GSDTOHedWjI9H/F?=
+ =?us-ascii?Q?oiG71f3sEEaLGrJ2T40ozQyEVOIKbhr/ZvjviwIMG+fF4vBg4BbqfDKz3uN1?=
+ =?us-ascii?Q?9Xn+qRs/iP+B7Y//+QcvMi0cqaDjGhvmsr1Fh2Yij3tQSRvoKQ92d+KRKzat?=
+ =?us-ascii?Q?BIoOtbfcM0uB0dVytJUjjGO1rGWaGvJujU4wGs7pnNDDoIH7MxVFn7lTWvi3?=
+ =?us-ascii?Q?vG9BCRr4dPH03kkPcJaA8y2UNpeQz3FAHosSAhAscF7JReFAVMtvLyHX7yoe?=
+ =?us-ascii?Q?/I8Z4DcBTVVteI1F2Mdx3vm7KXJU3aEX1RAUX7cWIQH9aGLTJoDI0WFGE5kj?=
+ =?us-ascii?Q?4IUkWfFsxyRvz2WBBkU9v8cbdowRCnmK00owY6dyt0dHXMao/u8Dg3/lrJML?=
+ =?us-ascii?Q?fePPAjHQJQnHEN1fxr/kbNJw5tOOrJesWM0wF+uIlf2E9DMPQdNLGv1f3KIR?=
+ =?us-ascii?Q?T1O2v7tLJ/bs+SNgwLJ/CJR6YxxXv0OVjQp4U+3qS+Xd6UKkzJC7KPWM8vp0?=
+ =?us-ascii?Q?xidPg1cFIHP+tghffwaqAB02RqUDkUMOtR+oysO/+5mVEcbr9dKUAxmYfNwU?=
+ =?us-ascii?Q?LPYl98szxkSwVC+0Wcl1xP4INt+9RcWQgM6dva1jrCfENmBcmrbHmQmhvgWt?=
+ =?us-ascii?Q?x0G+Vt8Q7CRi/7xkjARsDMBSEeljwyVjH+GT6dm14uxOxB00LrXsZCvKe/Kt?=
+ =?us-ascii?Q?8M6x9n1j5eN8+PrHSuOtQiY0XQP0PkjN7q3FQy/svoOe9SGnezAHB0ce3MOI?=
+ =?us-ascii?Q?Pe8kXdgrtUu5XMs9FiXegCRyDGUNr35B6tDPxBQP0Xg+gsgj+s9pGd138fdl?=
+ =?us-ascii?Q?m1KKFYdOKVtJMvb2sZ09NyZkkOraxv6d3Dhut/Ko9yNqKtNKObA0XRc2Hdnq?=
+ =?us-ascii?Q?QyuMjGdjoY2qtoczUW5Pe2KMyQUt6kcC+uUmjmharCN3jvT5/Tl8OTy5OF9Y?=
+ =?us-ascii?Q?rJdvKxCSq7007vdFIUvkugwaEB7laud3sfRnqHaOt0Rmy1nX8oEdBWU7i67g?=
+ =?us-ascii?Q?+x+hPjKwSGDFQhjFTBmuekPBvn+KEsGMdgQ+jScF8HoK2DO12mhq/XE7/hsw?=
+ =?us-ascii?Q?882GIKz6Sz5mo5B7bamzaKNkwl+HTlhdfUp/czxeEHv5iirbr7w+fTA+X8vs?=
+ =?us-ascii?Q?8KMrq6Pme465YwSdSfzIaTqy+hIGvVwCy7ET5E+NDsfElZTJDHdwJofTX3iG?=
+ =?us-ascii?Q?xMoYv5RdozDrg7kVI7TITPeaPxNMLLTLlPzqjAOyHq7pNPzk7nS3hGg7c46G?=
+ =?us-ascii?Q?G8kATLa+Cmpk5p2S9fheQJSCe68ovlv3SoQV2Bldka41wok66SfJHYUsz1Gy?=
+ =?us-ascii?Q?bfiwqiwiyDzLiWP72I8GpcfIZK4YszPnftTwls1uI/0KdyIIcqXHhxMaIVig?=
+ =?us-ascii?Q?IGKwfvC+U1i2BYNNev7DcwelPuZE9dkcvujD?=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(8096899003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?iso-8859-1?Q?qtIY2zOKsqSsejY5P3DPPIgFD82FGm1DcQ1l1KXuUsyjnNaLj+pOY7+Tr9?=
+ =?iso-8859-1?Q?TUDSZxkWQ+Ffr1MUEbmO4jLCQc6zNmeAN0vPbIE5OPiIImCgxtojovKoyU?=
+ =?iso-8859-1?Q?8JWZf+CHnW6puIY/ibl/LdYo5nJfGXCL9w1XJ+OXA0FeoMC+dr+H7PATVi?=
+ =?iso-8859-1?Q?gySIlLnttF3FA2IegbD0i/hfe3+BlKTAVzS+084Vm+6IMzEs6vYP5P6iy4?=
+ =?iso-8859-1?Q?CK5xwXHdMN6SlVNof9Zjt/RGLva8waF1dJ/jNJMD3tk6UNWQkyrFHBA/Eb?=
+ =?iso-8859-1?Q?uYSLjhcPsw5ceqXwcq8WZ8dfD+CL8DjDZ0HN/CXfU+t0UgJoZWsfz80pkW?=
+ =?iso-8859-1?Q?vACgXCiiwFWzsfMcX0NSQSs1AHIYTyVbcYAH3qUmcWfCwhwhqWyTpX9wbR?=
+ =?iso-8859-1?Q?arcgKzBOQJA/z1y3+e6/HDV9DYbrgMT+778hHiLIkjJWPiklsQMUivVE1Q?=
+ =?iso-8859-1?Q?N+5Idvp5ndXUiSg1AtUBkaaqFoMy25pE2PoKEfgmw3bYNsPgGDbSrD1b8A?=
+ =?iso-8859-1?Q?RK9W0dHonnfzkq3Z4iusa6Wm3aKlxJ4h8qCqIZpLfaK3Qy+PpGIoF6dmOj?=
+ =?iso-8859-1?Q?761zhoeZCwRXOvLbbRz/CEerwktQxjejgRSkNCu+wvi3IFbRR3oEkMYY81?=
+ =?iso-8859-1?Q?hcsVjHxZtg5dfm+3Ld2+STM1wyt7DM6/5wp72jro7WRKX74mddoicyqNmE?=
+ =?iso-8859-1?Q?+qMGuz9sq7JVIAy0ks8cXRbcVOQWnP2b30hWp5NFJenR82wBfFj339KKCt?=
+ =?iso-8859-1?Q?BwCCEwUO8ax70s+bMWWd4UOVlRh4g8qXJ1IFLxC046J5zfZwgOr9qeI9Tz?=
+ =?iso-8859-1?Q?vWS3kRpL3RhMfiUYyT+sKlg/EvVBJIGfdPueGtebS9IRYWteHto7hHwZVy?=
+ =?iso-8859-1?Q?+E2kx8JjW/EI6IUQzxdUeveRAsYoaLxbxToq0ggsWfPibmYum9T3r/hnjY?=
+ =?iso-8859-1?Q?qhNxGxFRSLo/xLje6Jk7RF1k4ZkTezXwsOyFycJ3u49P4mOwsWmzP47/o6?=
+ =?iso-8859-1?Q?Jf4JL6eIXUSAi01TKcnNXNoWW+PbiYtWMR/1gy1dntGU16m9L2d58BJbJA?=
+ =?iso-8859-1?Q?1/NFeBoDe1aVJ9Tjm5QQi+jy4h4BL4D/bS46YPBji6eCM1k1WkmtTLmqKe?=
+ =?iso-8859-1?Q?nqVoojrdxXvDbX/Pg9SkUQ7oFh+45Kcsph0WMLWXBlucv7Xy053rclZtCN?=
+ =?iso-8859-1?Q?mp4fNaB+jlc6Quiy89ON5B5vjuwUx+rjLe0XpFIVsRmbfXYE4JZ0geQtd7?=
+ =?iso-8859-1?Q?LzandRvcBHsAyJegauRmwLgtgQq4Rh6ClTqO+BvRjMOmSnZj5gTs8DCmBs?=
+ =?iso-8859-1?Q?TeULpD+MP8d33BUgsHmJXb5N8ZSsAaiXpBqxeLBLrj6TczuO9z2T68YHd4?=
+ =?iso-8859-1?Q?DeUpIvayvmZPZrHUNVGSfdNYQH5qjNTOuH2WEqcjiyueJX5Sg4J9WEftBy?=
+ =?iso-8859-1?Q?4xZRtvk8io5Q3zaUQ/1VwSdT3lNSyyasNRxFrT2TTARdWF2aQxp14YyGUT?=
+ =?iso-8859-1?Q?o/XevnftsdjoNrcOqFU7wBo8cTvEvQIIfzIFX6P3g5lcfwD5TZ0urq6g2v?=
+ =?iso-8859-1?Q?w2r1CugOqGl9dkDHMwpmxT7GL4H2POi5YasNecEhqop1LWh2b4hdBME1sQ?=
+ =?iso-8859-1?Q?rdRqf8sah9AzWO1Q1NNMfro372RxBNi9es?=
+Content-Type: multipart/alternative;
+	boundary="_000_MA1PR01MB3450F55B85DCC265D51DFE8EFCD4AMA1PR01MB3450INDP_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB9709
+Return-Path: santosh@o2finfo.com
+X-MS-Exchange-Organization-ExpirationStartTime: 20 Nov 2025 05:07:04.4454
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 88a8262e-9b02-44e7-c552-08de27f2a571
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 8077d34f-0098-442f-8d5b-ff82071a64da:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 42a7a34b-bbd5-44d7-73bb-08de27f2a4b2
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;ARA:13230040|12012899012|35042699022|13003099007|8096899003;
+X-Forefront-Antispam-Report: CIP:2a01:111:f403:c408::3;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PNZPR01CU001.outbound.protection.outlook.com;PTR:mail-centralindiaazlp170110003.outbound.protection.outlook.com;CAT:NONE;SFS:(13230040)(12012899012)(35042699022)(13003099007)(8096899003);DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2025 05:07:04.3676
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88a8262e-9b02-44e7-c552-08de27f2a571
+X-MS-Exchange-CrossTenant-Id: 8077d34f-0098-442f-8d5b-ff82071a64da
+X-MS-Exchange-CrossTenant-AuthSource: MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAUPR01MB12952
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.4195213
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9343.009
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;auth:0;dest:I;ENG:(910005)(944506478)(944626604)(4710137)(4713098)(4999163)(920097)(930097)(140003);
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?4mRqVbpgurJapZ6mIUyej5oTBiPIXElAbxO3vgzSoZBfWoiClNwHg67KxW?=
+ =?iso-8859-1?Q?QLeNqTbc5AdyygJgnp1yh+b0U1WYQNJA7Z36Sakce+A9qMK7r71BRZne6C?=
+ =?iso-8859-1?Q?HEk2B5sUL5Bk0pyhso8qR/C57KNPM1Q5abFlXeZDuN1MsCik0wrzCf5zSd?=
+ =?iso-8859-1?Q?bwFDJExTAPZ4dHU6MUtqhrSYRumFQL8mFYlEWpIfP+YbAi3cAXMVM6Lk4l?=
+ =?iso-8859-1?Q?frIluUbzMRHD8NBaImp4P0IUivJcrqH6XXEFff7EOgxrMY5izbCuJgs1rW?=
+ =?iso-8859-1?Q?/V/YXkubEAsK3muTk+d+n/pvr58GxcbghNygeKqhtblpiekktYIdoFAQuy?=
+ =?iso-8859-1?Q?mmA+ujaRpK1aY03a0Hequjc3RKFoKosM+qpI1JU1IpG6hbe0aOnDoYUG6o?=
+ =?iso-8859-1?Q?XU91Eq29qIC1txxxVx6/bQZNdaxlWifVqJdxVuVJhVLllqlYli68vTBV/B?=
+ =?iso-8859-1?Q?zaGLB0XWuG7SCm8UKCEZuYWrvSDMURF97Ba7OOx24fsM9eteQtn3pziwhD?=
+ =?iso-8859-1?Q?RSMXBwCAv/3FT3BY3Uc1vPdHyH9h2YPZ9VZ/5L8Ex3BeKWSiEDWzQMVHvX?=
+ =?iso-8859-1?Q?hzTcsbw2NYidzP6Edu0VJ0XT7l0y3aFnOvoaPqmReFHscS37of27A0MV7C?=
+ =?iso-8859-1?Q?gW+ka6ElkBfpVCXCizBRyU/iVSgpx2u4Mkshbg/Ck1dvyq4PSP0ShPgMCf?=
+ =?iso-8859-1?Q?+AGMZNKiZUVMTDxsLa+cZqtYQUTjWCszV/hRLExbia52wPIRH9IUA3CmQA?=
+ =?iso-8859-1?Q?un52Ckb2aVqyJiIC+avmYNl2G9njp5zs12QhNPXGAhASTi2oAUMckcVcav?=
+ =?iso-8859-1?Q?RZutog+s/KoOev5FFRsDpbn+/tuU7S8onuB4mKrYzS/wRh8d1zBKCbkiGJ?=
+ =?iso-8859-1?Q?jeoh0yXNuY371x/QnCx3M3IY5PYU1HgmT1+hesLnrN3mRC3wj5OF4r29Yo?=
+ =?iso-8859-1?Q?DRjQSIZwQI7lnHu5OGY0VXGJvEjz+099YDwYoiAKaTSzvDxjRtptZdFHLg?=
+ =?iso-8859-1?Q?Ms0LFsw7N3Fgpqz1tB6gxRMeOBGdRPsJmOZUGpwb7YrB+vhlQb2WSdkxCK?=
+ =?iso-8859-1?Q?mpp/4swKJX53M1IByr6M759VCx7H37Rn8L4d415ycYIDWm4AVa6uT9tw/e?=
+ =?iso-8859-1?Q?6URHiXyWHpDaAxBuHwE7n0yeK1+BFJzvLG9unkCuZ1aDwU42uLSEhIsihp?=
+ =?iso-8859-1?Q?ar/QPykUW/B+JPXmznNV0krAHTJJGsD1Z0drhOAUbrnoVzjqeLHTAtIjsq?=
+ =?iso-8859-1?Q?/uUPJnYCOLjF0BJthXtNmmNqFKQ4Hz5TWECe9eDpJCw7bLCj0rBtTksdDq?=
+ =?iso-8859-1?Q?fM5s82Epvo1dMTgoCwrtkoJcJIhdFTS3gpPgwHWFLGkEXpUJkDEmZfaO9v?=
+ =?iso-8859-1?Q?z2FazsSTJfXhI59KbsXwM1qrBL5NK2jZJ1scw4xSPkyrdNCIISAnoa4meq?=
+ =?iso-8859-1?Q?g7xCTavGmT1snTyCziN4VGTBzuWs6qrWDb9Z1o7J05zUk0DeX/++9NuUnF?=
+ =?iso-8859-1?Q?EwugMnnKaIrxaJHZbpNgyiuOGPj4vy2jVfRQ+mz0ofsoozDLvsjFOBfXI3?=
+ =?iso-8859-1?Q?dJ5piyPdyvOdvdRzY41o3E3xFahdRnqt1YW7kViZ5M0AAKZ1CwxDN4D+fI?=
+ =?iso-8859-1?Q?fdv6g1PbR76lVtWSo7FwXN53z7vEm/2zpMh6Ikm1aEQzU8Vy3u1ei+Nzp5?=
+ =?iso-8859-1?Q?tD9HJsleWaXV3QJGxkcGGIcM41q6T01R1eoPSRmEWu6VV3TBYYvvkCQ37p?=
+ =?iso-8859-1?Q?pSzSZ4xOhu/S27hMmHT4jxbXFpqUQvXz3io5KENFLV9N2JJik0bA5tuRM0?=
+ =?iso-8859-1?Q?pkP7qP/sRSEn+2oMjXEj9f3Hs4eeK9kzjtorMXlkquCwM7q3vuGrY1BAua?=
+ =?iso-8859-1?Q?4m2Y3IKLppvUjl2i3mje4w9R3XDc8Y6zK35ciAcFhVwFMkWvEaDoSHx74a?=
+ =?iso-8859-1?Q?+o0yhaoVDu+oSK4mwF1LEuR5r+qCsAdzUxtYOkVGl1yX2a/UCx8TsGVQtD?=
+ =?iso-8859-1?Q?IdQspJHuHbireECcSktv3afuj/XTdQmZCiGgOLebUblH2qd+hs7of/t47g?=
+ =?iso-8859-1?Q?k9Tilk35q/UcKYpIf2Tmyt0s3VL5Ab3eEyZ8qSfqA3lTN4na6OPwOWTluQ?=
+ =?iso-8859-1?Q?bfRBIsjn+SC6Bsu6p7I2+5hMZz3B7rNwCqDe4p51NMSX4N69bZm3OqLJF2?=
+ =?iso-8859-1?Q?ZkpM+gv4oCwekdXKUPK8QA0lYFDX9JsVKWDRqlTRn8R+GzT0g41hA/isbQ?=
+ =?iso-8859-1?Q?YAWemk2/wuF/5m6UMJLmTskZYfQERMQdyI+RGbwkpkS5cTLAd59ocTaL6+?=
+ =?iso-8859-1?Q?3p1eMnEvT5dzgXZW5Bv0oJXaP3JY6RQQwRrSWwxaaIeID6R2tdxWfKn1Ah?=
+ =?iso-8859-1?Q?Plv033sAvxJDhCeLbgJLEEgbk4duB/ba4LjiCn81kfj1bWwrgRj+aXP2kA?=
+ =?iso-8859-1?Q?WaPbFR6cf0I56t8s2PyjlGS7cV5gXUhIDnYRiBto+B8eYb8FC/OtBF3LR9?=
+ =?iso-8859-1?Q?96LC8XKzEzuIE7U+LJs51ib3Of390jR6pJjhUv/wbCHlhdBfA+C8SZ6A+4?=
+ =?iso-8859-1?Q?X54BPGXyeWdDkPGM1BXb/NuxnAjjPgEHq1joPqgF4FF39LQ22XIMAP18XW?=
+ =?iso-8859-1?Q?XK1md2azb6G2HTW3eHyF2Dz8DGzXw7wngn77ttif2tlbnCJk1ZfQr2XxuA?=
+ =?iso-8859-1?Q?2u1kkw0Rq70C63VtXs0GVAqwq3ht2ec9U1lmhXLyjt6aFZ2hAmae4mXVs8?=
+ =?iso-8859-1?Q?pyaIKCqFejwVBFJqrPzTMYNV9n1HBW0iKqMHqtfQ0HNI3pGH4+Zp1ivgRN?=
+ =?iso-8859-1?Q?FXTIfYrksYnbTx7n4NwxPqwpEnC4At3aUzD2+NrVT0a37bVUEK29CZiFnR?=
+ =?iso-8859-1?Q?joD/ahgQaUJy1KTPr8J2n0XmtR6G680wNFsdHfl+JfvnhEIP+FSseFCf6Z?=
+ =?iso-8859-1?Q?gPQGSR24FOoaJgECh3qDlwt7OHmn0kKQz/1ZFMpofRoh5lfV4IStGRHCnk?=
+ =?iso-8859-1?Q?Tz6QN317/fmUz8xf/T4ku+5RgVtG7qsEsZ5sAwAyMl/HP3kdrvaXolhHdP?=
+ =?iso-8859-1?Q?I4HwAL1cZH4XOA7cpuvBqV937DD4dBm5t71ifREI031lEhixJi/yBAIVb5?=
+ =?iso-8859-1?Q?19FOSLPQkDdmuaa/liVNwDczQD3xM=3D?=
+MIME-Version: 1.0
+
+--_000_MA1PR01MB3450F55B85DCC265D51DFE8EFCD4AMA1PR01MB3450INDP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+
+
+________________________________
+From: Devi S <devi@o2finfo.com>
+Sent: Friday, November 14, 2025 5:55 PM
+To: Ganesh <ganesh@o2finfosolutions.com>; Brahmananda Reddy Karna <brahmana=
+nda.r@o2finfosolutions.com>; Anugu Vinay Kumar <vinay.k@o2finfosolutions.co=
+m>; Challa Ravi Kumar <ravi.c@o2finfosolutions.com>; Harika Madabathula <ha=
+rika@o2finfosolutions.com>; jessica@o2finfosolutions.com <jessica@o2finfoso=
+lutions.com>; Jonnalagadda Naga Malleswari <malleswari.n@betabridgetech.com=
+>; Geejula Tejasri <tejasri@o2finfosolutions.com>; Swetha Ballari <swetha.b=
+@o2finfosolutions.com>; Santosh <santosh@o2finfo.com>; Phani Varma <Phani.V=
+@o2finfo.com>
+Subject: FW: ECMS_545184./ 544042_ MFGADM_ Offshore
+
+
+
+
+
+
+Regards,
+
+Devi Chitturi
+
+O2F Info Solutions
+
+9701322795
+
+
+
+
+
+From: Sharada S B <Sharada_B@infosys.com>
+Sent: 14 November 2025 15:38
+Cc: Ranjith LNU <ranjith.2194255@infosys.com>; Usha R <usha.r06@infosys.com=
+>; Pushpalatha Girirangappa01 <Pushpalatha_G01@infosys.com>; ECMS_COE <ECMS=
+_COE@infosys.com>
+Subject: ECMS_545184./ 544042_ MFGADM_ Offshore
+
+
+
+Dear Vendor Partners ,
+
+
+
+***Please do not change the subject line ***
+
+New interview guidelines and process change mentioned below.
+
+
+
+Resume submission Guidelines:
+
+
+
+  *   Please ensure that the candidate's skill set, experience, and communi=
+cation abilities are aligned with the job description (JD)
+  *   Include a screenshot of the candidate interview on the first page of =
+the resume, captured after at least 15 minutes of interaction. The screensh=
+ot should not contain any ID proof of the candidate. Interviews conducted v=
+ia WhatsApp, FaceTime, or similar platforms will not be accepted. Preferred=
+ platforms are Webex, Google Meet, Microsoft Teams, and Zoom
+  *   Share the resumes to the mailbox:  ECMS_COE@infosys.com <mailto:ECMS_=
+COE@infosys.com%20only>  Do not mark Talent Acquisition (TA) or Delivery te=
+ams due to Compliance.
+  *   Please ensure that all shared profiles are in full compliance with In=
+fosys guidelines
+
+
+
+Candidate details submission tracker: Any deviation from below will not be =
+considered.
+
+
+
+
+
+Candidate Tracker
+
+ECMS REQ ID/ Unique ID
+
+Vendor email ID
+
+Title
+
+Candidate Name
+
+Phone No
+
+Email
+
+Notice Period
+
+Current Location
+
+Location applying for
+
+Total Experience
+
+Relevant Experience
+
+Skills
+
+Vendor Quoted Rate
+
+Interview screenshot
+
+Visa Type
+
+Agreed for Full time/Subcon
+
+If ex-Infy (provide the Employee ID)
+
+
+
+JD format:
+
+
+
+Number of Openings*
+
+3
+
+Skill Approved ECMS RQ#
+
+544042<https://iscls1apps.ad.infosys.com/ECMS/RequestInformation/RequestDet=
+ails?requestNumber=3DE8-5E-F0-EA-21-66-9F-FF-C5-0C-8B-11-35-66-1D-F9&reqNo=
+=3DE8-5E-F0-EA-21-66-9F-FF-C5-0C-8B-11-35-66-1D-F9> / 545184
+
+PU
+
+MFGADM
+
+Duration of contract*
+
+12 months
+
+Total Yrs. of Experience*
+
+5 to 10 years
+
+Relevant Yrs. of experience*
+
+5 to 10 years
+
+Detailed JD *(Roles and Responsibilities)
+
+Attached JD
+
+Mandatory skills*
+
+Available in JD
+
+Desired skills*
+
+.net core + react
+
+Domain*
+
+Automotive
+
+Approx. vendor billing rate* (INR /Day)
+
+Excluding service tax
+
+10000 to 11500 INR per day
+
+Work Location*
+
+India (close to any Infosys DC, preferably Bengaluru)
+
+Background check process to be followed: *
+
+Before onboarding / After onboarding: *
+
+BGV Agency: *
+
+Before Onboarding, BGV agency to be advised by ECMS
+
+Mode of Interview: Telephonic/Face to Face/Skype Interview*
+
+Telephonic / Video call
+
+WFO / WFH / Hybrid
+
+Hybrid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--_000_MA1PR01MB3450F55B85DCC265D51DFE8EFCD4AMA1PR01MB3450INDP_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 11pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof">
+<br>
+</div>
+<div id=3D"appendonsend"></div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 11pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<hr style=3D"display: inline-block; width: 98%;">
+<div id=3D"divRplyFwdMsg">
+<div style=3D"direction: ltr; font-family: Calibri, sans-serif; font-size: =
+11pt; color: rgb(0, 0, 0);">
+<b>From:</b>&nbsp;Devi S &lt;devi@o2finfo.com&gt;<br>
+<b>Sent:</b>&nbsp;Friday, November 14, 2025 5:55 PM<br>
+<b>To:</b>&nbsp;Ganesh &lt;ganesh@o2finfosolutions.com&gt;; Brahmananda Red=
+dy Karna &lt;brahmananda.r@o2finfosolutions.com&gt;; Anugu Vinay Kumar &lt;=
+vinay.k@o2finfosolutions.com&gt;; Challa Ravi Kumar &lt;ravi.c@o2finfosolut=
+ions.com&gt;; Harika Madabathula &lt;harika@o2finfosolutions.com&gt;;
+ jessica@o2finfosolutions.com &lt;jessica@o2finfosolutions.com&gt;; Jonnala=
+gadda Naga Malleswari &lt;malleswari.n@betabridgetech.com&gt;; Geejula Teja=
+sri &lt;tejasri@o2finfosolutions.com&gt;; Swetha Ballari &lt;swetha.b@o2fin=
+fosolutions.com&gt;; Santosh &lt;santosh@o2finfo.com&gt;; Phani
+ Varma &lt;Phani.V@o2finfo.com&gt;<br>
+<b>Subject:</b>&nbsp;FW: ECMS_545184./ 544042_ MFGADM_ Offshore</div>
+<div style=3D"direction: ltr;">&nbsp;</div>
+</div>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">Regards,</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">Devi Chitturi</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">O2F Info Solutions</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">9701322795</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<div style=3D"padding: 3pt 0cm 0cm; border-width: 1pt medium medium; border=
+-style: solid none none; border-color: rgb(225, 225, 225) currentcolor curr=
+entcolor;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;"><b>From:</b>&nbsp;Sharada S B &lt;Sharada_B@infosys.com&gt;=
+<br>
+<b>Sent:</b>&nbsp;14 November 2025 15:38<br>
+<b>Cc:</b>&nbsp;Ranjith LNU &lt;ranjith.2194255@infosys.com&gt;; Usha R &lt=
+;usha.r06@infosys.com&gt;; Pushpalatha Girirangappa01 &lt;Pushpalatha_G01@i=
+nfosys.com&gt;; ECMS_COE &lt;ECMS_COE@infosys.com&gt;<br>
+<b>Subject:</b>&nbsp;ECMS_545184./ 544042_ MFGADM_ Offshore</span></p>
+</div>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">Dear Vendor Partners ,
+<b>&nbsp;</b></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">***Please do not change the subject line ***</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><b>New interview guidelines and process change mentioned below.=
+</b></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><b>&nbsp;</b></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><b><u>Resume submission Guidelines:</u></b></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><b><u>&nbsp;</u></b></p>
+<ul style=3D"margin-top: 0cm; margin-bottom: 0cm;">
+<li style=3D"font-family: &quot;Aptos&quot;, sans-serif; font-size: 12pt; m=
+argin: 0cm;">Please ensure that the candidate's skill set, experience, and =
+communication abilities are aligned with the job description (JD)</li><li s=
+tyle=3D"font-family: &quot;Aptos&quot;, sans-serif; font-size: 12pt; margin=
+: 0cm;"><b>Include a screenshot of the candidate interview on the first pag=
+e of the resume, captured after at least 15 minutes of interaction. The scr=
+eenshot should not contain any ID proof
+ of the candidate. Interviews conducted via WhatsApp, FaceTime, or similar =
+platforms will not be accepted. Preferred platforms are Webex, Google Meet,=
+ Microsoft Teams, and Zoom</b></li><li style=3D"font-family: &quot;Aptos&qu=
+ot;, sans-serif; font-size: 12pt; margin: 0cm;">Share the resumes to the ma=
+ilbox: &nbsp;<span role=3D"presentation" style=3D"color: rgb(70, 120, 134);=
+"><u><a class=3D"OWAAutoLink" id=3D"OWA09df4f6c-2daa-3bde-82b4-5ebccd9ef088=
+" style=3D"color: rgb(70, 120, 134);" href=3D"mailto:ECMS_COE@infosys.com%2=
+0only">ECMS_COE@infosys.com
+</a></u></span>&nbsp;<b>Do not mark Talent Acquisition (TA) or Delivery tea=
+ms due to Compliance.</b></li><li style=3D"font-family: &quot;Aptos&quot;, =
+sans-serif; font-size: 12pt; margin: 0cm;">Please ensure that all shared pr=
+ofiles are in full compliance with Infosys guidelines</li></ul>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><b><u>Candidate details submission tracker:</u>
+</b>Any deviation from below will not be considered.</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><b>&nbsp;</b></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><b>&nbsp;</b></p>
+<table style=3D"box-sizing: border-box; border-collapse: collapse; border-s=
+pacing: 0px;" cellpadding=3D"0" cellspacing=3D"0">
+<tbody>
+<tr>
+<td style=3D"border-width: 1pt; border-style: solid; border-color: windowte=
+xt; background-color: rgb(247, 199, 172); padding: 0.75pt 5.4pt; vertical-a=
+lign: bottom; height: 15.75pt;" colspan=3D"17">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Candidate Tracker</b></span></=
+p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(165=
+, 201, 235); padding: 0.75pt 5.4pt; vertical-align: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>ECMS REQ ID/ Unique ID</b></sp=
+an></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Vendor email ID</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Title</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Candidate Name</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Phone No</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Email</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Notice Period</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Current Location</b></span></p=
+>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Location applying for</b></spa=
+n></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Total Experience</b></span></p=
+>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Relevant Experience</b></span>=
+</p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Skills</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Vendor Quoted Rate</b></span><=
+/p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Interview screenshot</b></span=
+></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Visa Type</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>Agreed for Full time/Subcon</b=
+></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"color: black;"><b>If ex-Infy (provide the Employ=
+ee ID)</b></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><b><u>JD format:</u></b></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<table cellpadding=3D"0" cellspacing=3D"0" style=3D"margin-right: 6.75pt; m=
+argin-left: 6.75pt; width: 407.6pt; box-sizing: border-box; border-collapse=
+: collapse; border-spacing: 0px;" align=3D"left">
+<tbody>
+<tr>
+<td style=3D"border-width: 1pt; border-style: solid; border-color: windowte=
+xt; background-color: rgb(172, 185, 202); padding: 0cm 5.4pt; vertical-alig=
+n: top; width: 185.05pt; height: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Number of Openings*</span></p>
+</td>
+<td style=3D"border-width: 1pt 1pt 1pt medium; border-style: solid solid so=
+lid none; border-color: windowtext windowtext windowtext currentcolor; padd=
+ing: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">3</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Skill Approved ECMS RQ#</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.55pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: rgb(70, 120, 134);"><u><a class=3D"OWAAutoLink" id=3D=
+"OWAdfd7370b-b82c-f87e-6d1b-d6eb303b2d32" data-auth=3D"NotApplicable" style=
+=3D"color: rgb(70, 120, 134); margin-top: 0px; margin-bottom: 0px;" title=
+=3D"https://iscls1apps.ad.infosys.com/ecms/requestinformation/requestdetail=
+s?requestnumber=3De8-5e-f0-ea-21-66-9f-ff-c5-0c-8b-11-35-66-1d-f9&amp;reqno=
+=3De8-5e-f0-ea-21-66-9f-ff-c5-0c-8b-11-35-66-1d-f9" href=3D"https://iscls1a=
+pps.ad.infosys.com/ECMS/RequestInformation/RequestDetails?requestNumber=3DE=
+8-5E-F0-EA-21-66-9F-FF-C5-0C-8B-11-35-66-1D-F9&amp;reqNo=3DE8-5E-F0-EA-21-6=
+6-9F-FF-C5-0C-8B-11-35-66-1D-F9">544042</a></u></span><span style=3D"font-f=
+amily: &quot;Calibri&quot;, sans-serif; font-size: 11pt;">&nbsp;/
+</span><span style=3D"font-size: 11pt;">545184</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">PU</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.55pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">MFGADM</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Duration of contract*</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">12 months</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Total Yrs. of Experience*</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">5 to 10 years</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Relevant Yrs. of experience*</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">5 to 10 years</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Detailed JD *(Roles and Responsibilities)</sp=
+an></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 11pt;">Attached JD</p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Mandatory skills*</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Available in JD</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Desired skills*</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 11pt;">.net core + react</p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Domain*</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Automotive</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.2pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Approx. vendor billing rate* (INR /Day)</span=
+></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Excluding service tax</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.2pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">10000 to 11500 INR per day</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 10.05pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Work Location*</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 10.05pt;"=
+>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">India (close to any Infosys DC, preferably Bengaluru)</span=
+></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 33.6pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Background check process to be followed: *</s=
+pan></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Before onboarding / After onboarding: *</span=
+></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">BGV Agency: *</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 33.6pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Before Onboarding, BGV agency to be advised by ECMS</span><=
+/p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 20.9pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">Mode of Interview: Telephonic/Face to Face/Sk=
+ype Interview*</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 20.9pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Telephonic / Video call</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(172=
+, 185, 202); padding: 0cm 5.4pt; vertical-align: top; width: 185.05pt; heig=
+ht: 20.9pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;">WFO / WFH / Hybrid</span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+padding: 0cm 5.4pt; vertical-align: top; width: 222.55pt; height: 20.9pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Hybrid</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;">&nbsp;</p>
+</body>
+</html>
+
+--_000_MA1PR01MB3450F55B85DCC265D51DFE8EFCD4AMA1PR01MB3450INDP_--

@@ -1,0 +1,12 @@
+Step 2: Steps for your GitHub Copilot
+Copy and paste this message into GitHub Copilot to prepare your Flask backend:
+
+"I am building a Chrome extension for candidate capture. Please update my app.py with the following requirements:
+
+Auth: Create an alias /api/extension/login that points to the existing plugin_login() function.
+
+Tracking: Update the @app.route('/api/capture-profile') to not only write to the candidates table but also insert a record into daily_submissions using the recruiter_id and candidate_id.
+
+Storage: Update @app.route('/api/upload-cv') to save files into subfolders organized by date: /storage/cvs/{recruiter_id}/{YYYY-MM-DD}/.
+
+Security: Restrict CORS to allow requests from the Chrome extension."

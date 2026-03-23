@@ -1,0 +1,54 @@
+# Deploy NestJS API to Azure App Service (Linux).
+#
+# Prerequisites (you create these in Azure Portal — we cannot do that from the repo):
+# 1. App Service (Node 20 LTS) + set Startup Command: node dist/main.js
+# 2. Application settings: DB_*, REDIS_*, JWT_SECRET, REDIS_TLS=true (Azure Redis port 6380), etc.
+# 3. GitHub → Settings → Secrets and variables → Actions:
+#    - Secret:  AZURE_WEBAPP_PUBLISH_PROFILE  (download from App Service → Get publish profile)
+#    - Variable: AZURE_WEBAPP_NAME            (your app name only, e.g. ats-api-dev)
+
+name: Azure — deploy API (App Service)
+
+# Manual only until Azure + GitHub variables are set. To auto-deploy on push to main, add:
+#   push: { branches: [main], paths: [ 'src/**', 'package.json', 'package-lock.json' ] }
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: azure-api-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require AZURE_WEBAPP_NAME variable
+        if: ${{ vars.AZURE_WEBAPP_NAME == '' }}
+        run: |
+          echo 'Add GitHub repository variable AZURE_WEBAPP_NAME (App Service name, no URL).'
+          exit 1
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install, build, production deps
+        run: |
+          npm ci
+          npm run build
+          npm prune --omit=dev
+
+      - name: Zip deployment package
+        run: zip -r deploy.zip dist package.json package-lock.json node_modules
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: deploy.zip

@@ -1,0 +1,371 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "run-migrations",
+			"type": "shell",
+			"command": "npm.cmd run migration:run",
+			"isBackground": false
+		},
+		{
+			"label": "run-migrations-tsnode",
+			"type": "shell",
+			"command": "npx ts-node ./node_modules/typeorm/cli.js migration:run -d src/database/data-source.ts",
+			"isBackground": false
+		},
+		{
+			"label": "run-seeds",
+			"type": "shell",
+			"command": "npx ts-node src/database/run-seeds.ts",
+			"isBackground": false
+		},
+		{
+			"label": "run-seeds",
+			"type": "shell",
+			"command": "npx ts-node src/database/run-seeds.ts",
+			"isBackground": false
+		},
+		{
+			"label": "run-seeds",
+			"type": "shell",
+			"command": "npx ts-node src/database/run-seeds.ts",
+			"isBackground": false
+		},
+		{
+			"label": "run-seeds",
+			"type": "shell",
+			"command": "npx ts-node src/database/run-seeds.ts",
+			"isBackground": false
+		},
+		{
+			"label": "run-seeds",
+			"type": "shell",
+			"command": "npx ts-node src/database/run-seeds.ts",
+			"isBackground": false
+		},
+		{
+			"label": "test-super-admin-login",
+			"type": "shell",
+			"command": "Invoke-RestMethod -Uri 'http://localhost:3000/api/super-admin/auth/login' -Method POST -ContentType 'application/json' -Body (ConvertTo-Json @{ email = 'admin@ats.com'; password = 'ChangeMe@123' }) | ConvertTo-Json -Depth 10",
+			"isBackground": false
+		},
+		{
+			"label": "create-demo-company",
+			"type": "shell",
+			"command": "$token = (Invoke-RestMethod -Uri 'http://localhost:3000/api/super-admin/auth/login' -Method POST -ContentType 'application/json' -Body (ConvertTo-Json @{ email = 'admin@ats.com'; password = 'ChangeMe@123' })).data.accessToken; $body = @{ name = 'Demo Company'; slug = 'demo-company'; email = 'demo@company.com'; licenseTier = 'premium'; initialAdmin = @{ firstName = 'Admin'; lastName = 'Demo'; email = 'admin@demo-company.com'; password = 'DemoAdmin@123' } } | ConvertTo-Json -Depth 10; Invoke-RestMethod -Uri 'http://localhost:3000/api/super-admin/companies' -Method POST -ContentType 'application/json' -Headers @{ Authorization = \"Bearer $token\" } -Body $body | ConvertTo-Json -Depth 10",
+			"isBackground": false
+		},
+		{
+			"label": "create-demo-company",
+			"type": "shell",
+			"command": ".\\test-scripts\\step2-create-company.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "create-company-script",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step2-create-company.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "create-company-script",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step2-create-company.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "create-company-retry",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step2-create-company.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "create-company-after-restart",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step2-create-company.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "debug-token",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\debug-token.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "test-company-creation",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\debug-token.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "test-company-admin-login",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step3-test-company-login.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "retry-company-admin-login",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step3-test-company-login.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "final-company-admin-login",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step3-test-company-login.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "test-ats-flow",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step4-ats-flow-test.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "build-app",
+			"type": "shell",
+			"command": "npm run build",
+			"isBackground": false
+		},
+		{
+			"label": "retry-ats-flow",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step4-ats-flow-test.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "final-ats-flow-test",
+			"type": "shell",
+			"command": "powershell -ExecutionPolicy Bypass -File .\\test-scripts\\step4-ats-flow-test.ps1",
+			"isBackground": false
+		},
+		{
+			"label": "Test ATS Flow with Fixed Middleware",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-scripts\\step4-ats-flow-test.ps1"
+			]
+		},
+		{
+			"label": "Test ATS Flow (Corrected Fields)",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-scripts\\step4-ats-flow-test.ps1"
+			]
+		},
+		{
+			"label": "Test ATS Flow with Fixed Schema",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-scripts\\step4-ats-flow-test.ps1"
+			]
+		},
+		{
+			"label": "run report validation",
+			"type": "shell",
+			"command": "G:/ATS/.venv/Scripts/python.exe",
+			"args": [
+				"tmp_report_validation.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "none"
+		},
+		{
+			"label": "tmp-create-company",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoLogo",
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\tmp-create-company.ps1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "cleanup-tmp-file",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoLogo",
+				"-NoProfile",
+				"-Command",
+				"Remove-Item -Force .\\tmp-create-company.ps1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Test ATS Flow with Fixed Schema",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-scripts\\step4-ats-flow-test.ps1"
+			]
+		},
+		{
+			"label": "test-token-payload",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-token-payload.ps1"
+			]
+		},
+		{
+			"label": "Test Centralized Email System",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-centralized-email.ps1"
+			]
+		},
+		{
+			"label": "Test Centralized Email System",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-centralized-email.ps1"
+			]
+		},
+		{
+			"label": "Test Centralized Email System",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-centralized-email.ps1"
+			]
+		},
+		{
+			"label": "test-centralized-email",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				".\\test-email-system.ps1"
+			]
+		},
+		{
+			"label": "clear-jobs",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"$env:PGPASSWORD='password'; psql -h 127.0.0.1 -U postgres -d ats_saas -c \"DELETE FROM jobs; SELECT count(*) FROM jobs;\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "clear-jobs",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"$env:PGPASSWORD='password'; psql -h 127.0.0.1 -U postgres -d ats_saas -c 'DELETE FROM jobs; SELECT count(*) FROM jobs;'"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "clear-jobs-cmd",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set PGPASSWORD=password && psql -h 127.0.0.1 -U postgres -d ats_saas -c \"DELETE FROM jobs; SELECT count(*) FROM jobs;\""
+			],
+			"isBackground": false
+		},
+		{
+			"label": "clear-jobs-sqlfile",
+			"type": "shell",
+			"command": "cmd",
+			"args": [
+				"/c",
+				"set PGPASSWORD=password && psql -h 127.0.0.1 -U postgres -d ats_saas -f tmp_clear_jobs.sql"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "clear-jobs-api",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"$ErrorActionPreference='Stop'; $loginBody=@{email='itsupport@o2finfosolutions.com';password='Admin@123'}; $login=Invoke-RestMethod -Uri 'http://localhost:3000/api/v1/auth/login' -Method POST -ContentType 'application/json' -Body ($loginBody | ConvertTo-Json); $token=$login.data.accessToken; $jobs=Invoke-RestMethod -Uri 'http://localhost:3000/api/v1/jobs?page=1&limit=100' -Headers @{Authorization=\"Bearer $token\"} -Method GET; foreach ($j in $jobs.data) { Invoke-RestMethod -Uri ('http://localhost:3000/api/v1/jobs/' + $j.id) -Headers @{Authorization=\"Bearer $token\"} -Method DELETE | Out-Null }; $final=Invoke-RestMethod -Uri 'http://localhost:3000/api/v1/jobs?page=1&limit=10' -Headers @{Authorization=\"Bearer $token\"} -Method GET; Write-Host ('Remaining jobs: ' + $final.total)"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "clear-jobs-ts",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"ts-node",
+				"scripts/clearJobs.ts"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "clear-jobs-ts",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"ts-node",
+				"scripts/clearJobs.ts"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "clear-jobs-final",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"ts-node",
+				"scripts/clearJobs.ts"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "test-email-import",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Write-Host 'Testing email import API...'; $token = (Invoke-RestMethod -Uri 'http://localhost:3000/api/super-admin/auth/login' -Method POST -ContentType 'application/json' -Body (ConvertTo-Json @{ email = 'admin@ats.com'; password = 'ChangeMe@123' })).data.accessToken; Write-Host 'Token: '$token.Substring(0, 30)'...'; $emailContent = 'From: test@company.com\nSubject: ECMS:545390 - Senior PEGA Developer\n\nRole: Senior PEGA Developer\nMandatory Skills: PEGA, Java\nExperience: 8-10 years'; $response = Invoke-RestMethod -Uri 'http://localhost:3000/api/v1/jobs/import-from-email' -Method POST -ContentType 'application/json' -Headers @{ Authorization = \"Bearer $token\" } -Body (ConvertTo-Json @{ emailContent = $emailContent; format = 'text' }); $response | ConvertTo-Json -Depth 8"
+			]
+		}
+	]
+}

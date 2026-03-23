@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ATS API Test</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        .test-section {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0052a3;
+        }
+
+        .response {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .success {
+            background: #d4edda;
+        }
+
+        .error {
+            background: #f8d7da;
+        }
+
+        input {
+            padding: 5px;
+            margin: 5px;
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ATS Backend API Test</h1>
+
+    <div class="test-section">
+        <h2>1. Test Authentication</h2>
+        <input id="email" type="text" placeholder="Email" value="admin@example.com">
+        <input id="password" type="password" placeholder="Password" value="Admin123!">
+        <button onclick="testLogin()">Login</button>
+        <div id="loginResponse" class="response"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test Get Candidates</h2>
+        <input id="token" type="text" placeholder="JWT Token (from login above)">
+        <button onclick="testGetCandidates()">Get Candidates</button>
+        <div id="candidatesResponse" class="response"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test Create Candidate</h2>
+        <input id="firstName" type="text" placeholder="First Name" value="John">
+        <input id="lastName" type="text" placeholder="Last Name" value="Doe">
+        <input id="candidateEmail" type="text" placeholder="Email" value="john@example.com">
+        <button onclick="testCreateCandidate()">Create Candidate</button>
+        <div id="createResponse" class="response"></div>
+    </div>
+
+    <script>
+        async function testLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const responseDiv = document.getElementById('loginResponse');
+
+            try {
+                const response = await fetch('http://localhost:3001/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                const token = data.accessToken;
+                if (token) {
+                    document.getElementById('token').value = token;
+                }
+
+                responseDiv.textContent = JSON.stringify(data, null, 2);
+                responseDiv.className = response.ok ? 'response success' : 'response error';
+            } catch (error) {
+                responseDiv.textContent = 'Error: ' + error.message;
+                responseDiv.className = 'response error';
+            }
+        }
+
+        async function testGetCandidates() {
+            const token = document.getElementById('token').value;
+            const responseDiv = document.getElementById('candidatesResponse');
+
+            if (!token) {
+                responseDiv.textContent = 'Error: No token provided. Please login first.';
+                responseDiv.className = 'response error';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3001/api/v1/candidates', {
+                    method: 'GET',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+
+                const data = await response.json();
+                responseDiv.textContent = JSON.stringify(data, null, 2);
+                responseDiv.className = response.ok ? 'response success' : 'response error';
+            } catch (error) {
+                responseDiv.textContent = 'Error: ' + error.message;
+                responseDiv.className = 'response error';
+            }
+        }
+
+        async function testCreateCandidate() {
+            const token = document.getElementById('token').value;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('candidateEmail').value;
+            const responseDiv = document.getElementById('createResponse');
+
+            if (!token) {
+                responseDiv.textContent = 'Error: No token provided. Please login first.';
+                responseDiv.className = 'response error';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3001/api/v1/candidates', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ firstName, lastName, email })
+                });
+
+                const data = await response.json();
+                responseDiv.textContent = JSON.stringify(data, null, 2);
+                responseDiv.className = response.ok ? 'response success' : 'response error';
+            } catch (error) {
+                responseDiv.textContent = 'Error: ' + error.message;
+                responseDiv.className = 'response error';
+            }
+        }
+
+        // Auto-run login on page load
+        window.addEventListener('load', () => {
+            setTimeout(testLogin, 500);
+        });
+    </script>
+</body>
+
+</html>

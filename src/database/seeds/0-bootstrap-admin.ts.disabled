@@ -1,0 +1,389 @@
+import { DataSource } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { Company } from '../../companies/entities/company.entity';
+import { User } from '../../auth/entities/user.entity';
+import { Role } from '../../auth/entities/role.entity';
+import { Permission } from '../../auth/entities/permission.entity';
+import { RolePermission } from '../../auth/entities/role-permission.entity';
+
+/**
+ * Bootstrap Seed - Creates First Admin User
+ *
+ * This seed script:
+ * 1. Creates (or reuses) a default company
+ * 2. Ensures Admin role exists with all permissions
+ * 3. Creates an admin user (idempotent)
+ *
+ * Safe to run multiple times - checks for existing data
+ *
+ * Usage:
+ *   npx ts-node src/database/seeds/0-bootstrap-admin.ts
+ * Or include in your seed runner
+ */
+
+const DEFAULT_COMPANY_ID = '00000000-0000-0000-0000-000000000001';
+const ADMIN_ROLE_SLUG = 'admin';
+const ADMIN_EMAIL = 'admin@example.com';
+const ADMIN_PASSWORD = 'Admin123!';
+const BCRYPT_ROUNDS = 10;
+
+interface AdminUserConfig {
+    companyId?: string;
+    email?: string;
+    password?: string;
+    firstName?: string;
+    lastName?: string;
+}
+
+/**
+ * Create or get default company
+ */
+async function ensureCompany(
+    dataSource: DataSource,
+    config: AdminUserConfig
+): Promise<{ id: string; name: string }> {
+    const companyRepository = dataSource.getRepository(Company);
+    const companyId = config.companyId || DEFAULT_COMPANY_ID;
+
+    let company = await companyRepository.findOne({
+        where: { id: companyId },
+    });
+
+    if (company) {
+        console.log(`✅ Using existing company: ${company.name} (${company.id})`);
+        return { id: company.id, name: company.name };
+    }
+
+    console.log('📝 Creating default company...');
+
+    company = companyRepository.create({
+        id: companyId,
+        name: 'Default Company',
+        slug: 'default-company',
+        email: 'admin@company.local',
+        license_tier: 'professional',
+        is_active: true,
+        feature_flags: {
+            candidates: true,
+            jobs: true,
+            applications: true,
+            interviews: true,
+            offers: true,
+            custom_fields: true,
+            api_access: true,
+            webhooks: true,
+        },
+        settings: {
+            timezone: 'UTC',
+            date_format: 'YYYY-MM-DD',
+        },
+    });
+
+    await companyRepository.save(company);
+    console.log(`✅ Created company: ${company.name} (${company.id})`);
+
+    return { id: company.id, name: company.name };
+}
+
+/**
+ * Get all global permissions
+ */
+async function getAllPermissions(
+    dataSource: DataSource
+): Promise<Permission[]> {
+    const permissionRepository = dataSource.getRepository(Permission);
+
+    let permissions = await permissionRepository.find();
+
+    // If no permissions exist, create admin permissions
+    if (permissions.length === 0) {
+        console.log('⚠️  No permissions found. Creating admin permissions...');
+
+        const adminPermissions = [
+            {
+                name: 'candidates:*',
+                description: 'All candidate operations',
+                resource: 'candidates',
+                action: '*',
+                level: 2,
+                is_sensitive: false,
+            },
+            {
+                name: 'jobs:*',
+                description: 'All job operations',
+                resource: 'jobs',
+                action: '*',
+                level: 2,
+                is_sensitive: false,
+            },
+            {
+                name: 'applications:*',
+                description: 'All application operations',
+                resource: 'applications',
+                action: '*',
+                level: 2,
+                is_sensitive: false,
+            },
+            {
+                name: 'users:*',
+                description: 'All user operations',
+                resource: 'users',
+                action: '*',
+                level: 2,
+                is_sensitive: true,
+            },
+            {
+                name: 'reports:*',
+                description: 'All report operations',
+                resource: 'reports',
+                action: '*',
+                level: 2,
+                is_sensitive: false,
+            },
+            {
+                name: 'settings:manage',
+                description: 'Manage company settings',
+                resource: 'settings',
+                action: 'manage',
+                level: 2,
+                is_sensitive: true,
+            },
+            {
+                name: 'roles:manage',
+                description: 'Manage roles and permissions',
+                resource: 'roles',
+                action: 'manage',
+                level: 2,
+                is_sensitive: true,
+            },
+            {
+                name: 'audit:view',
+                description: 'View audit logs',
+                resource: 'audit',
+                action: 'view',
+                level: 2,
+                is_sensitive: true,
+            },
+            {
+                name: 'webhooks:manage',
+                description: 'Manage webhooks',
+                resource: 'webhooks',
+                action: 'manage',
+                level: 2,
+                is_sensitive: false,
+            },
+            {
+                name: 'api:access',
+                description: 'Access API',
+                resource: 'api',
+                action: 'access',
+                level: 1,
+                is_sensitive: false,
+            },
+        ];
+
+        permissions = await permissionRepository.save(adminPermissions);
+        console.log(`✅ Created ${permissions.length} admin permissions`);
+    }
+
+    return permissions;
+}
+
+/**
+ * Create or get Admin role
+ */
+async function ensureAdminRole(
+    dataSource: DataSource,
+    companyId: string,
+    permissions: Permission[]
+): Promise<{ id: string; name: string }> {
+    const roleRepository = dataSource.getRepository(Role);
+    const rolePermissionRepository = dataSource.getRepository(RolePermission);
+
+    let role = await roleRepository.findOne({
+        where: {
+            company_id: companyId,
+            slug: ADMIN_ROLE_SLUG,
+        },
+    });
+
+    if (role) {
+        console.log(`✅ Using existing Admin role (${role.id})`);
+        return { id: role.id, name: role.name };
+    }
+
+    console.log('📝 Creating Admin role...');
+
+    role = roleRepository.create({
+        company_id: companyId,
+        name: 'Admin',
+        slug: ADMIN_ROLE_SLUG,
+        description: 'Full system access',
+        is_system: true,
+        is_default: false,
+        display_order: 1,
+    });
+
+    role = await roleRepository.save(role);
+
+    // Assign all permissions to admin role
+    const rolePermissions = permissions.map((permission) =>
+        rolePermissionRepository.create({
+            role_id: role.id,
+            permission_id: permission.id,
+        })
+    );
+
+    await rolePermissionRepository.save(rolePermissions);
+    console.log(`✅ Created Admin role with ${permissions.length} permissions`);
+
+    return { id: role.id, name: role.name };
+}
+
+/**
+ * Hash password using bcrypt
+ */
+async function hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, BCRYPT_ROUNDS);
+}
+
+/**
+ * Create or update admin user (idempotent)
+ */
+async function ensureAdminUser(
+    dataSource: DataSource,
+    companyId: string,
+    roleId: string,
+    config: AdminUserConfig
+): Promise<{ id: string; email: string }> {
+    const userRepository = dataSource.getRepository(User);
+
+    const email = config.email || ADMIN_EMAIL;
+    const password = config.password || ADMIN_PASSWORD;
+    const firstName = config.firstName || 'Admin';
+    const lastName = config.lastName || 'User';
+
+    let user = await userRepository.findOne({
+        where: {
+            company_id: companyId,
+            email: email,
+        },
+    });
+
+    if (user) {
+        console.log(`✅ Admin user already exists: ${email}`);
+        console.log(`   ID: ${user.id}`);
+        console.log(`   Status: ${user.is_active ? 'Active ✅' : 'Inactive ❌'}`);
+        console.log(
+            `   Email Verified: ${user.email_verified ? 'Yes ✅' : 'No ❌'}`
+        );
+        return { id: user.id, email: user.email };
+    }
+
+    console.log(`📝 Creating admin user: ${email}...`);
+
+    const passwordHash = await hashPassword(password);
+
+    user = userRepository.create({
+        company_id: companyId,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone: null,
+        password_hash: passwordHash,
+        auth_provider: 'email',
+        auth_provider_id: null,
+        avatar_url: null,
+        job_title: 'Administrator',
+        department: 'Admin',
+        role: 'admin',
+        permissions: {},
+        is_active: true,
+        email_verified: true,
+        last_login_at: null,
+        preferences: {
+            theme: 'light',
+            notifications_email: true,
+            notifications_in_app: true,
+        },
+    });
+
+    await userRepository.save(user);
+
+    console.log(`✅ Created admin user`);
+    console.log(`   ID: ${user.id}`);
+    console.log(`   Email: ${user.email}`);
+    console.log(`   Name: ${user.first_name} ${user.last_name}`);
+    console.log(`   Role: Admin`);
+
+    return { id: user.id, email: user.email };
+}
+
+/**
+ * Main bootstrap function
+ */
+export async function bootstrapAdminUser(
+    dataSource: DataSource,
+    config: AdminUserConfig = {}
+): Promise<void> {
+    console.log('\n╔════════════════════════════════════════════╗');
+    console.log('║  Bootstrap Admin User Seed                 ║');
+    console.log('╚════════════════════════════════════════════╝\n');
+
+    try {
+        // Step 1: Ensure company exists
+        console.log('📦 Step 1: Ensure company exists');
+        const company = await ensureCompany(dataSource, config);
+
+        // Step 2: Ensure permissions exist
+        console.log('\n🔐 Step 2: Ensure permissions exist');
+        const permissions = await getAllPermissions(dataSource);
+
+        // Step 3: Ensure admin role exists
+        console.log('\n👤 Step 3: Ensure admin role exists');
+        const role = await ensureAdminRole(dataSource, company.id, permissions);
+
+        // Step 4: Ensure admin user exists
+        console.log('\n👨‍💼 Step 4: Ensure admin user exists');
+        const user = await ensureAdminUser(
+            dataSource,
+            company.id,
+            role.id,
+            config
+        );
+
+        // Success message
+        console.log('\n╔════════════════════════════════════════════╗');
+        console.log('║  Bootstrap Complete! ✅                    ║');
+        console.log('╚════════════════════════════════════════════╝\n');
+
+        console.log('📊 Summary:');
+        console.log(`   Company:    ${company.name} (${company.id})`);
+        console.log(`   Role:       ${role.name} (${role.id})`);
+        console.log(`   User:       ${user.email} (${user.id})`);
+        console.log(`   Password:   ${config.password || ADMIN_PASSWORD}`);
+        console.log('\n🎉 Ready to login!');
+        console.log(`   URL:        http://localhost:5173/login`);
+        console.log(`   Email:      ${user.email}`);
+        console.log(`   Password:   ${config.password || ADMIN_PASSWORD}`);
+        console.log('\n⚠️  Change password after first login!\n');
+    } catch (error) {
+        console.error('\n❌ Bootstrap failed:', error.message);
+        throw error;
+    }
+}
+
+/**
+ * Standalone execution
+ * Run with: npx ts-node src/database/seeds/0-bootstrap-admin.ts
+ */
+async function main() {
+    // This requires the database connection to be configured
+    // Typically used when running as part of a seed runner
+    console.log('Run this seed through the main seed runner');
+    console.log('or include in your app bootstrap process');
+}
+
+if (require.main === module) {
+    main().catch(console.error);
+}

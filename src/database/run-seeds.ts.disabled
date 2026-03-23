@@ -1,0 +1,147 @@
+/**
+ * Seed Runner - Execute all seeds including bootstrap
+ *
+ * Usage:
+ *   npx ts-node src/database/run-seeds.ts
+ *
+ * This runs seeds in order:
+ * 1. 0-bootstrap-admin.ts    (Create admin user and company)
+ * 2. default-roles-permissions.seed.ts (Create default roles)
+ * 3. default-licenses-features.seed.ts (Create licenses)
+ * 4. default-custom-fields.seed.ts (Create custom fields)
+ * 5. default-candidates.seed.ts (Create sample candidates)
+ * 6. default-jobs.seed.ts (Create sample jobs)
+ * 7. super-admin.seed.ts (Create global super admin)
+ */
+
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
+import * as path from 'path';
+import { config as dotenvConfig } from 'dotenv';
+import { Company } from '../companies/entities/company.entity';
+import { User } from '../auth/entities/user.entity';
+import { Role } from '../auth/entities/role.entity';
+import { Permission } from '../auth/entities/permission.entity';
+import { RolePermission } from '../auth/entities/role-permission.entity';
+import { RolePermissionAudit } from '../auth/entities/role-permission-audit.entity';
+import { UserPermission } from '../auth/entities/user-permission.entity';
+import { SuperAdminUser } from '../super-admin/entities/super-admin-user.entity';
+
+// Load environment variables
+dotenvConfig({ path: path.join(__dirname, '../../.env') });
+
+// Import seed functions (DISABLED - needs update for single-tenant schema)
+// import { bootstrapAdminUser } from './seeds/0-bootstrap-admin';
+// import { seedSuperAdminUser } from './seeds/super-admin.seed';
+
+/**
+ * Create and initialize TypeORM DataSource
+ */
+function createDataSource(): DataSource {
+    return new DataSource({
+        type: 'postgres',
+        host: process.env.DB_HOST || 'localhost',
+        port: parseInt(process.env.DB_PORT || '5432'),
+        username: process.env.DB_USERNAME || 'postgres',
+        password: process.env.DB_PASSWORD || 'password',
+        database: process.env.DB_NAME || 'ats_saas',
+        entities: [
+            Company,
+            User,
+            Role,
+            Permission,
+            RolePermission,
+            RolePermissionAudit,
+            UserPermission,
+            SuperAdminUser,
+        ],
+        synchronize: false,
+        logging: false,
+    });
+}
+
+/**
+ * Run all seeds
+ */
+async function runSeeds(dataSource: DataSource) {
+    console.log('\n╔═══════════════════════════════════════════════╗');
+    console.log('║      ATS SaaS - Database Seed Runner         ║');
+    console.log('╚═══════════════════════════════════════════════╝\n');
+
+    try {
+        // Initialize database connection
+        console.log('🔌 Connecting to database...');
+        if (!dataSource.isInitialized) {
+            await dataSource.initialize();
+        }
+        console.log('✅ Connected to database\n');
+
+        // Run bootstrap seed (create company, roles, admin user)
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        console.log('Running: Bootstrap Admin Seed');
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+
+        await bootstrapAdminUser(dataSource, {
+            // Customize here if needed:
+            // companyId: 'your-company-id',
+            // email: 'your@email.com',
+            // password: 'YourPassword123!',
+            // firstName: 'Your Name',
+            // lastName: 'Your Last',
+        });
+
+        console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        console.log('Running: Super Admin Seed');
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+
+        await seedSuperAdminUser(dataSource, {
+            email: process.env.SUPER_ADMIN_EMAIL || 'admin@ats.com',
+            password: process.env.SUPER_ADMIN_PASSWORD || 'ChangeMe@123',
+            firstName: process.env.SUPER_ADMIN_FIRST_NAME || 'Super',
+            lastName: process.env.SUPER_ADMIN_LAST_NAME || 'Admin',
+            role: process.env.SUPER_ADMIN_ROLE || 'super_admin',
+        });
+
+        console.log('\n✅ All seeds completed successfully!\n');
+        console.log('╔═══════════════════════════════════════════════╗');
+        console.log('║           Seeding Complete ✅                ║');
+        console.log('╚═══════════════════════════════════════════════╝\n');
+
+        console.log('📋 What was created:');
+        console.log('   ✅ Default company');
+        console.log('   ✅ Admin role with all permissions');
+        console.log('   ✅ Admin user (admin@example.com / Admin123!)');
+        console.log('   ✅ Super admin (admin@ats.com / ChangeMe@123)');
+        console.log('\n🎯 Next steps:');
+        console.log('   1. Start backend: npm run dev');
+        console.log('   2. Start frontend: cd frontend && npm run dev');
+        console.log('   3. Login (company admin): http://localhost:5173/login');
+        console.log('   4. Company admin: admin@example.com / Admin123!');
+        console.log('   5. Super admin: POST /api/super-admin/auth/login with admin@ats.com / ChangeMe@123');
+        console.log('\n');
+    } catch (error) {
+        console.error('\n❌ Seeding failed:', error.message);
+        console.error(error);
+        process.exit(1);
+    } finally {
+        // Close database connection
+        if (dataSource.isInitialized) {
+            await dataSource.destroy();
+        }
+    }
+}
+
+/**
+ * Main entry point
+ */
+async function main() {
+    const dataSource = createDataSource();
+    await runSeeds(dataSource);
+}
+
+// Execute
+main().catch((error) => {
+    console.error('Fatal error:', error);
+    process.exit(1);
+});

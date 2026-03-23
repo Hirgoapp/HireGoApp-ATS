@@ -1,0 +1,1395 @@
+Received: from PN3PR01MB6152.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:83::10)
+ by PN4PR01MB11492.INDPRD01.PROD.OUTLOOK.COM with HTTPS; Thu, 20 Nov 2025
+ 05:06:40 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=PgqN5Pso2nMhAb/l9oEmgdtTXlbLFZhXPaaJkHXFvW3YEQnmRsgpNzUDFpB31c9Ryke+nR3qjdQ8x2/XyI8XJdgqk3FS6/RyuTsBliNG7YyyWlESZUn1qJSZa9jOBWgvnfZohy4uF2zgxSpeHCbCffLZYG+LAEL3OJEVOmgjSVhsZzueYLIvS6PVORooE2w0SX8ozA5X6LwUaKKSpj09Zd9GK8nuU8UGECMMD90TwEFyU8CrjecPu0EIAS/VIEXdo2z7D/X6lli3PxfwO9PjTf0lPdIuSXkYv9no1kMKCAScRLYS4AC6FTdHI8RKGtUJkGqRqnTy065deQxIWiqawg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WviHFzkYYtP6Uo63JBewlXzc7ZTPR3hMFIHvT/SdcQw=;
+ b=SDXay0e9k2r2TC2V5ZVNHD8JXR3sHrKrd2kqwv4gfKWfu55MhOdVeeddvkWVZqV6rxM6DiDBnon2Qmg/8x4CJEvVu1t+90gHohjoH2LWXUa9CbP+vBpLoGGVN5Y3cQouFsF/NNCKSgyvPYuc6O1ZT4wxwMu9ePq3XOxB1jPooQ4igeDGieaIGWOp/AG6I2qBx1fK2/14kuNc280aQJKrH7eGNE0189RijO+F5gVjWDz09zfTHggF8kKjru6lqFqs+20A7nE0Ehwa56Jbi4TbF3/K76BxYBynGdr/01uLD5/oaDiTtW24RIX0yUqxsK3IhmCwZF27J4jxI25Falj1og==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 2a01:111:f403:c408::3) smtp.rcpttodomain=o2finfosolutions.com
+ smtp.mailfrom=o2finfo.com; dmarc=pass (p=quarantine sp=quarantine pct=25)
+ action=none header.from=o2finfo.com; dkim=pass (signature was verified)
+ header.d=o2finfo.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=o2finfo.com] dkim=[1,1,header.d=o2finfo.com]
+ dmarc=[1,1,header.from=o2finfo.com])
+Received: from MA5P287CA0251.INDP287.PROD.OUTLOOK.COM (2603:1096:a01:1ae::12)
+ by PN3PR01MB6152.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:83::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Thu, 20 Nov
+ 2025 05:06:37 +0000
+Received: from MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1ae:cafe::4a) by MA5P287CA0251.outlook.office365.com
+ (2603:1096:a01:1ae::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.10 via Frontend Transport; Thu,
+ 20 Nov 2025 05:06:38 +0000
+Authentication-Results: spf=pass (sender IP is 2a01:111:f403:c408::3)
+ smtp.mailfrom=o2finfo.com; dkim=pass (signature was verified)
+ header.d=o2finfo.com;dmarc=pass action=none
+ header.from=o2finfo.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of o2finfo.com designates
+ 2a01:111:f403:c408::3 as permitted sender) receiver=protection.outlook.com;
+ client-ip=2a01:111:f403:c408::3;
+ helo=PNZPR01CU001.outbound.protection.outlook.com; pr=C
+Received: from PNZPR01CU001.outbound.protection.outlook.com
+ (2a01:111:f403:c408::3) by MA1PEPF00007265.mail.protection.outlook.com
+ (2603:1096:a04::207) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.9 via Frontend Transport; Thu,
+ 20 Nov 2025 05:06:37 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GbW58dDW00rss1SgPaGE9U4+0UuO4mcfCPeXsurE9jcoNXCYRMmsbw93ixEQNSal44u/XnGkjbjHjKR3YOPavHFUcKbVz7IrkH7chUNxYmoQtzg1hGV3OlskKqT6lfIW5AhmmilU1ncbwBtX8jPQ30AP4xshh58/4XtjWhXCprAKkNJO/Bfdd52BH+fpDZHf4D3DvWsmCUWHJW0KYngJH24WwI+wfyW6s+pXfoXMlQDR+RdwRoZTfCeHdxYq+Uqjse4w3EbKclp/F9oZosXNCs9zMqSj4AIyeUNxUh7v4+5iPZO2C70vpv4sZONhcq7JhxElas6qrDqkY0xqtfP40g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WviHFzkYYtP6Uo63JBewlXzc7ZTPR3hMFIHvT/SdcQw=;
+ b=u4LgitQPhPPq1uL0vcKugUPUt9xefUYhT0GLae0K4TRF71Vbf9vO9HqW7WbywLli3vr+l6geNZ7kk2mzthAtHqaycra+20GhM/7/CLxbxgJE1ng16ZF86wo032pGWlF9sUpJ3mJ/02Gb7wkUa1xEGcxtrsREoeqbiOuC491BPI6MBZ80UOsyJOWpR1piGbxyJrYc62l/nWCJxmgyacIdQ5ByivGNQRVYwq13sSZAzQTmrjcaUhRevfd6PPPy7d1nRBgMwO0RMWZMFEi/ih/ucqQYY3CG6Lp/TceXTvOj6WzwuSmr+IhGbp1J1uzv/m7pUh7BRb7JA/CU54R1VX9t9Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=o2finfo.com; dmarc=pass action=none header.from=o2finfo.com;
+ dkim=pass header.d=o2finfo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2finfo.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WviHFzkYYtP6Uo63JBewlXzc7ZTPR3hMFIHvT/SdcQw=;
+ b=BVg/2fXdampGw8SfLZ9hmz8StpKV1bthSvgo/+u2QFXtFE7Z8UOET0VnOEYkE9eSmxOtra43viQd/Rb/oRx9SNiWBhQG8Mn+Im/3hjGpQxgKMaKpgdbGS6rdp4nRM+1r86Kzdybjsl8FSJrSIUaFTx0ZOQ8bjjt34hkM+l8+LnGBpAyZYbioLjjBtoEiueqJgTJMtiCVjMcatjciQGhV6Q0qDIbpX98/p1nYhB1c24Lkq9zhjznfUAtRjlx8jRkitbXAw6t3fkSz0T6Qf3HNlTpxxAig1JwUTOxRlatYq/Qxt4UXc9x3yuHZWf9ITBrslSYdYlYPpKTi6ertw8nWtA==
+Received: from MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a00:78::15)
+ by PN3PR01MB9709.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:16c::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Thu, 20 Nov
+ 2025 05:06:34 +0000
+Received: from MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::62dd:7157:93e5:8111]) by MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::62dd:7157:93e5:8111%2]) with mapi id 15.20.9298.012; Thu, 20 Nov 2025
+ 05:06:34 +0000
+From: Santosh <santosh@o2finfo.com>
+To: "requirements@o2finfosolutions.com" <requirements@o2finfosolutions.com>
+Subject: Fw: 545390 - Senior PEGA developer - India - EAIS
+Thread-Topic: 545390 - Senior PEGA developer - India - EAIS
+Thread-Index: AQHcUw30r8tEBgJxmEqe3bfGBHERRbTtlpcggA157iU=
+Date: Thu, 20 Nov 2025 05:06:34 +0000
+Message-ID: <MA1PR01MB345008AB09C3F5D977EEEB1EFCD4A@MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM>
+References: <TYZPR02MB4944B68DE79DDF5327F9F75CFD1CA@TYZPR02MB4944.apcprd02.prod.outlook.com>
+ <KL1PR02MB8013E105A7E155C2583A4DA7ED1FA@KL1PR02MB8013.apcprd02.prod.outlook.com>
+ <KL1PR02MB7750250754C43EA8E7FE0081F91FA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB77507C7A1C24131455837B5BF91FA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB775022AABE8E68D338801A6AF91FA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB775030976463AFAAE6FCE392F91FA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB77501A3400F5495DE69634D6F91EA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB77503B8A027E7622558A271AF91EA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB775047249FDDA239D3C7E5EBF91BA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB7750B1ED61A12D8F72F1B398F91BA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB7750E8DDE70C0BBC20E458F8F91BA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB77500397AFC6FD739C3A43AEF91BA@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB7750F1EFF61CFACB06AD394EF9E3A@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB775049F9F7139595DBC8A574F9E3A@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB7750138933504E981ABC78DDF9E3A@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <KL1PR02MB7750742AD5C1CD3EDE55C140F9E3A@KL1PR02MB7750.apcprd02.prod.outlook.com>
+ <JH0PR02MB7344DA3EC0A50F11DB91B4BBF9C5A@JH0PR02MB7344.apcprd02.prod.outlook.com>
+ <TYSPR02MB7340F023C14767484FFD20C7F9CFA@TYSPR02MB7340.apcprd02.prod.outlook.com>
+ <TYSPR02MB7340C042B3EEDB32DCBBE50AF9CFA@TYSPR02MB7340.apcprd02.prod.outlook.com>
+ <MAXPR01MB27827770E106CDD4949238879ECFA@MAXPR01MB2782.INDPRD01.PROD.OUTLOOK.COM>
+In-Reply-To: <MAXPR01MB27827770E106CDD4949238879ECFA@MAXPR01MB2782.INDPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-IN, en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+msip_labels:
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=o2finfo.com;
+x-ms-traffictypediagnostic: MA1PR01MB3450:EE_|PN3PR01MB9709:EE_|MA1PEPF00007265:EE_|PN3PR01MB6152:EE_|PN4PR01MB11492:EE_
+X-MS-Office365-Filtering-Correlation-Id: b9e14cd1-9c8f-4ce5-be79-08de27f29554
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|376014|366016|1800799024|38070700021|4053099003|13003099007|8096899003;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?eg/sI2O3a+SlLVuS0+Chx5/N896JV+Ntjf+CnktIve2tBcRPywMB+mLS2n+d?=
+ =?us-ascii?Q?H8MZ4UiUfF9+ZU/QEAtjNy/7ea6v/wOzdSzbqNH/51lrQ30yZkreu5r00uX5?=
+ =?us-ascii?Q?Tj/Hdl2C2fGAn6N28BYQPkvpZwLfftk9S8wxO69A1ailKO7j5BkADjRkkTfT?=
+ =?us-ascii?Q?todAB0kV4Y0ar4onOzjSV+dJMB64of9Adx+Yqz/AMr8evyQX15knNJQzaEdH?=
+ =?us-ascii?Q?sUBlSs5Nup+zqlFZV9Ura/D3KFTYaP2Qr0fHUTTjJIo3GPDJs26nbhErBo5S?=
+ =?us-ascii?Q?d5YUt3qn7msgmuCoz18FFRxQhGuTmxvrDd9RjtFTb1l0Wv6ewAW+nmmkxelz?=
+ =?us-ascii?Q?bOoIxYapVseo03I5zZXPDVhc3F0B0EkV3wvrBHf6QQhBNTU/GWvydS6u7bZ1?=
+ =?us-ascii?Q?QiBbEgaodkLGBCtGAp/edTCcrfodVnuM7rylhSxAQPM5j6LTsUoqqjz1opyS?=
+ =?us-ascii?Q?c811HFluQLGJr3K0R3CRb3xby5LFttquLwKSlZhucbD8WnB7NfwcBTEtZg2y?=
+ =?us-ascii?Q?lsz9uGfckq5QQrnSINyl3/ZyrqiREZeLtCkwu8aME4WVQHYNE4R14TpGcHJt?=
+ =?us-ascii?Q?9x5eC/L4F26bKAyISlhZnOBgwHkS+fqSw/V9Ww1tjddOhuC+fGmDSthYQqdT?=
+ =?us-ascii?Q?BZT+hlliAhAQ3cHabuJJ0lsZz4KL1c6kbs8yK+eNQgou+nvikzo7APSm2b2Q?=
+ =?us-ascii?Q?P8jk8Z0ukxizn0S8oQooLoAP4teiGNRK0/XtYjg6iuVN0dYJ/II8E8DvZUEH?=
+ =?us-ascii?Q?6zfwzGLiCH+Yq/gwDx9dm51Rco2l//gmNe3rA1EwTu4cDVnvQzWoCPJN5lAK?=
+ =?us-ascii?Q?9imA0pwytHHooRitGKO/m/zp3xaL9obc17meulbC4Jh/CfVbIcZf7cnM0YAM?=
+ =?us-ascii?Q?LYB+P+T7X9wvX4B094navJv3/HAySdJ84M7pMY49f9qKIy48HRLVXe8MiJbm?=
+ =?us-ascii?Q?66to3HifoMEM/1xwCydBZPGmBfZde19Bfo6pEQx8f7X/7XGmzU64+YRGnxdv?=
+ =?us-ascii?Q?1huY6zyZ2Y+G51UMimOzVuT0NFOBjIGfPWtH1eEBe179ea4GFJEWvSmqJJS8?=
+ =?us-ascii?Q?9YjEO6N6Y+BKzVedVAQvJOwtsCBclJB2W36MRMmR3mlnWPXS9gVcv4hLFRoj?=
+ =?us-ascii?Q?wSU288YX6o3I8S023xaCzgXX5ntNVEr4zJUgqjm/LvdqMTzxh6GWXJu2B0i4?=
+ =?us-ascii?Q?waKTQKOiVqU6mLsvj0iSvyPDCzxgaCj2l38RehsMxdy8d4MCHed6u6Bf7A5K?=
+ =?us-ascii?Q?uuqTxeTtPJ/cyGwWWssToH5X2AWU+L3nKnNtf4LqgIk6zc3R7PRAvcSxvYRQ?=
+ =?us-ascii?Q?XnOyTTMuJF6v3tny8+XkOVpDj/NMAvla+zKyo494+B6sgzdexOpvqBLI4yv4?=
+ =?us-ascii?Q?IzBxRaPu3+vnWKSD00IclgMtn5AzDGmQrEAPNyBWAI3ikKc/XJxLtN5+PJwm?=
+ =?us-ascii?Q?s/OQq71u+MY0qEoCmUkjNXdYlia46SC4PlAxafAnsFXeflQhFSnVrPLxWeNI?=
+ =?us-ascii?Q?wdXHXptsccoUB1vIqU89l8AdxnovpzqQADe8?=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA1PR01MB3450.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(4053099003)(13003099007)(8096899003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?iso-8859-1?Q?qwmt9q4Uipu+f34hCybzOcHd4z5bpvpN1LvgzOOP7m4VJg5MszMyvTxLfN?=
+ =?iso-8859-1?Q?73JVCLqu509BxelTa1FrmRX8VsbGz+SGzdlk0BihcDv/nCMKWmatPp8yKq?=
+ =?iso-8859-1?Q?4zElDpwdCLrgqgldmAiVWVKl6KF1xHGR0I8uR9a8RD7ztEtjcGNcrLe/5l?=
+ =?iso-8859-1?Q?j9EctNjHiBf6AxCIOyguCLCHDIw33lB8iUjpcULye7uCEduIF9J7sQbBS8?=
+ =?iso-8859-1?Q?ri/fafJLtk+Z9MW4rZW3r7zTL0sS71zhCJe++s+9C76ZsXLX6rn/7gNR5H?=
+ =?iso-8859-1?Q?b2Muw1shbmBqpt5Ytj1pnh2CWA0C9EwOfErnYqjpwRB1JJc6HVLGGkCm80?=
+ =?iso-8859-1?Q?p4yfqccHxNUILfofEreXIb9gQrDTIABzfkStpuW4QBJZuqo5EbBTaJoqtH?=
+ =?iso-8859-1?Q?UJF3HH4tOYtY6vT+J1Dgq8l4Eb3FB/EgSXSSYiitF1/JGFY0gs3cjr4Nxw?=
+ =?iso-8859-1?Q?d+IuwI1WVFxHcN4ygjEvhWZ3Go2j4b5ERpjpzu9abbuKjRWOGto5eDcVvx?=
+ =?iso-8859-1?Q?Ead0a5XUKV5lTxKu/lRNQivcAbr02gcoMDGR5vLG4kOfzRLJUfZkwv0/G2?=
+ =?iso-8859-1?Q?6vWl1aWe49Bt4N076Qrj/kjpNoSHpt58gGq16Zg6EU5IvSnM8k5RML9xtO?=
+ =?iso-8859-1?Q?InK6Lecv+wDyVN+nElkpdfxAfUJRdW+bE+2PrNtbcwlVWA3ek32lIg0bXp?=
+ =?iso-8859-1?Q?w3tIuIabDCISKctbyJOKgUpYVgWIebMewBRpabivbb4z+HtYSIKLGoKpKR?=
+ =?iso-8859-1?Q?uSGzU6zuo/v1QxCV0LrQO7K8+gh+GEvFH5h2UdJH4srjBgACP+tJ+j/yPO?=
+ =?iso-8859-1?Q?y07tSfA1BkCGFdV8PPGHLySMZC0OsdfNi3Ptt6L8r/ZMps30odK+wXt0qj?=
+ =?iso-8859-1?Q?o+1wQVwfIO/CW4NxjefKIQtMW0weXytPjLcjz9uUVSE8ZR5lmYatJmyDvZ?=
+ =?iso-8859-1?Q?Xl8cPy13Y4/P6gZIcxCMAycSM2+9iIOwjNPTLm6+c91sWZyrnbDDjiwk3R?=
+ =?iso-8859-1?Q?66Fi0vuS7X0IKcZeUOdqTO3hyKhAf97v0HeSc7KaJdXjGT3jhBIzg7vcEM?=
+ =?iso-8859-1?Q?a6IomWIEnUncD0dmbg4sS/PvBShsfKoAaPtlYKJGibS6lqu4p4++OKCMLP?=
+ =?iso-8859-1?Q?si/Xqr8L756jA6dfDrhDNl1XcNkzBXZTIV1oikIa0C3o92l+0sPQvwd+l+?=
+ =?iso-8859-1?Q?JTjX1LBx+ksWX+O9BqSnBJ8VjPbG5D1MaOwv3KcEsdEHNZsDMSyOY9BsX0?=
+ =?iso-8859-1?Q?+XrtzQZXwm/dmHG9gA+DfZzhlAjtWoxoiLGoPNFmbDOi9fPk8d5YKXRVJU?=
+ =?iso-8859-1?Q?rz9Nkz89qWSIge1B0WZiDh6wNwJbOva1hXrlS0xnieXVBf25yi/HZOxWhp?=
+ =?iso-8859-1?Q?DnZ918mtkv/hc4Wt0D8MwyWqHhEi5GrGVv3SazFDix7CMGUvjFyNmCA2yk?=
+ =?iso-8859-1?Q?8WVwZRq1EfXgHHrTjJ9EF62alte9ST9kyykNojWuKKLiYrjpKkhO2gvAzF?=
+ =?iso-8859-1?Q?sUWh5lOxUqNdmZxZWGKtUdCjhdBZirY6BTwFEZYIseTGA92U5MuOlkABo4?=
+ =?iso-8859-1?Q?sJTxb2CTJZ8lYcQZGtgN/4JTy5L8LaumsHCLb6jSxi9JM/dAb2wXh1Z6iR?=
+ =?iso-8859-1?Q?LAv6yPMjx4Nlo=3D?=
+Content-Type: multipart/related;
+	boundary="_004_MA1PR01MB345008AB09C3F5D977EEEB1EFCD4AMA1PR01MB3450INDP_";
+	type="multipart/alternative"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB9709
+Return-Path: santosh@o2finfo.com
+X-MS-Exchange-Organization-ExpirationStartTime: 20 Nov 2025 05:06:37.4116
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: b9e14cd1-9c8f-4ce5-be79-08de27f29554
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 8077d34f-0098-442f-8d5b-ff82071a64da:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 4839ccd7-46ac-481f-8eca-08de27f2938f
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;ARA:13230040|5073199012|12012899012|4073199012|35042699022|13003099007|4053099003|4076899003|8096899003;
+X-Forefront-Antispam-Report: CIP:2a01:111:f403:c408::3;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PNZPR01CU001.outbound.protection.outlook.com;PTR:mail-centralindiaazlp170110003.outbound.protection.outlook.com;CAT:NONE;SFS:(13230040)(5073199012)(12012899012)(4073199012)(35042699022)(13003099007)(4053099003)(4076899003)(8096899003);DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2025 05:06:37.3360
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b9e14cd1-9c8f-4ce5-be79-08de27f29554
+X-MS-Exchange-CrossTenant-Id: 8077d34f-0098-442f-8d5b-ff82071a64da
+X-MS-Exchange-CrossTenant-AuthSource: MA1PEPF00007265.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB6152
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.7160201
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9343.009
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;auth:0;dest:I;ENG:(910005)(944506478)(944626604)(4710137)(4713098)(4999163)(920097)(930097)(140003);
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?886Pyvvgz+M2K6tZHmRaLFpISyhd1f5I7KdQCrvic/Jldc4r7u7hQYaZ99?=
+ =?iso-8859-1?Q?tuSPG0jyBRuVlu7WlpTVb3vscBUZrZNASuF1AsOXnXdz2tt1LAYgxCj1dG?=
+ =?iso-8859-1?Q?tFp753V5ptPThrWYizqK+4JUrvM+JGjwLSiTyUcd9Kf3NwNFD31L8eTa1u?=
+ =?iso-8859-1?Q?YkkAGa/ZxeVSBbnufIKNqZpEdYH4r5udVFBIDybW3j0PEn/YXCDzTVJUO/?=
+ =?iso-8859-1?Q?EILRGZAm0yxwe+IahvpqdmjJTC8s0zDkpcWShUl9nrYSU4ZIihz84s6zdE?=
+ =?iso-8859-1?Q?JvvzcRLQpdpO4uROk1tonKAWj5XR9Y5IbSIdSABx4wQkuDxxt/EhHE3W+u?=
+ =?iso-8859-1?Q?GUe/zndMMwRK0fTjFWqXREf9DMQKrxiDkXGkQMcEYO8a6zCLq0e8k4NNid?=
+ =?iso-8859-1?Q?ezKi0NgmDwQ1W0UUFi7HecMx38mlQKxpYQbhezPfP4DA514gKBJSm40C9A?=
+ =?iso-8859-1?Q?MZr1K+ABA6oTY9SvSSf+gtmfu/bIqaTk0805KNXafvO9/WYAt2C+lDLC3F?=
+ =?iso-8859-1?Q?ZGwIYfFtFRz2wwYSlRQdj1CLBEBfEHI03r4PvvnWse52VhKylPDReVl3Bu?=
+ =?iso-8859-1?Q?yvmzhFDcaSa54T45F7utZpuazv/itLVXp8yN/hRuhFDOqagIPWB94H4A5/?=
+ =?iso-8859-1?Q?Q3isHVzobh73ks2Y7zCJT4KIJPD3NSjz/xWp20QqzFwEj9gX6tDyASIIgX?=
+ =?iso-8859-1?Q?T92PZUUEkp9TKE7ZMPoEzyc9MPwhRk9XyONp/Jx8UpFPdR+yXWQVa1smYS?=
+ =?iso-8859-1?Q?EA4MYI+nFmRHMtNSJMnjZGVfgE/NBR5oNP416iwaommIhjKxeadfg7kX08?=
+ =?iso-8859-1?Q?zpwrV6MjiNfnJnPSA0/ph3hmk42F42kjG6rBkdFeSrQU6RVWaub+hqtwUT?=
+ =?iso-8859-1?Q?iJc8xsaJXqKUGE94w4xI4jPZoXsMYVCgYx5BhqVnNMHIxzBp9T7V+oyjAR?=
+ =?iso-8859-1?Q?3kmJJD9ku8Y9PvqDBvqLWhOWblup3IVLhB4n9s3vxerZuITZpYxZBeHqcm?=
+ =?iso-8859-1?Q?aw3QELKrKsmzda+1CBNtYIEBR0sL+Ff+JELWbbsJi41lMyfhaK9q/0f84S?=
+ =?iso-8859-1?Q?s651NqB7t59HfnzqTqSvEiFEKXVzD4JX5mXDKzwglMD08aBZNuLWUTvP1W?=
+ =?iso-8859-1?Q?dV7HWI4ohnaCXbQ6GoqJomksxtm4EhPFidqTdz2oihnXGd6G5XOxMnrqYW?=
+ =?iso-8859-1?Q?eh6IhVO/MfFEfHSuiRzV+oXnE2kAYoIkbMqsGzUvWa9rlQYNIF9OfNWZRu?=
+ =?iso-8859-1?Q?kQnOQru+ZeWPNW2xLJ8i/5jO2eroLHkRBJz6g9UIwIiL4iVUQT84zuRCKS?=
+ =?iso-8859-1?Q?L9RTcqMi9kHYFvnNkCf3Ar0o0/miB/m5BvWxOeehg130Nkdq4u7H6tqr3N?=
+ =?iso-8859-1?Q?6LqfoA0api+bUJ637ul5jQXIkOTBDuzqLO63p/CHdfXIAsV+N9p9EKPtBo?=
+ =?iso-8859-1?Q?TsvPmdp0UKOs7EJt3NZg9Ideg0/8Pizz9K2K2dmcb/+gaOmGaqsexX5qii?=
+ =?iso-8859-1?Q?1N4LuIjNKq/PGiC18DbkkiVtNzfrVUL+0xB08mq3rGdmLs75rYSbuOHJ/M?=
+ =?iso-8859-1?Q?8E8QnkI4mwSO+xZVkHhcqGFWEpDKkNdIWp7MOp0mGzptRI9yJxxQzjkREW?=
+ =?iso-8859-1?Q?ttWr6R8oPt7aWiGALoL45Xb3+4G5d7Scs4a6TmRW208HTQCADHI5g2u9WV?=
+ =?iso-8859-1?Q?z5uILum/SLzwLexp/dWN6XJQkEpynubMRfJy/01NG+j6N6YODDuNhPUy0v?=
+ =?iso-8859-1?Q?eHXCHQXWwac3/SqcsKwksIfWUvPTb5+GQDKU4eOdWcd4ox3GppyC/tLQb0?=
+ =?iso-8859-1?Q?Mgw3JMekIcz4mZ9uHqBGVr5UNAs1KxnosnhmbJ+BpTm5JqTqZ2lWc/Uo9E?=
+ =?iso-8859-1?Q?ugIVcT22aI1QvsvIjFCiNwd3iNfq6klxqGw5bA60VvzXjy/iKYOzm2+Qs4?=
+ =?iso-8859-1?Q?7Rv5qT0b6is5de7ZHDL/X6kBB1c+INKzpYkNV+AvC+cynjif7uN6f4b3Ck?=
+ =?iso-8859-1?Q?qgVNEBQF1reJF8N/pjDrpjdXG3jE7vYGkQgHywY2XxOctYBmmuP/wcCy4g?=
+ =?iso-8859-1?Q?X08xtth1SbMee6jWoGVTnzabPG5c3opcoRnJ1l0T53RQUqCSLafl9Zg9fb?=
+ =?iso-8859-1?Q?JQQPnJG8CH2XQsAqi8JiTBKE6I5xHtuKAwtqvVqKljLpbofgkHbG1UWhMB?=
+ =?iso-8859-1?Q?8PkJ+OSeamH9usVDAQaMOAS7/ygc2PyHV3oiyDiciFUIgbtfuHk/aKJgrj?=
+ =?iso-8859-1?Q?+SFJ005isxOxx6vYS9qNIE7Dn7hcfl23vQW77Jta/3/A2NgT5tDE/M03Ob?=
+ =?iso-8859-1?Q?KdZgrnNXnPIscsNkq85tb4qIfjcNv4nyVGy96DE9Rm9RO0MZozMWUu1suY?=
+ =?iso-8859-1?Q?o1+onOvDEQR2kANELeNV2+uW9k/FUinAaNfFlfqlfLmufvbaP8YWCCn7LO?=
+ =?iso-8859-1?Q?W3NyPv0tvh5gkz+NDvN3AwfXLohBzCRJaDqA6xJ9P7DErnXHWyHUe2ACkI?=
+ =?iso-8859-1?Q?6WhfGldIkaE0W3+I0xty3NcJB/LkyhtPSRrlVWTTiKd/sX+FxLm09CCC+C?=
+ =?iso-8859-1?Q?I/2XXTm1u16jUg1OC1hTopW6WuRezTqSmjOaVSsJCX2DLpO9U1qLs6XoSC?=
+ =?iso-8859-1?Q?l68iELKP54cGLVeXB/LO4u7naXByIm3mD9GBAZev0jFzN2dXIpDQN22mJn?=
+ =?iso-8859-1?Q?XmPvvOT3VNyjGinh7D1WHHlakBV928sWZef3KY/9EZop6ujoKX8TGaarGJ?=
+ =?iso-8859-1?Q?EbEfGeTCiQxt7HURGhYmF6dK3E2HhHOQz9EKhWWJ+65YZnZ8EICDhBDOAK?=
+ =?iso-8859-1?Q?wSav6Q9tV7RauOb6IjmuTfOYFm8GLT3URj76ZGWbRQeGxqmNRUrWLPHmAb?=
+ =?iso-8859-1?Q?f0JbfxnQOf1o97ut82AgIy0p7AmqW4WC1Tq0GL+hiO1/7ph6PGVcXpVzz9?=
+ =?iso-8859-1?Q?MOZJNHgX71hoGoPNFp1P9X0Qa+06hJFU7aMivbyjjdu7Zg1cf5qXzN593J?=
+ =?iso-8859-1?Q?8TGWLz3hoMKcF7tNSPQbvt5b8kr4skM3diRAmQD91OgC2C0sfYytEuQacm?=
+ =?iso-8859-1?Q?TD+ad7Vu7j9GbepU9ZkjEV3kjE2yHoWjgm+SNWaxmulZ6fyZlEWEc/Euja?=
+ =?iso-8859-1?Q?udMUkxuB8uBY1h1die2YEn3JHyjKU=3D?=
+MIME-Version: 1.0
+
+--_004_MA1PR01MB345008AB09C3F5D977EEEB1EFCD4AMA1PR01MB3450INDP_
+Content-Type: multipart/alternative;
+	boundary="_000_MA1PR01MB345008AB09C3F5D977EEEB1EFCD4AMA1PR01MB3450INDP_"
+
+--_000_MA1PR01MB345008AB09C3F5D977EEEB1EFCD4AMA1PR01MB3450INDP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+
+________________________________
+From: Devi S <devi@o2finfo.com>
+Sent: Tuesday, November 11, 2025 8:47 PM
+To: Ganesh <ganesh@o2finfosolutions.com>; Brahmananda Reddy Karna <brahmana=
+nda.r@o2finfosolutions.com>; Anugu Vinay Kumar <vinay.k@o2finfosolutions.co=
+m>; Challa Ravi Kumar <ravi.c@o2finfosolutions.com>; Harika Madabathula <ha=
+rika@o2finfosolutions.com>; jessica@o2finfosolutions.com <jessica@o2finfoso=
+lutions.com>; Jonnalagadda Naga Malleswari <malleswari.n@betabridgetech.com=
+>; Geejula Tejasri <tejasri@o2finfosolutions.com>; Swetha Ballari <swetha.b=
+@o2finfosolutions.com>; Santosh <santosh@o2finfo.com>; Phani Varma <Phani.V=
+@o2finfo.com>
+Subject: FW: 545390 - Senior PEGA developer - India - EAIS
+
+
+
+
+
+
+Regards,
+
+Devi Chitturi
+
+O2F Info Solutions
+
+9701322795
+
+
+
+
+
+From: Lakshya Sajnani <lakshya.sajnani@infosys.com>
+Sent: 11 November 2025 18:50
+Cc: Navnit Kumar <Navnit_Kumar@infosys.com>; Akshatha S <akshatha.2172788@i=
+nfosys.com>
+Subject: 545390 - Senior PEGA developer - India - EAIS
+
+
+
+Dear Vendor Partners,
+
+***Please do not change the subject line ***
+
+New interview guidelines and process change mentioned below.
+
+
+
+Resume submission Guidelines:
+
+
+
+  *   Please ensure that the candidate's skill set, experience, and communi=
+cation abilities are aligned with the job description (JD)
+  *   Include a screenshot of the candidate interview on the first page of =
+the resume, captured after at least 7 minutes of interaction. The screensho=
+t should not contain any ID proof of the candidate. Interviews conducted vi=
+a WhatsApp, FaceTime, or similar platforms will not be accepted. Preferred =
+platforms are Microsoft Teams, Webex, Google Meet or Zoom
+  *   Share the resumes to the mailbox: EAIS_screening@infosys.com<mailto:E=
+AIS_screening@infosys.com> only. Do not mark Talent Acquisition (TA) or Del=
+ivery teams due to Compliance.
+  *   Please ensure that all shared profiles are in full compliance with In=
+fosys guidelines
+
+
+
+Candidate details submission tracker: Any deviation from below will not be =
+considered.
+
+
+
+
+
+Candidate Tracker
+
+ECMS REQ ID/ Unique ID
+
+Profile submission date
+
+Vendor email ID
+
+Title
+
+Candidate Name
+
+Phone No
+
+Email
+
+Notice Period
+
+Current Location
+
+Location applying for
+
+Total Experience
+
+Relevant Experience
+
+Skills
+
+Vendor Quoted Rate
+
+Interview screenshot
+
+Visa Type
+
+Agreed for Full time/Subcon
+
+If ex-Infy (provide the Employee ID)
+
+
+
+
+
+JD format:
+
+
+
+Date Of Requisition
+
+11-Nov-2025
+
+ECMS REQ ID/ Unique ID
+
+ 545390
+
+PU
+
+ EAISHIL
+
+Project Manager
+
+ Muthulingam
+
+Delivery SPOC
+
+Bhushan
+
+Number of Openings
+
+1
+
+Country
+
+ India
+
+Detailed JD (Roles and Responsibilities)
+
+        *   Liaison with client Product Owner/SMEs to gather functional req=
+uirements
+        *   Design a functional solution approach of the stories, together =
+with the Solution Architect and Lead System Architect(s)
+        *   Participate in workflow analysis and business process analysis =
+to identify and clarify requirements, current-future state identification a=
+nd contributed to the redesign
+        *   Constantly focus on value-driven delivery, motivate the teams i=
+n delivering their commitment
+        *   Liaise with all the connecting teams (scrum of scrums) to resol=
+ve dependencies and create the overall implementation roadmap
+        *   Participate in Design Sprints
+        *   Validate the functional design
+        *   Help prioritize backlogs
+  *   Ensure best design practices are followed.
+  *   Working with developers to achieve the design
+
+Total Experience
+
+ 7+yrs
+
+Relevant Experience
+
+Senior PEGA developer with 7 yrs of exp
+
+Mandatory skills
+
+ 7+yrs of hands-on exp Senior PEGA developer
+
+Desired skills
+
+Senior PEGA developer with 7 yrs of exp
+
+Domain (Industry)
+
+Banking
+
+Work Location
+
+ Pune/Hyderabad/Bangalore PAN India
+
+Background check (Before onboarding / After onboarding)
+
+Before onboarding
+
+Mode of Interview- Telephonic/Face to Face/Video Interview
+
+ Client Interview/F2F
+
+WFO / WFH / Hybrid
+
+ Hybrid
+
+Vendor Rate in currency of Work Location
+
+Up to INR 15000/Day
+
+
+
+
+
+Regards,
+
+Lakshya Sajnani
+
+Lead- Talent Acquisition
+
+M: 9619580685
+
+www.infosys.com<http://www.infosys.com>
+
+
+
+[cid:image001.png@01DC533A.E67CF630]
+
+
+
+
+
+
+
+--_000_MA1PR01MB345008AB09C3F5D977EEEB1EFCD4AMA1PR01MB3450INDP_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 11pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<hr style=3D"display: inline-block; width: 98%;">
+<div id=3D"divRplyFwdMsg">
+<div style=3D"direction: ltr; font-family: Calibri, sans-serif; font-size: =
+11pt; color: rgb(0, 0, 0);">
+<b>From:</b>&nbsp;Devi S &lt;devi@o2finfo.com&gt;<br>
+<b>Sent:</b>&nbsp;Tuesday, November 11, 2025 8:47 PM<br>
+<b>To:</b>&nbsp;Ganesh &lt;ganesh@o2finfosolutions.com&gt;; Brahmananda Red=
+dy Karna &lt;brahmananda.r@o2finfosolutions.com&gt;; Anugu Vinay Kumar &lt;=
+vinay.k@o2finfosolutions.com&gt;; Challa Ravi Kumar &lt;ravi.c@o2finfosolut=
+ions.com&gt;; Harika Madabathula &lt;harika@o2finfosolutions.com&gt;;
+ jessica@o2finfosolutions.com &lt;jessica@o2finfosolutions.com&gt;; Jonnala=
+gadda Naga Malleswari &lt;malleswari.n@betabridgetech.com&gt;; Geejula Teja=
+sri &lt;tejasri@o2finfosolutions.com&gt;; Swetha Ballari &lt;swetha.b@o2fin=
+fosolutions.com&gt;; Santosh &lt;santosh@o2finfo.com&gt;; Phani
+ Varma &lt;Phani.V@o2finfo.com&gt;<br>
+<b>Subject:</b>&nbsp;FW: 545390 - Senior PEGA developer - India - EAIS</div=
+>
+<div style=3D"direction: ltr;">&nbsp;</div>
+</div>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-size: 11pt;">Regards,</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-size: 11pt;">Devi Chitturi</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-size: 11pt;">O2F Info Solutions</span><=
+/p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-size: 11pt;">9701322795</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;">&nbsp;</p>
+<div style=3D"margin-right: 0cm; margin-left: 0cm; padding: 3pt 0cm 0cm; bo=
+rder-width: 1pt medium medium; border-style: solid none none; border-color:=
+ rgb(225, 225, 225) currentcolor currentcolor;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;"><b>From:</b>&nbsp;Lakshya Sajnani &lt;lakshya.sajnani@infos=
+ys.com&gt;<br>
+<b>Sent:</b>&nbsp;11 November 2025 18:50<br>
+<b>Cc:</b>&nbsp;Navnit Kumar &lt;Navnit_Kumar@infosys.com&gt;; Akshatha S &=
+lt;akshatha.2172788@infosys.com&gt;<br>
+<b>Subject:</b>&nbsp;545390 - Senior PEGA developer - India - EAIS</span></=
+p>
+</div>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;">&nbsp;</p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;">Dear Vendor Partners,</span></p>
+<p style=3D"margin: 1em 0px; font-family: &quot;Calibri&quot;, sans-serif; =
+font-size: 12pt;">
+<span style=3D"font-size: 11pt;">***Please do not change the subject line *=
+**</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b>New interview guidelines and process change mentione=
+d below.</b></span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b>&nbsp;</b></span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b><u>Resume submission Guidelines:</u></b></span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b><u>&nbsp;</u></b></span></p>
+<ul style=3D"margin-top: 0cm; margin-bottom: 0cm;">
+<li style=3D"font-family: &quot;Aptos&quot;, sans-serif; font-size: 12pt; m=
+argin: 0cm;"><span role=3D"presentation" style=3D"font-family: &quot;Calibr=
+i&quot;, sans-serif; font-size: 11pt;">Please ensure that the candidate's s=
+kill set, experience, and communication abilities are aligned
+ with the job description (JD)</span></li><li style=3D"font-family: &quot;A=
+ptos&quot;, sans-serif; font-size: 12pt; margin: 0cm;"><span role=3D"presen=
+tation" style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 1=
+1pt;"><b>Include a screenshot of the candidate interview on the first page =
+of the resume, captured after
+ at least 7 minutes of interaction. The screenshot should not contain any I=
+D proof of the candidate. Interviews conducted via WhatsApp, FaceTime, or s=
+imilar platforms will not be accepted. Preferred platforms are Microsoft Te=
+ams, Webex, Google Meet or Zoom</b></span></li><li style=3D"font-family: &q=
+uot;Aptos&quot;, sans-serif; font-size: 12pt; margin: 0cm;"><span role=3D"p=
+resentation" style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-si=
+ze: 11pt;">Share the resumes to the mailbox:
+</span><span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot=
+;, sans-serif; font-size: 11pt; color: rgb(70, 120, 134);"><u><a style=3D"c=
+olor: rgb(70, 120, 134);" class=3D"OWAAutoLink" id=3D"OWAb27134a7-5957-e628=
+-80de-50c532c9a030" href=3D"mailto:EAIS_screening@infosys.com">EAIS_screeni=
+ng@infosys.com</a></u></span><span role=3D"presentation" style=3D"font-fami=
+ly: &quot;Calibri&quot;, sans-serif; font-size: 11pt;">&nbsp;only.
+<b>Do not mark Talent Acquisition (TA) or Delivery teams due to Compliance.=
+</b></span></li><li style=3D"font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt; margin: 0cm;"><span role=3D"presentation" style=3D"font-fami=
+ly: &quot;Calibri&quot;, sans-serif; font-size: 11pt;">Please ensure that a=
+ll shared profiles are in full compliance with Infosys guidelines</span></l=
+i></ul>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b><u>Candidate details submission tracker:</u>
+</b>Any deviation from below will not be considered.</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b>&nbsp;</b></span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b>&nbsp;</b></span></p>
+<table cellpadding=3D"0" cellspacing=3D"0" style=3D"width: 1575.5pt; box-si=
+zing: border-box; border-collapse: collapse; border-spacing: 0px;">
+<tbody>
+<tr>
+<td style=3D"border-width: 1pt; border-style: solid; border-color: windowte=
+xt; background-color: rgb(247, 199, 172); padding: 0cm; vertical-align: top=
+; width: 1575.5pt; height: 15.75pt;" colspan=3D"18">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Candidate Tracker</b></span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor windowtext windowtext; background-color: rgb(165=
+, 201, 235); padding: 0.75pt 5.4pt; vertical-align: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>ECMS REQ ID/ Unique ID</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0cm; vertical-align: top; wi=
+dth: 86.8pt; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Profile submission date</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Vendor email ID</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Title</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Candidate Name</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Phone No</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Email</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Notice Period</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Current Location</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Location applying for</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Total Experience</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Relevant Experience</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Skills</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Vendor Quoted Rate</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Interview screenshot</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Visa Type</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>Agreed for Full time/Subcon</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor windowtext windowtext currentcolor; =
+background-color: rgb(165, 201, 235); padding: 0.75pt 5.4pt; vertical-align=
+: top; height: 15.75pt;">
+<p style=3D"text-align: center; margin: 0cm; font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: black;"><b>If ex-Infy (provide the Employee ID)</b></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b><u>JD format:</u></b></span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b><u>&nbsp;</u></b></span></p>
+<table style=3D"box-sizing: border-box; border-collapse: collapse; border-s=
+pacing: 0px;" cellpadding=3D"0" cellspacing=3D"0">
+<tbody>
+<tr>
+<td style=3D"border-width: 1pt; border-style: solid; border-color: rgb(163,=
+ 163, 163); background-color: rgb(221, 235, 247); padding: 4pt; vertical-al=
+ign: top; width: 273.55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Date Of Requisition</b></span></p>
+</td>
+<td style=3D"border-width: 1pt 1pt 1pt medium; border-style: solid solid so=
+lid none; border-color: rgb(163, 163, 163) rgb(163, 163, 163) rgb(163, 163,=
+ 163) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">11-Nov-2025</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>ECMS REQ ID/ Unique ID</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;545390</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>PU</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;EAISHIL</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Project Manager</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;Muthulingam</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Delivery SPOC</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Bhushan</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Number of Openings</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">1</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Country</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;India</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Detailed JD (Roles and Responsibilities)</=
+b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; width: 459.45pt;">
+<ul style=3D"margin-top: 0cm; margin-bottom: 0cm;">
+<ul style=3D"margin-top: 0cm; margin-bottom: 0cm;">
+<ul style=3D"margin-top: 0cm; margin-bottom: 0cm;">
+<li style=3D"font-family: &quot;Aptos&quot;, sans-serif; font-size: 12pt; m=
+argin: 0cm 0cm 0cm 36pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Liaison wi=
+th client Product Owner/SMEs to gather functional requirements</span></li><=
+li style=3D"font-family: &quot;Aptos&quot;, sans-serif; font-size: 12pt; ma=
+rgin: 0cm 0cm 0cm 36pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Design a f=
+unctional solution approach of the stories, together with the Solution Arch=
+itect and Lead System Architect(s)</span></li><li style=3D"font-family: &qu=
+ot;Aptos&quot;, sans-serif; font-size: 12pt; margin: 0cm 0cm 0cm 36pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Participat=
+e in workflow analysis and business process analysis to identify and clarif=
+y requirements, current-future state identification
+ and contributed to the redesign</span></li><li style=3D"font-family: &quot=
+;Aptos&quot;, sans-serif; font-size: 12pt; margin: 0cm 0cm 0cm 36pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Constantly=
+ focus on value-driven delivery, motivate the teams in delivering their com=
+mitment</span></li><li style=3D"font-family: &quot;Aptos&quot;, sans-serif;=
+ font-size: 12pt; margin: 0cm 0cm 0cm 36pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Liaise wit=
+h all the connecting teams (scrum of scrums) to resolve dependencies and cr=
+eate the overall implementation roadmap</span></li><li style=3D"font-family=
+: &quot;Aptos&quot;, sans-serif; font-size: 12pt; margin: 0cm 0cm 0cm 36pt;=
+">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Participat=
+e in Design Sprints</span></li><li style=3D"font-family: &quot;Aptos&quot;,=
+ sans-serif; font-size: 12pt; margin: 0cm 0cm 0cm 36pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Validate t=
+he functional design</span></li><li style=3D"font-family: &quot;Aptos&quot;=
+, sans-serif; font-size: 12pt; margin: 0cm 0cm 0cm 36pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Help prior=
+itize backlogs</span></li></ul>
+</ul>
+<li style=3D"font-family: &quot;Aptos&quot;, sans-serif; font-size: 12pt; m=
+argin: 0cm 0cm 0cm 24.5pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Ensure bes=
+t design practices are followed.</span></li><li style=3D"font-family: &quot=
+;Aptos&quot;, sans-serif; font-size: 12pt; margin: 0cm 0cm 0cm 24.5pt;">
+<span role=3D"presentation" style=3D"font-family: &quot;Calibri&quot;, sans=
+-serif; font-size: 11pt; color: black; background-color: white;">Working wi=
+th developers to achieve the design</span></li></ul>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Total Experience</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;7+yrs</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Relevant Experience</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Senior PEGA developer with 7 yrs of exp</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Mandatory skills</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;7+yrs of hands-on&nbsp;exp Senior PEGA developer</spa=
+n></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Desired skills</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Senior PEGA developer with 7 yrs of exp</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Domain (Industry)</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Banking&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Work Location</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;Pune/Hyderabad/Bangalore PAN India</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Background check (Before onboarding / Afte=
+r onboarding)</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Before onboarding</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Mode of Interview- Telephonic/Face to Face=
+/Video Interview</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;Client Interview/F2F</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>WFO / WFH / Hybrid</b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">&nbsp;Hybrid</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"border-width: medium 1pt 1pt; border-style: none solid solid; =
+border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163); backgroun=
+d-color: rgb(221, 235, 247); padding: 4pt; vertical-align: top; width: 273.=
+55pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt; color: black;"><b>Vendor Rate in currency of Work Location</=
+b></span></p>
+</td>
+<td style=3D"border-width: medium 1pt 1pt medium; border-style: none solid =
+solid none; border-color: currentcolor rgb(163, 163, 163) rgb(163, 163, 163=
+) currentcolor; padding: 4pt; vertical-align: top; width: 459.45pt;">
+<p style=3D"margin: 0cm; font-family: &quot;Aptos&quot;, sans-serif; font-s=
+ize: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif; fo=
+nt-size: 11pt;">Up to&nbsp;INR 15000/Day</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b><u>&nbsp;</u></b></span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt; color: rgb(31, 73, 125);">Regards,</span></p>
+<table cellpadding=3D"0" cellspacing=3D"0" style=3D"width: 485.4pt; box-siz=
+ing: border-box; border-collapse: collapse; border-spacing: 0px;">
+<tbody>
+<tr>
+<td style=3D"padding: 0cm 5.4pt; width: 207.1pt; height: 14.65pt;">
+<p style=3D"line-height: 115%; margin: 0cm; font-family: &quot;Aptos&quot;,=
+ sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Calibri&quot;, sans-serif; font-size: 11p=
+t; color: rgb(31, 73, 125); line-height: 115%;">Lakshya Sajnani</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 0cm 5.4pt; width: 207.1pt; height: 14.65pt;">
+<p style=3D"line-height: 115%; margin: 0cm; font-family: &quot;Aptos&quot;,=
+ sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Arial&quot;, sans-serif; font-size: 8.5pt=
+; color: black; line-height: 115%;">Lead- Talent Acquisition</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 0cm 5.4pt; width: 207.1pt; height: 14.65pt;">
+<p style=3D"line-height: 115%; margin: 0cm; font-family: &quot;Aptos&quot;,=
+ sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Arial&quot;, sans-serif; font-size: 8.5pt=
+; color: rgb(89, 89, 89); line-height: 115%;">M: 9619580685</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 0cm 5.4pt; width: 207.1pt; height: 14.65pt;">
+<p style=3D"line-height: 115%; margin: 0cm; font-family: &quot;Aptos&quot;,=
+ sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Arial&quot;, sans-serif; font-size: 8.5pt=
+; color: rgb(70, 120, 134); line-height: 115%;"><u><a data-auth=3D"NotAppli=
+cable" style=3D"color: rgb(70, 120, 134); margin-top: 0px; margin-bottom: 0=
+px;" class=3D"OWAAutoLink" id=3D"OWAebc3c673-843f-a035-ecea-a4ea3851bad7" h=
+ref=3D"http://www.infosys.com">www.infosys.com</a></u></span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 0cm 5.4pt; width: 207.1pt; height: 9.9pt;">
+<p style=3D"line-height: 115%; margin: 0cm; font-family: &quot;Aptos&quot;,=
+ sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Arial&quot;, sans-serif; font-size: 8.5pt=
+; color: black; line-height: 115%;">&nbsp;</span></p>
+<p style=3D"line-height: 115%; margin: 0cm 0cm 12pt; font-family: &quot;Apt=
+os&quot;, sans-serif; font-size: 12pt;">
+<span style=3D"font-family: &quot;Arial&quot;, sans-serif; font-size: 8.5pt=
+; color: black; line-height: 115%;"><img size=3D"7943" height=3D"54" width=
+=3D"105" style=3D"width: 1.1041in; height: 0.5625in; margin-top: 0px; margi=
+n-bottom: 0px;" id=3D"x_Picture_x0020_2" data-outlook-trace=3D"F:1|T:1" src=
+=3D"cid:image001.png@01DC533A.E67CF630"></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;">&nbsp;</span></p>
+<p style=3D"margin: 0cm 0px; font-family: &quot;Aptos&quot;, sans-serif; fo=
+nt-size: 12pt;"><span style=3D"font-family: &quot;Calibri&quot;, sans-serif=
+; font-size: 11pt;"><b><u>&nbsp;</u></b></span></p>
+</body>
+</html>
+
+--_000_MA1PR01MB345008AB09C3F5D977EEEB1EFCD4AMA1PR01MB3450INDP_--
+
+--_004_MA1PR01MB345008AB09C3F5D977EEEB1EFCD4AMA1PR01MB3450INDP_
+Content-Type: image/png; name="image001.png"
+Content-Description: image001.png
+Content-Disposition: inline; filename="image001.png"; size=7695;
+	creation-date="Tue, 11 Nov 2025 13:19:49 GMT";
+	modification-date="Thu, 20 Nov 2025 05:05:40 GMT"
+Content-ID: <image001.png@01DC533A.E67CF630>
+Content-Transfer-Encoding: base64
+
+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
+
+--_004_MA1PR01MB345008AB09C3F5D977EEEB1EFCD4AMA1PR01MB3450INDP_--
