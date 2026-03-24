@@ -41,18 +41,21 @@ RUN chown -R nestjs:nodejs /app
 
 USER nestjs
 
-# Azure App Service / containers typically inject PORT (often 8080). Nest uses process.env.PORT.
+# NODE_ENV is always production inside the container.
+# PORT is intentionally left unset so Railway's injected PORT env var takes effect at runtime.
+# If Railway does not inject PORT, the app falls back to 3001 (see main.ts).
 ENV NODE_ENV=production
-ENV PORT=8080
 
-# Health check (must match listen port when PORT is unset in child process — we set PORT above)
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD node -e "require('http').get('http://127.0.0.1:'+(process.env.PORT||8080)+'/health',(r)=>{process.exit(r.statusCode===200?0:1)})"
+# Health check – uses the PORT injected at runtime, falling back to 3001.
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD node -e "require('http').get('http://127.0.0.1:'+(process.env.PORT||3001)+'/health',(r)=>{process.exit(r.statusCode===200?0:1)})"
 
-EXPOSE 8080
+# Railway dynamically assigns the port; EXPOSE is informational only.
+EXPOSE 3001
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
 
-# Start application
+# Start application.
+# Set RUN_MIGRATIONS=true in Railway env vars to auto-run DB migrations on startup.
 CMD ["node", "dist/main"]

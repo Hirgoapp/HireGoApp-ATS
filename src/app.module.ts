@@ -73,6 +73,31 @@ import { GlobalSearchModule } from './search/search.module';
             inject: [ConfigService],
             useFactory: (configService: ConfigService) => {
                 const dbLogging = String(configService.get<string>('DB_LOGGING', 'false')).toLowerCase() === 'true';
+                // RUN_MIGRATIONS=true auto-runs pending migrations on startup.
+                // Caution: in multi-instance deployments this can cause race conditions.
+                // Prefer using the explicit `npm run start:migrate` or a one-off migration
+                // step in your Railway deploy pipeline when running multiple replicas.
+                const migrationsRun = String(configService.get<string>('RUN_MIGRATIONS', 'false')).toLowerCase() === 'true';
+                // Set DB_SSL_REJECT_UNAUTHORIZED=false only if your provider uses self-signed certificates.
+                const rejectUnauthorized = configService.get<string>('DB_SSL_REJECT_UNAUTHORIZED') !== 'false';
+                const entities = [__dirname + '/**/*.entity{.ts,.js}'];
+                const migrations = [__dirname + '/database/migrations/*{.ts,.js}'];
+
+                // Railway (and other PaaS providers) supply DATABASE_URL as a full connection string.
+                // When present it takes precedence over individual DB_* variables.
+                const databaseUrl = configService.get<string>('DATABASE_URL');
+                if (databaseUrl) {
+                    return {
+                        type: 'postgres' as const,
+                        url: databaseUrl,
+                        entities,
+                        migrations,
+                        synchronize: false,
+                        logging: dbLogging,
+                        migrationsRun,
+                        ssl: { rejectUnauthorized },
+                    };
+                }
 
                 return {
                     type: 'postgres' as const,
@@ -81,12 +106,13 @@ import { GlobalSearchModule } from './search/search.module';
                     username: configService.get<string>('DB_USERNAME', 'postgres'),
                     password: configService.get<string>('DB_PASSWORD', ''),
                     database: configService.get<string>('DB_DATABASE', 'ats_saas'),
-                    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-                    migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
+                    entities,
+                    migrations,
                     synchronize: false,
                     logging: dbLogging,
+                    migrationsRun,
                     ssl: process.env.DB_SSL === 'true'
-                        ? { rejectUnauthorized: false }
+                        ? { rejectUnauthorized }
                         : false,
                 };
             },

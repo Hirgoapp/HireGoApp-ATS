@@ -9,6 +9,13 @@ import { EmailsProcessor } from './processors/emails.processor';
 import { JobsGateway } from './jobs.gateway';
 
 function bullRedisOptions(config: ConfigService) {
+    // Railway (and other PaaS providers) supply REDIS_URL as a full connection string.
+    // When present, pass it directly to ioredis via the `url` property.
+    const redisUrl = config.get<string>('REDIS_URL');
+    if (redisUrl) {
+        return { url: redisUrl };
+    }
+
     const tlsEnabled = ['true', '1', 'yes'].includes(
         String(config.get<string>('REDIS_TLS', '')).toLowerCase(),
     );
