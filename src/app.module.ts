@@ -85,6 +85,9 @@ import { GlobalSearchModule } from './search/search.module';
                     migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
                     synchronize: false,
                     logging: dbLogging,
+                    ssl: process.env.DB_SSL === 'true'
+                        ? { rejectUnauthorized: false }
+                        : false,
                 };
             },
         }),
