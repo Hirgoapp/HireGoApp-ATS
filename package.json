@@ -13,6 +13,7 @@
         "build": "nest build",
         "start": "node dist/main",
         "start:prod": "NODE_ENV=production node dist/main",
+        "start:migrate": "node dist/database/data-source.js && node dist/main",
         "start:debug": "nest start --debug --watch",
         "typeorm": "typeorm",
         "migration:generate": "typeorm migration:generate",

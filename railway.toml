@@ -1,0 +1,15 @@
+[build]
+# Railway will use the repo's Dockerfile for the build.
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# Starts the API server. DB migrations run automatically when RUN_MIGRATIONS=true is set
+# as a Railway service environment variable (TypeORM migrationsRun option).
+# For explicit pre-start migrations (safer for multi-replica setups), change startCommand
+# to: "node dist/database/data-source.js && node dist/main"
+startCommand = "node dist/main"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
