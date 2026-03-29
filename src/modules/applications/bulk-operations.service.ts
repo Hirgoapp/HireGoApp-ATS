@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Application, ApplicationStatus } from './entities/application.entity';
 import { ApplicationWorkflowService } from './application-workflow.service';
 import { BulkMoveToStageDto, BulkRejectApplicationsDto, BulkHireApplicationsDto, BulkOperationResultDto } from './dto/bulk-operations.dto';
@@ -156,24 +156,36 @@ export class BulkOperationsService {
             errors: {},
         };
 
+        // Fetch all matching applications in a single query
+        const found = await this.applicationRepository.find({
+            where: { id: In(applicationIds), company_id: companyId },
+            select: ['id'],
+        });
+
+        const foundIds = new Set(found.map(a => a.id));
+
+        // Report IDs that were not found
         for (const appId of applicationIds) {
-            try {
-                const application = await this.applicationRepository.findOne({
-                    where: { id: appId, company_id: companyId },
-                });
-
-                if (!application) {
-                    throw new Error('Application not found');
-                }
-
-                application.is_archived = true;
-                application.archived_at = new Date();
-                await this.applicationRepository.save(application);
-
-                result.success++;
-            } catch (error) {
+            if (!foundIds.has(appId)) {
                 result.failed++;
-                result.errors[appId] = error.message;
+                result.errors[appId] = 'Application not found';
+            }
+        }
+
+        // Batch-update all found applications in a single query
+        if (foundIds.size > 0) {
+            try {
+                await this.applicationRepository.update(
+                    { id: In([...foundIds]), company_id: companyId },
+                    { is_archived: true, archived_at: new Date() },
+                );
+                result.success = foundIds.size;
+            } catch (error) {
+                // Update failed — mark every found application as a failure
+                result.failed += foundIds.size;
+                for (const appId of foundIds) {
+                    result.errors[appId] = error.message;
+                }
             }
         }
 

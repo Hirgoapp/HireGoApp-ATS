@@ -159,32 +159,72 @@ export class ReportService {
             select: ['id', 'title', 'status', 'created_at'],
         });
 
+        if (jobs.length === 0) {
+            return {
+                companyId,
+                totalJobs: 0,
+                totalCandidates: 0,
+                jobsWithCandidates: [],
+                topPerformingJobs: [],
+                reportDate: new Date(),
+            };
+        }
+
+        // Fetch stage counts for all jobs in a single aggregated query
+        const stageCounts: { jobId: string; stage: string; count: string }[] =
+            await this.submissionRepository
+                .createQueryBuilder('submission')
+                .select('submission.job_id', 'jobId')
+                .addSelect('submission.current_stage', 'stage')
+                .addSelect('COUNT(*)', 'count')
+                .where('submission.company_id = :companyId', { companyId })
+                .andWhere('submission.deleted_at IS NULL')
+                .groupBy('submission.job_id')
+                .addGroupBy('submission.current_stage')
+                .getRawMany();
+
+        // Fetch joined (accepted) counts for all jobs in a single aggregated query
+        const acceptedCounts: { jobId: string; count: string }[] =
+            await this.submissionRepository
+                .createQueryBuilder('submission')
+                .select('submission.job_id', 'jobId')
+                .addSelect('COUNT(*)', 'count')
+                .where('submission.company_id = :companyId', { companyId })
+                .andWhere('submission.outcome = :outcome', { outcome: SubmissionOutcome.JOINED })
+                .andWhere('submission.deleted_at IS NULL')
+                .groupBy('submission.job_id')
+                .getRawMany();
+
+        // Build lookup maps from the aggregated results
+        const stageCountsByJob = new Map<string, Record<string, number>>();
+        for (const row of stageCounts) {
+            if (!stageCountsByJob.has(row.jobId)) {
+                stageCountsByJob.set(row.jobId, {});
+            }
+            stageCountsByJob.get(row.jobId)[row.stage] = parseInt(row.count, 10);
+        }
+
+        const acceptedByJob = new Map<string, number>(
+            acceptedCounts.map(row => [row.jobId, parseInt(row.count, 10)]),
+        );
+
         const jobStatuses: JobCandidateStatus[] = [];
 
         for (const job of jobs) {
-            const submissions = await this.submissionRepository
-                .createQueryBuilder('submission')
-                .select('submission.current_stage', 'stage')
-                .addSelect('COUNT(*)', 'count')
-                .where('submission.company_id = :companyId', { companyId })
-                .andWhere('submission.job_id = :jobId', { jobId: job.id })
-                .andWhere('submission.deleted_at IS NULL')
-                .groupBy('submission.current_stage')
-                .getRawMany();
+            const stageMap = stageCountsByJob.get(job.id) ?? {};
 
             const statusMap: Record<string, number> = {
                 sourced: 0,
                 shortlisted: 0,
                 interviewed: 0,
                 offered: 0,
-                accepted: 0,
+                accepted: acceptedByJob.get(job.id) ?? 0,
                 rejected: 0,
                 onHold: 0,
             };
 
-            submissions.forEach(row => {
-                const count = parseInt(row.count, 10);
-                switch (row.stage) {
+            for (const [stage, count] of Object.entries(stageMap)) {
+                switch (stage) {
                     case 'applied':
                         statusMap.sourced += count;
                         break;
@@ -206,16 +246,7 @@ export class ReportService {
                     default:
                         break;
                 }
-            });
-
-            statusMap.accepted = await this.submissionRepository.count({
-                where: {
-                    company_id: companyId,
-                    job_id: job.id,
-                    outcome: SubmissionOutcome.JOINED,
-                    deleted_at: IsNull(),
-                },
-            });
+            }
 
             const total = Object.values(statusMap).reduce((sum, val) => sum + val, 0);
 
@@ -528,18 +559,46 @@ export class ReportService {
 
         const jobMetrics: JobPerformanceMetrics[] = [];
 
+        if (jobs.length === 0) {
+            return {
+                companyId,
+                totalJobs: 0,
+                openJobs: 0,
+                filledJobs: 0,
+                fillRate: 0,
+                avgTimeToFill: 0,
+                avgSubmissionsPerJob: 0,
+                jobs: [],
+                topPerformingJobs: [],
+                mostCompetitiveJobs: [],
+                reportDate: new Date(),
+            };
+        }
+
+        // Fetch submission counts grouped by job in a single query
+        const submissionCountRows: { jobId: string; count: string }[] =
+            await this.submissionRepository
+                .createQueryBuilder('submission')
+                .select('submission.job_id', 'jobId')
+                .addSelect('COUNT(*)', 'count')
+                .where('submission.company_id = :companyId', { companyId })
+                .andWhere('submission.deleted_at IS NULL')
+                .groupBy('submission.job_id')
+                .getRawMany();
+
+        const submissionCountByJob = new Map<string, number>(
+            submissionCountRows.map(row => [row.jobId, parseInt(row.count, 10)]),
+        );
+
+        // Offer counts are company-wide (not per-job in the original query),
+        // so fetch them once outside the loop.
+        const [offers, acceptedOffers] = await Promise.all([
+            this.offerRepository.count({ where: { companyId, deletedAt: IsNull() } }),
+            this.offerRepository.count({ where: { companyId, status: OfferStatus.ACCEPTED, deletedAt: IsNull() } }),
+        ]);
+
         for (const job of jobs) {
-            const submissions = await this.submissionRepository.count({
-                where: { job_id: job.id, company_id: companyId, deleted_at: IsNull() },
-            });
-
-            const offers = await this.offerRepository.count({
-                where: { companyId, deletedAt: IsNull() },
-            });
-
-            const acceptedOffers = await this.offerRepository.count({
-                where: { companyId, status: OfferStatus.ACCEPTED, deletedAt: IsNull() },
-            });
+            const submissions = submissionCountByJob.get(job.id) ?? 0;
 
             const daysOpen = Math.floor(
                 (new Date().getTime() - new Date(job.created_at).getTime()) / (1000 * 60 * 60 * 24),

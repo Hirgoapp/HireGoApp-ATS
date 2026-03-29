@@ -8,6 +8,7 @@ import {
     ManyToOne,
     JoinColumn,
     OneToMany,
+    Index,
 } from 'typeorm';
 import { Company } from '../../../companies/entities/company.entity';
 import { User } from '../../../auth/entities/user.entity';
@@ -25,6 +26,9 @@ export enum ApplicationStatus {
 }
 
 @Entity('applications')
+@Index('idx_applications_company_status', ['company_id', 'status'])
+@Index('idx_applications_pipeline_id', ['pipeline_id'])
+@Index('idx_applications_assigned_to', ['assigned_to'])
 export class Application {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -95,7 +99,7 @@ export class Application {
     @JoinColumn({ name: 'company_id' })
     company: Company;
 
-    @ManyToOne(() => JobRequirement, { eager: true })
+    @ManyToOne(() => JobRequirement)
     @JoinColumn({ name: 'job_id' })
     job: JobRequirement;
 
@@ -103,7 +107,7 @@ export class Application {
     @JoinColumn({ name: 'pipeline_id' })
     pipeline: Pipeline;
 
-    @ManyToOne(() => PipelineStage, { eager: true })
+    @ManyToOne(() => PipelineStage)
     @JoinColumn({ name: 'current_stage_id' })
     current_stage: PipelineStage;
 
