@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 import * as Sentry from '@sentry/node';
@@ -128,10 +128,20 @@ async function bootstrap() {
             .build();
 
         console.log('🔵 Step 5: Creating Swagger document...');
-        const document = SwaggerModule.createDocument(app, config);
+        const swaggerLib = require('@nestjs/swagger') as {
+            SwaggerModule?: {
+                createDocument: (appRef: unknown, cfg: unknown) => unknown;
+                setup: (path: string, appRef: unknown, doc: unknown) => void;
+            };
+        };
+        const document = swaggerLib.SwaggerModule?.createDocument(app, config);
 
         console.log('🔵 Step 6: Setting up Swagger UI...');
-        SwaggerModule.setup('api', app, document);
+        if (document) {
+            swaggerLib.SwaggerModule?.setup('api', app, document);
+        } else {
+            console.warn('⚠️ SwaggerModule is unavailable; skipping /api docs setup.');
+        }
 
         // console.log('🔵 Step 6.5: Setting up S3 storage policies (if enabled)...');
         // try {

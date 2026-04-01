@@ -15,7 +15,6 @@ import { Job } from '../../jobs/entities/job.entity';
 import { User } from '../../../auth/entities/user.entity';
 import { SubmissionStatusHistory } from './submission-status-history.entity';
 
-// NOTE: DB stores stage values as Title Case strings in `current_stage`.
 export enum SubmissionStatus {
     APPLIED = 'Applied',
     SCREENING = 'Screening',
@@ -24,6 +23,12 @@ export enum SubmissionStatus {
     HIRED = 'Hired',
     REJECTED = 'Rejected',
     WITHDRAWN = 'Withdrawn',
+}
+
+export enum SubmissionOutcome {
+    JOINED = 'joined',
+    REJECTED = 'rejected',
+    WITHDRAWN = 'withdrawn',
 }
 
 @Entity('submissions')
